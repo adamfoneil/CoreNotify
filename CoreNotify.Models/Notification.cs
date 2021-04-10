@@ -13,6 +13,9 @@ namespace CoreNotify.Models
         [Key]
         [MaxLength(50)]
         public string Name { get; set; }
+        
+        [MaxLength(255)]
+        public string Subject { get; set; }
 
         [Required]
         [MaxLength(20)]
