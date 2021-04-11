@@ -87,14 +87,7 @@ namespace CoreNotify.Functions
             }
 
             var account = cn.Get<Account>(notification.AccountId);
-            if (account == null)
-            {
-                cn.LogError($"Account id {notification.AccountId} not found", new
-                {
-                    accountId = notification.AccountId
-                });
-            }
-
+            
             if (account.RenewalDate < DateTime.Now) cn.LogError($"Account {account.Name} expired on {account.RenewalDate}", new
             {
                 key = recipient.NotificationKey,
