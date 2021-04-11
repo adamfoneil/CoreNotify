@@ -1,7 +1,7 @@
 ﻿using AO.Models.Models;
 using System;
 
-namespace CoreNotify.Models
+namespace CoreNotify.Database
 {
     public class UserProfile : UserProfileBase
     {

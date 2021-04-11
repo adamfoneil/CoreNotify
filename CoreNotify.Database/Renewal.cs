@@ -3,7 +3,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace CoreNotify.Models
+namespace CoreNotify.Database
 {
     [Identity(nameof(Id))]
     public class Renewal

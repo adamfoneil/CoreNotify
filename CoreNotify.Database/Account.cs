@@ -1,9 +1,9 @@
 ﻿using AO.Models;
-using CoreNotify.Models.Conventions;
+using CoreNotify.Database.Conventions;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CoreNotify.Models
+namespace CoreNotify.Database
 {
     public class Account : BaseTable
     {

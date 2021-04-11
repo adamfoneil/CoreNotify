@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.Shared", "CoreNo
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.Database", "CoreNotify.Database\CoreNotify.Database.csproj", "{C7267F72-F0F1-49BE-B43F-8A4E8D5A8A72}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.Functions", "CoreNotify.Functions\CoreNotify.Functions.csproj", "{02B492C0-7553-41F7-A16E-4A0ADF2E4109}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C7267F72-F0F1-49BE-B43F-8A4E8D5A8A72}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7267F72-F0F1-49BE-B43F-8A4E8D5A8A72}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7267F72-F0F1-49BE-B43F-8A4E8D5A8A72}.Release|Any CPU.Build.0 = Release|Any CPU
+		{02B492C0-7553-41F7-A16E-4A0ADF2E4109}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{02B492C0-7553-41F7-A16E-4A0ADF2E4109}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{02B492C0-7553-41F7-A16E-4A0ADF2E4109}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{02B492C0-7553-41F7-A16E-4A0ADF2E4109}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

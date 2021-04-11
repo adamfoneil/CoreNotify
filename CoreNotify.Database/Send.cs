@@ -2,7 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CoreNotify.Models
+namespace CoreNotify.Database
 {
     [Schema("log")]
     public class Send

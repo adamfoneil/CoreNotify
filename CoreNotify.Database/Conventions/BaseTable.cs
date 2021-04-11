@@ -4,7 +4,7 @@ using AO.Models.Interfaces;
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace CoreNotify.Models.Conventions
+namespace CoreNotify.Database.Conventions
 {
     [Identity(nameof(Id))]
     public abstract class BaseTable : IAudit
