@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Net.Http;
 using Microsoft.Data.SqlClient;
+using SendGrid;
 
 namespace CoreNotify.Functions
 {
@@ -27,7 +28,7 @@ namespace CoreNotify.Functions
                     {                        
                         var request = ValidateRequest(cn, recipient);
 
-                        var html = BuildHtml(request.notification.ContentEndpoint, recipient);
+                        var html = GetContent(cn, request, recipient);
 
                         SendEmailAndLog(cn, html, recipient, request.account.SendGridApiKey ?? context.GetSendGridKey());
                     }
@@ -39,15 +40,33 @@ namespace CoreNotify.Functions
             }
         }
 
-        private static void SendEmailAndLog(SqlConnection cn, string html, ICoreNotifyRecipient recipient, string sendGridKey)
+        private static string GetContent(SqlConnection cn, (Notification notification, Account account) request, ICoreNotifyRecipient recipient)
         {
-            
+            try
+            {
+                var builder = new UriBuilder(request.notification.ContentEndpoint);
+                builder.AddQueryParameters(recipient.Parameters);
+                builder.AddQueryParameter("key", request.account.QueryStringKey);
 
+                var response = client.GetAsync(builder.Uri).Result;
+                response.EnsureSuccessStatusCode();                
+            }
+            catch (Exception exc)
+            {
+                cn.LogError(exc.Message, new
+                {
+                    notificationId = request.notification.Id,
+                    
+                });
+            }
+
+            throw new NotImplementedException();
         }
 
-        private static string BuildHtml(string contentEndpoint, ICoreNotifyRecipient recipient)
+        private static void SendEmailAndLog(SqlConnection cn, string html, ICoreNotifyRecipient recipient, string sendGridKey)
         {
-            throw new NotImplementedException();
+            var sendGridClient = new SendGridClient(sendGridKey);
+
         }
 
         private static (Notification notification, Account account) ValidateRequest(SqlConnection cn, ICoreNotifyRecipient recipient)

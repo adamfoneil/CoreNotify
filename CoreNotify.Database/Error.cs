@@ -8,6 +8,10 @@ namespace CoreNotify.Database
     /// </summary>
     public class Error : LogTable
     {        
+        [MaxLength(255)]
+        [Required]
+        public string MethodName { get; set; }
+
         [Required]
         public string Message { get; set; }
 
