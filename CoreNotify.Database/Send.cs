@@ -1,16 +1,12 @@
 ﻿using AO.Models;
+using CoreNotify.Database.Conventions;
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace CoreNotify.Database
-{
-    [Schema("log")]
-    public class Send
-    {        
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        public DateTime Timestamp { get; set; } = DateTime.UtcNow;
-
+{    
+    public class Send : LogTable
+    {
         [References(typeof(Notification))]
         public int NotificationId { get; set; }
 

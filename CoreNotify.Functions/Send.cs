@@ -1,8 +1,10 @@
 using CoreNotify.Functions.Helpers;
 using CoreNotify.Shared.Interfaces;
+using CoreNotify.Database;
 using Dapper.CX.SqlServer.Extensions.Int;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
+using System;
 
 namespace CoreNotify.Functions
 {
@@ -10,7 +12,7 @@ namespace CoreNotify.Functions
     {
         [FunctionName("Send")]
         public static void Run(
-            [QueueTrigger("corenotify-recipients", Connection = "StorageAccount")]string message, 
+            [QueueTrigger("corenotify-send", Connection = "StorageAccount")]string message, 
             ILogger log, ExecutionContext context)
         {
             if (JsonHelper.TryParse(message, out ICoreNotifyRecipient recipient))
@@ -18,6 +20,17 @@ namespace CoreNotify.Functions
                 using (var cn = context.GetConnection("DatabaseConnection"))
                 {
                     var notification = cn.Get<Notification>(recipient.NotificationId);
+                    if (notification == null)
+                    {
+                        cn.LogError($"Notification {recipient.NotificationId} not found.", new { notificationId = recipient.NotificationId });
+                    }
+
+                    var account = cn.Get<Account>(notification.AccountId);
+                    if (account.RenewalDate < DateTime.Now) cn.LogError($"Account {account.Name} expired", new
+                    {
+                        notificationId = recipient.NotificationId,
+                        accountId = notification.AccountId
+                    });
                 }
             }
 

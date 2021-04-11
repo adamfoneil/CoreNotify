@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AO.Models" Version="1.1.30" />
+    <PackageReference Include="AO.StringId" Version="1.0.2" />
   </ItemGroup>
 
 </Project>

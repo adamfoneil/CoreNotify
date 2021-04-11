@@ -2,6 +2,7 @@
 using CoreNotify.Database.Conventions;
 using System;
 using System.ComponentModel.DataAnnotations;
+using StringIdLibrary;
 
 namespace CoreNotify.Database
 {
@@ -16,7 +17,18 @@ namespace CoreNotify.Database
 
         public DateTime RenewalDate { get; set; } = DateTime.Today.AddDays(30);
 
+        /// <summary>
+        /// used to validate recipient and rendering requests in your application(s)
+        /// </summary>
         [MaxLength(50)]
-        public string QueryStringKey { get; set; }
+        [Required]
+        public string QueryStringKey { get; set; } = StringId.New(16, StringIdRanges.Lower | StringIdRanges.Numeric);
+
+        /// <summary>
+        /// BYO SendGrid key
+        /// </summary>
+        [MaxLength(255)]
+        [Required]
+        public string SendGridApiKey { get; set; }
     }
 }
