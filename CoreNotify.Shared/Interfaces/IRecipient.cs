@@ -2,7 +2,7 @@
 
 namespace CoreNotify.Shared.Interfaces
 {
-    public interface ICoreNotifyRecipient
+    public interface IRecipient
     {
         string NotificationKey { get; }
         string Email { get; }

@@ -8,6 +8,7 @@ using System;
 using System.Net.Http;
 using Microsoft.Data.SqlClient;
 using SendGrid;
+using System.Net;
 
 namespace CoreNotify.Functions
 {
@@ -22,7 +23,7 @@ namespace CoreNotify.Functions
         {            
             try
             {
-                if (JsonHelper.TryParse(message, out ICoreNotifyRecipient recipient))
+                if (JsonHelper.TryParse(message, out IRecipient recipient))
                 {
                     using (var cn = context.GetConnection("DatabaseConnection"))
                     {                        
@@ -40,44 +41,60 @@ namespace CoreNotify.Functions
             }
         }
 
-        private static string GetContent(SqlConnection cn, (Notification notification, Account account) request, ICoreNotifyRecipient recipient)
+        private static string GetContent(SqlConnection cn, (Notification notification, Account account) request, IRecipient recipient)
         {
+            string contentUrl = null;
+            HttpStatusCode statusCode = 0;
+
             try
             {
                 var builder = new UriBuilder(request.notification.ContentEndpoint);
                 builder.AddQueryParameters(recipient.Parameters);
                 builder.AddQueryParameter("key", request.account.QueryStringKey);
 
-                var response = client.GetAsync(builder.Uri).Result;
-                response.EnsureSuccessStatusCode();                
+                contentUrl = builder.Uri.AbsoluteUri;
+                var response = client.GetAsync(contentUrl).Result;
+                statusCode = response.StatusCode;
+                response.EnsureSuccessStatusCode();
+
+                return response.Content.ReadAsStringAsync().Result;
             }
             catch (Exception exc)
             {
                 cn.LogError(exc.Message, new
                 {
+                    statusCode,
                     notificationId = request.notification.Id,
-                    
+                    contentUrl
                 });
-            }
 
-            throw new NotImplementedException();
+                throw;
+            }
         }
 
-        private static void SendEmailAndLog(SqlConnection cn, string html, ICoreNotifyRecipient recipient, string sendGridKey)
+        private static void SendEmailAndLog(SqlConnection cn, string html, IRecipient recipient, string sendGridKey)
         {
             var sendGridClient = new SendGridClient(sendGridKey);
 
         }
 
-        private static (Notification notification, Account account) ValidateRequest(SqlConnection cn, ICoreNotifyRecipient recipient)
+        private static (Notification notification, Account account) ValidateRequest(SqlConnection cn, IRecipient recipient)
         {
             var notification = cn.GetWhere<Notification>(new { key = recipient.NotificationKey });
             if (notification == null)
             {
-                cn.LogError($"Notification key {recipient.NotificationKey} not found.", new { key = recipient.NotificationKey });
+                cn.LogError($"Notification key {recipient.NotificationKey} not found.", new { key = recipient.NotificationKey });                
             }
 
             var account = cn.Get<Account>(notification.AccountId);
+            if (account == null)
+            {
+                cn.LogError($"Account id {notification.AccountId} not found", new
+                {
+                    accountId = notification.AccountId
+                });
+            }
+
             if (account.RenewalDate < DateTime.Now) cn.LogError($"Account {account.Name} expired on {account.RenewalDate}", new
             {
                 key = recipient.NotificationKey,

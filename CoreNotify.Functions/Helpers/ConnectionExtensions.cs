@@ -9,7 +9,7 @@ namespace CoreNotify.Functions.Helpers
 {
     public static class ConnectionExtensions
     {
-        public static void LogError(this SqlConnection connection, string message, object data, bool throwException = true, [CallerMemberName]string callerName = null)
+        public static void LogError(this SqlConnection connection, string message, object data, [CallerMemberName] string callerName = null)
         {
             connection.Insert(new Error()
             {
@@ -17,8 +17,6 @@ namespace CoreNotify.Functions.Helpers
                 Message = message,
                 Data = JsonSerializer.Serialize(data)
             }, getIdentity: false);
-
-            if (throwException) throw new Exception(message);
         }
     }
 }
