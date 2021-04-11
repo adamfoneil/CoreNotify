@@ -11,12 +11,14 @@ namespace CoreNotify.Functions.Helpers
             const char paramSeparator = '&';
             const char keyValueSepartor = '=';
 
-            var queryParams = uriBuilder.Query.Split(paramSeparator).Select(item =>
-            {
-                var parts = item.Split(keyValueSepartor);
-                var key = (parts[0].StartsWith("?")) ? parts[0].Substring(1) : parts[0];
-                return new KeyValuePair<string, object>(key, parts[1]);
-            }).ToDictionary(kp => kp.Key, kp => kp.Value);
+            var queryParams = (!string.IsNullOrEmpty(uriBuilder.Query)) ? 
+                uriBuilder.Query.Split(paramSeparator).Select(item =>
+                {
+                    var parts = item.Split(keyValueSepartor);
+                    var key = (parts[0].StartsWith("?")) ? parts[0].Substring(1) : parts[0];
+                    return new KeyValuePair<string, object>(key, parts[1]);
+                }).ToDictionary(kp => kp.Key, kp => kp.Value) :
+                new Dictionary<string, object>();
 
             foreach (var kp in parameters)
             {

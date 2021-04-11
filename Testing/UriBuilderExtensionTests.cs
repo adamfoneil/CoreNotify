@@ -36,5 +36,18 @@ namespace Testing
                                                         
             Assert.IsTrue(builder.Uri.AbsoluteUri.Equals("https://whatever.com/this/that?greeting=avast!&date=4/11/2021%2012:00:00%20AM&level=1&key=something"));
         }
+
+        [TestMethod]
+        public void WithoutQuery()
+        {
+            var builder = new UriBuilder("https://whatever.com/this/that");
+            builder.AddQueryParameters(new
+            {
+                key = "whatever",
+                greeting = "hello"
+            });
+
+            Assert.IsTrue(builder.Uri.AbsoluteUri.Equals("https://whatever.com/this/that?key=whatever&greeting=hello"));
+        }
     }
 }
