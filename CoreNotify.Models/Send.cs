@@ -24,5 +24,9 @@ namespace CoreNotify.Models
 
         [Required]
         public string Content { get; set; }
+
+        public bool Bounced { get; set; }
+        
+        public bool Unsubscribe { get; set; }
     }
 }
