@@ -1,9 +1,11 @@
 ﻿using AO.Models;
 using CoreNotify.Database.Conventions;
+using StringIdLibrary;
 using System.ComponentModel.DataAnnotations;
 
 namespace CoreNotify.Database
 {
+    [UniqueConstraint(nameof(Key))]
     public class Notification : BaseTable
     {
         [Key]
@@ -34,6 +36,10 @@ namespace CoreNotify.Database
         [Required]
         [MaxLength(255)]
         public string ContentEndpoint { get; set; }
+
+        [Required]
+        [MaxLength(20)]
+        public string Key { get; set; } = StringId.New(16, StringIdRanges.Upper | StringIdRanges.Numeric);
 
         public bool IsActive { get; set; } = true;
     }
