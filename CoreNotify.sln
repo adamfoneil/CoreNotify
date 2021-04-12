@@ -3,17 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31129.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.Blazor", "CoreNotify.Blazor\CoreNotify.Blazor.csproj", "{BB06D1AC-7DB1-4734-AED1-0FA55F5A3BF8}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.Shared", "CoreNotify.Shared\CoreNotify.Shared.csproj", "{3BC24FBC-B214-46D5-B8C3-49EDF6EBE234}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.Database", "CoreNotify.Database\CoreNotify.Database.csproj", "{C7267F72-F0F1-49BE-B43F-8A4E8D5A8A72}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.Functions", "CoreNotify.Functions\CoreNotify.Functions.csproj", "{02B492C0-7553-41F7-A16E-4A0ADF2E4109}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{13B97D8A-E5B7-41EC-B12D-385728673A4D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing", "Testing\Testing.csproj", "{13B97D8A-E5B7-41EC-B12D-385728673A4D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.Client", "CoreNotify.Client\CoreNotify.Client.csproj", "{B7CE055E-CDF2-41B4-AE88-5E2D2E45E851}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.Client", "CoreNotify.Client\CoreNotify.Client.csproj", "{B7CE055E-CDF2-41B4-AE88-5E2D2E45E851}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{BB06D1AC-7DB1-4734-AED1-0FA55F5A3BF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BB06D1AC-7DB1-4734-AED1-0FA55F5A3BF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BB06D1AC-7DB1-4734-AED1-0FA55F5A3BF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BB06D1AC-7DB1-4734-AED1-0FA55F5A3BF8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3BC24FBC-B214-46D5-B8C3-49EDF6EBE234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3BC24FBC-B214-46D5-B8C3-49EDF6EBE234}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3BC24FBC-B214-46D5-B8C3-49EDF6EBE234}.Release|Any CPU.ActiveCfg = Release|Any CPU
