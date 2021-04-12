@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using CoreNotify.Functions.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Data.SqlClient;
@@ -56,13 +57,13 @@ namespace CoreNotify.Functions.Classes
                     {
                         if (HttpMethods.IsPost(request.Method))
                         {
-                            var model = await GetModelBodyAsync(request);
+                            var model = await request.DeserializeAsync<TModel>();
                             var id = await CreateAsync(cn, model);
                             return new OkObjectResult(id);
                         }
                         else if (HttpMethods.IsPut(request.Method))
                         {
-                            var model = await GetModelBodyAsync(request);
+                            var model = await request.DeserializeAsync<TModel>();
                             await UpdateAsync(cn, model);
                             return new OkResult();
                         }
@@ -82,12 +83,6 @@ namespace CoreNotify.Functions.Classes
                 Logger.LogError(exc, exc.Message);
                 return new BadRequestObjectResult(exc.Message);
             }
-        }
-
-        private static async Task<TModel> GetModelBodyAsync(HttpRequest request)
-        {
-            var json = await new StreamReader(request.Body).ReadToEndAsync();
-            return JsonSerializer.Deserialize<TModel>(json);
-        }
+        }      
     }
 }

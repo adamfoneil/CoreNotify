@@ -12,13 +12,15 @@ using System.Net;
 
 namespace CoreNotify.Functions
 {
-    public static class Send
+    public static class ExecuteSend
     {
         static HttpClient client = new HttpClient();
 
-        [FunctionName("Send")]
+        public const string QueueName = "corenotify-send";
+
+        [FunctionName("ExecuteSend")]
         public static void Run(
-            [QueueTrigger("corenotify-send", Connection = "StorageAccount")]string message, 
+            [QueueTrigger(QueueName, Connection = "StorageAccount")]string message, 
             ILogger log, ExecutionContext context)
         {            
             try
