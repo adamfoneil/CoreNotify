@@ -17,10 +17,9 @@ namespace CoreNotify.Database
         
         [MaxLength(255)]
         public string Subject { get; set; }
-
-        [Required]
+        
         [MaxLength(20)]
-        public string Schedule { get; set; } = "0 23 * * *"; // every day at 11PM default
+        public string Schedule { get; set; } // cron job expression
         
         /// <summary>
         /// where do we get the recipients for this email?

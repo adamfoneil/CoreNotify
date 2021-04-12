@@ -9,6 +9,7 @@ using System.Net.Http;
 using Microsoft.Data.SqlClient;
 using SendGrid;
 using System.Net;
+using CoreNotify.Shared;
 
 namespace CoreNotify.Functions
 {
@@ -25,7 +26,7 @@ namespace CoreNotify.Functions
         {            
             try
             {
-                if (JsonHelper.TryParse(message, out IRecipient recipient))
+                if (JsonHelper.TryParse(message, out Recipient recipient))
                 {
                     using (var cn = context.GetConnection("DatabaseConnection"))
                     {                        

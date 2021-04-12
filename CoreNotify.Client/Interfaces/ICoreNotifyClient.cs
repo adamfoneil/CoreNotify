@@ -1,16 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using CoreNotify.Database;
+using Refit;
 using System.Threading.Tasks;
 
 namespace CoreNotify.Interfaces
-{
+{        
     internal interface ICoreNotifyClient
     {
-        Task LoginAsync(string userName, string password);
+        [Post("api/CreateAccount")]
+        Task<Account> CreateAccountAsync([Query] string name);
 
-        Task RegisterAsync(string userName, string password, string accountName);
+        [Post("api/UpdateAccount")]
+        Task UpdateAccountAsync([Body] Account account, [Header("AccountName")]string accountName, [Header("AccountKey")]string accountKey);
 
-        
+        [Post("api/Notification")]
+        Task<Notification> SaveNotificationAsync([Body] Notification notification, [Header("AccountName")] string accountName, [Header("AccountKey")] string accountKey);
     }
 }

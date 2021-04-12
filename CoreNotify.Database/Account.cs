@@ -2,6 +2,7 @@
 using CoreNotify.Database.Conventions;
 using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoreNotify.Database
 {
@@ -28,5 +29,11 @@ namespace CoreNotify.Database
         /// </summary>
         [MaxLength(255)]        
         public string SendGridApiKey { get; set; }
+
+        [NotMapped]        
+        public string Key { get; set; }
+
+        [NotMapped]
+        public decimal Price { get; set; }
     }
 }

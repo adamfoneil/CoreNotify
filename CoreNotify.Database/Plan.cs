@@ -4,8 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoreNotify.Database
 {
-    [Identity(nameof(Id))]
-    [UniqueConstraint(nameof(ItemNumber))]
+    [Identity(nameof(Id))]    
     public class Plan
     {
         public int Id { get; set; }
@@ -23,9 +22,5 @@ namespace CoreNotify.Database
 
         [Column(TypeName = "money")]
         public decimal Price { get; set; }
-
-        [MaxLength(50)]
-        [Required]
-        public string ItemNumber { get; set; }
     }
 }
