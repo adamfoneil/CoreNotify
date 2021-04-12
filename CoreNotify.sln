@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing", "Testing\Testing.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.Client", "CoreNotify.Client\CoreNotify.Client.csproj", "{B7CE055E-CDF2-41B4-AE88-5E2D2E45E851}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.Blazor", "CoreNotify.Blazor\CoreNotify.Blazor.csproj", "{FE1B14D5-5D0D-4932-A655-E927E5B1816A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{B7CE055E-CDF2-41B4-AE88-5E2D2E45E851}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7CE055E-CDF2-41B4-AE88-5E2D2E45E851}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7CE055E-CDF2-41B4-AE88-5E2D2E45E851}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FE1B14D5-5D0D-4932-A655-E927E5B1816A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE1B14D5-5D0D-4932-A655-E927E5B1816A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE1B14D5-5D0D-4932-A655-E927E5B1816A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE1B14D5-5D0D-4932-A655-E927E5B1816A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

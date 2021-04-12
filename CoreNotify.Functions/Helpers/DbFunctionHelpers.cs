@@ -14,6 +14,11 @@ namespace CoreNotify.Functions.Helpers
         {
             try
             {
+                /*
+                todo: use SigninManager to login
+                var userName = request.Headers["userName"];
+                var pwd = request.Headers["password"];
+                */
                 var result = await connection.GetWhereAsync<Account>(new
                 {
                     name = request.Query["account"],
