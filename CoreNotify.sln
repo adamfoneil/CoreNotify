@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.Functions", "Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{13B97D8A-E5B7-41EC-B12D-385728673A4D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.Client", "CoreNotify.Client\CoreNotify.Client.csproj", "{B7CE055E-CDF2-41B4-AE88-5E2D2E45E851}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{13B97D8A-E5B7-41EC-B12D-385728673A4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13B97D8A-E5B7-41EC-B12D-385728673A4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13B97D8A-E5B7-41EC-B12D-385728673A4D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B7CE055E-CDF2-41B4-AE88-5E2D2E45E851}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7CE055E-CDF2-41B4-AE88-5E2D2E45E851}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B7CE055E-CDF2-41B4-AE88-5E2D2E45E851}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7CE055E-CDF2-41B4-AE88-5E2D2E45E851}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

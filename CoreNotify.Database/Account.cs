@@ -22,13 +22,12 @@ namespace CoreNotify.Database
         /// </summary>
         [MaxLength(50)]
         [Required]
-        public string QueryStringKey { get; set; } = StringId.New(16, StringIdRanges.Lower | StringIdRanges.Numeric);
+        public string ValidationKey { get; set; } = StringId.New(16, StringIdRanges.Lower | StringIdRanges.Numeric | StringIdRanges.Special | StringIdRanges.Upper);
 
         /// <summary>
-        /// BYO SendGrid key
+        /// BYO SendGrid key if you want
         /// </summary>
-        [MaxLength(255)]
-        [Required]
+        [MaxLength(255)]        
         public string SendGridApiKey { get; set; }
     }
 }

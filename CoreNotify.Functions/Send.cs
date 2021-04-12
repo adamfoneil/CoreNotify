@@ -50,7 +50,7 @@ namespace CoreNotify.Functions
             {
                 var builder = new UriBuilder(request.notification.ContentEndpoint);
                 builder.AddQueryParameters(recipient.Parameters);
-                builder.AddQueryParameter("key", request.account.QueryStringKey);
+                builder.AddQueryParameter("key", request.account.ValidationKey);
 
                 contentUrl = builder.Uri.AbsoluteUri;
                 var response = client.GetAsync(contentUrl).Result;
