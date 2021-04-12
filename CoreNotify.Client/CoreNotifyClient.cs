@@ -6,7 +6,6 @@ namespace CoreNotify
     {
         public CoreNotifyClient()
         {
-
         }
     }
 }

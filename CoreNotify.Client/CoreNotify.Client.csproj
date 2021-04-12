@@ -5,4 +5,23 @@
     <RootNamespace>CoreNotify</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Include="..\CoreNotify.Database\Account.cs" Link="Database\Account.cs" />
+    <Compile Include="..\CoreNotify.Database\Conventions\BaseTable.cs" Link="Database\Conventions\BaseTable.cs" />
+    <Compile Include="..\CoreNotify.Database\Notification.cs" Link="Database\Notification.cs" />
+    <Compile Include="..\CoreNotify.Database\Plan.cs" Link="Database\Plan.cs" />
+    <Compile Include="..\CoreNotify.Shared\Interfaces\IRecipient.cs" Link="Shared\Interfaces\IRecipient.cs" />
+    <Compile Include="..\CoreNotify.Shared\Recipient.cs" Link="Shared\Recipient.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Database\Conventions\" />
+    <Folder Include="Shared\Interfaces\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AO.Models" Version="1.1.30" />
+    <PackageReference Include="Refit" Version="6.0.38" />
+  </ItemGroup>
+
 </Project>

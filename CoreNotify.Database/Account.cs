@@ -2,7 +2,6 @@
 using CoreNotify.Database.Conventions;
 using System;
 using System.ComponentModel.DataAnnotations;
-using StringIdLibrary;
 
 namespace CoreNotify.Database
 {
@@ -22,7 +21,7 @@ namespace CoreNotify.Database
         /// </summary>
         [MaxLength(50)]
         [Required]
-        public string ValidationKey { get; set; } = StringId.New(16, StringIdRanges.Lower | StringIdRanges.Numeric | StringIdRanges.Special | StringIdRanges.Upper);
+        public string ValidationKey { get; set; }
 
         /// <summary>
         /// BYO SendGrid key if you want

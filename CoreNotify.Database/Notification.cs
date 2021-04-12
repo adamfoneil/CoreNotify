@@ -1,6 +1,5 @@
 ﻿using AO.Models;
 using CoreNotify.Database.Conventions;
-using StringIdLibrary;
 using System.ComponentModel.DataAnnotations;
 
 namespace CoreNotify.Database
@@ -38,8 +37,8 @@ namespace CoreNotify.Database
         public string ContentEndpoint { get; set; }
 
         [Required]
-        [MaxLength(20)]
-        public string Key { get; set; } = StringId.New(16, StringIdRanges.Upper | StringIdRanges.Numeric);
+        [MaxLength(50)]
+        public string Key { get; set; }
 
         public bool IsActive { get; set; } = true;
     }
