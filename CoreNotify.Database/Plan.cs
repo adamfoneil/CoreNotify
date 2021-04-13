@@ -4,6 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CoreNotify.Database
 {
+    public enum Plans
+    {
+        Monthly = 1,
+        Yearly = 2
+    }
+
     [Identity(nameof(Id))]    
     public class Plan
     {

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace CoreNotify.Functions.Helpers
 {
-    public static class HttpClientExtensions
+    public static class HttpRequestExtensions
     {
         public static async Task<(T item, string json)> DeserializeJsonAsync<T>(this HttpRequest request)
         {

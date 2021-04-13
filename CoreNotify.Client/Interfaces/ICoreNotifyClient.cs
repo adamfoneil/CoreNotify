@@ -6,13 +6,13 @@ namespace CoreNotify.Interfaces
 {        
     internal interface ICoreNotifyClient
     {
-        [Post("api/CreateAccount")]
-        Task<Account> CreateAccountAsync([Query] string name);
+        [Post("/api/CreateAccount")]
+        Task<Account> CreateAccountAsync([Body]Account account);
 
-        [Post("api/UpdateAccount")]
+        [Post("/api/UpdateAccount")]
         Task UpdateAccountAsync([Body] Account account, [Header("AccountName")]string accountName, [Header("AccountKey")]string accountKey);
 
-        [Post("api/Notification")]
+        [Post("/api/Notification")]
         Task<Notification> SaveNotificationAsync([Body] Notification notification, [Header("AccountName")] string accountName, [Header("AccountKey")] string accountKey);
     }
 }

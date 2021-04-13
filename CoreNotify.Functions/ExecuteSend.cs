@@ -28,7 +28,7 @@ namespace CoreNotify.Functions
             {
                 if (JsonHelper.TryParse(message, out Recipient recipient))
                 {
-                    using (var cn = context.GetConnection("DatabaseConnection"))
+                    using (var cn = context.GetConnection())
                     {                        
                         var request = ValidateRequest(cn, recipient);
 

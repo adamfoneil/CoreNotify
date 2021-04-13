@@ -16,8 +16,8 @@ namespace CoreNotify.Functions.Helpers
         public static string GetConnectionString(this ExecutionContext context, string name) => 
             GetConfig(context).GetConnectionString(name);
 
-        public static SqlConnection GetConnection(this ExecutionContext context, string name) =>
-            new SqlConnection(GetConnectionString(context, name));
+        public static SqlConnection GetConnection(this ExecutionContext context) =>
+            new SqlConnection(GetConnectionString(context, "DatabaseConnection"));        
 
         public static string GetSendGridKey(this ExecutionContext context) =>
             GetConfig(context)["SendGridApiKey"];
