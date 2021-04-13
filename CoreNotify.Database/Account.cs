@@ -33,6 +33,9 @@ namespace CoreNotify.Database
         [MaxLength(255)]        
         public string SendGridApiKey { get; set; }
 
+        /// <summary>
+        /// used during initial account creation only, not populated on gets because there can be many
+        /// </summary>
         [NotMapped]        
         public string Key { get; set; }
     }

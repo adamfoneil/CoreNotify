@@ -3,6 +3,12 @@
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>CoreNotify</RootNamespace>
+    <Authors>Adam O'Neil</Authors>
+    <Company>Adam O'Neil</Company>
+    <Product>CoreNotify.Client</Product>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Description>API client for CoreNotify.dev. Scalable, personalized bulk HTML email notifications with unsubscribe tracking.</Description>
+    <Copyright>Copyright (c) 2021 Adam O'Neil</Copyright>
   </PropertyGroup>
 
   <ItemGroup>

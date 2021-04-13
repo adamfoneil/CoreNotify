@@ -10,9 +10,9 @@ namespace CoreNotify.Interfaces
         Task<Account> CreateAccountAsync([Body]Account account);
 
         [Post("/api/UpdateAccount")]
-        Task UpdateAccountAsync([Body] Account account, [Header("AccountName")]string accountName, [Header("AccountKey")]string accountKey);
+        Task UpdateAccountAsync([Body] Account account, [Header("account")]string accountName, [Header("key")]string accountKey);
 
         [Post("/api/Notification")]
-        Task<Notification> SaveNotificationAsync([Body] Notification notification, [Header("AccountName")] string accountName, [Header("AccountKey")] string accountKey);
+        Task<Notification> SaveNotificationAsync([Body] Notification notification, [Header("account")]string accountName, [Header("key")]string accountKey);
     }
 }

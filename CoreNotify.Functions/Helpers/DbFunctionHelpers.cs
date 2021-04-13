@@ -1,4 +1,5 @@
 ﻿using CoreNotify.Database;
+using CoreNotify.Functions.Queries;
 using Dapper.CX.SqlServer.Extensions.Int;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Data.SqlClient;
@@ -14,16 +15,11 @@ namespace CoreNotify.Functions.Helpers
         {
             try
             {
-                /*
-                todo: use SigninManager to login
-                var userName = request.Headers["userName"];
-                var pwd = request.Headers["password"];
-                */
-                var result = await connection.GetWhereAsync<Account>(new
+                var result = await new ValidateAccount()
                 {
-                    name = request.Query["account"],
-                    validationKey = request.Query["key"]
-                });
+                    Name = request.Headers["account"],
+                    Key = request.Headers["key"]
+                }.ExecuteSingleOrDefaultAsync(connection);
 
                 if (result == null) throw new Exception("Account not found.");
 
