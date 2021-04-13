@@ -1,10 +1,12 @@
 ﻿using CoreNotify;
 using CoreNotify.Database;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Threading.Tasks;
 
 namespace Testing
 {
+    /// <summary>
+    /// you need to be running the Function project locally first
+    /// </summary>
     [TestClass]
     public class ApiClientTests
     {
