@@ -26,5 +26,7 @@ namespace CoreNotify
         public string Host { get; }
 
         public async Task<Account> CreateAccountAsync(Account account) => await _api.CreateAccountAsync(account);
+
+        public async Task UpdateAccountAsync(Account account) => await _api.UpdateAccountAsync(account, _account, _key);
     }
 }

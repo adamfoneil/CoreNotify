@@ -20,6 +20,8 @@ namespace CoreNotify.Functions
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = null)] HttpRequest request,
             ILogger log, ExecutionContext context)
         {
+            request.Debug(log);
+
             try
             {
                 var account = await request.DeserializeAsync<Account>();
@@ -39,7 +41,7 @@ namespace CoreNotify.Functions
                     var accountKey = new AccountKey()
                     {
                         AccountId = id,
-                        Key = StringId.New(32, StringIdRanges.Upper | StringIdRanges.Lower | StringIdRanges.Numeric | StringIdRanges.Special)
+                        Key = StringId.New(32, StringIdRanges.Lower | StringIdRanges.Numeric)
                     };
 
                     await cn.InsertAsync(accountKey, user: user);
