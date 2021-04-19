@@ -29,7 +29,7 @@ namespace CoreNotify.Functions
         protected override SqlConnection GetConnection() => Context.GetConnection();
 
         protected override async Task<Account> AuthenticateAsync(SqlConnection connection, HttpRequest request) =>
-            await DbFunctionHelpers.AuthenticateAsync(connection, request);
+            await DbFunctionHelpers.AuthenticateAsync(connection, request, Logger);
         
         protected override async Task<int> CreateAsync(SqlConnection connection, Notification model) =>
             await connection.SaveAsync(model);

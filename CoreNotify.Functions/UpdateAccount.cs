@@ -22,34 +22,12 @@ namespace CoreNotify.Functions
         {
             try
             {
+                var creds = request.GetCredentials();
+                var updateAccount = await request.DeserializeAsync<Account>();
+
                 using (var cn = context.GetConnection())
-                {
-                    var account = await DbFunctionHelpers.AuthenticateAsync(cn, request);
-
-                    var updateAccount = await request.DeserializeAsync<Account>();
-                    var ct = new ChangeTracker<Account>(updateAccount);
-
-                    // you can update only the account that you verified
-                    updateAccount.Id = account.Id;
-                    
-                    var plan = await cn.GetAsync<Plan>(updateAccount.PlanId);
-                    if (updateAccount.PlanId != account.PlanId && updateAccount.PlanId != 0)
-                    {
-                        // if you change plans, you get that plan price
-                        updateAccount.Price = plan.Price;
-                    }
-                    else
-                    {
-                        // otherwise price stays unchanged (set here to prevent user from changing)
-                        updateAccount.Price = account.Price;
-                    }
-
-                    // can't change the renewal date except by renewing (set here to prevent user from changing)
-                    updateAccount.RenewalDate = account.RenewalDate;
-
-                    var user = new Classes.SystemUser();
-                    await cn.SaveAsync(updateAccount, ct, user: user);
-
+                {                    
+                    await Service.Functions.UpdateAccount(cn, creds.name, creds.key, updateAccount, log);
                     return new OkResult();
                 }
             }

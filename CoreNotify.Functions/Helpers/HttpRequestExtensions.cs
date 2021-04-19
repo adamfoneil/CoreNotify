@@ -33,6 +33,18 @@ namespace CoreNotify.Functions.Helpers
         public static async Task<string> ReadBodyAsync(this HttpRequest request) => 
             await new StreamReader(request.Body).ReadToEndAsync();
 
+        public static (string name, string key) GetCredentials(this HttpRequest request)
+        {
+            try
+            {
+                return (request.Headers["account"], request.Headers["key"]);
+            }
+            catch (Exception exc)
+            {
+                throw new Exception($"Error getting credentials: {exc.Message}");
+            }
+        }
+
         /// <summary>
         /// output some reqest info in order to debug Refit
         /// </summary>

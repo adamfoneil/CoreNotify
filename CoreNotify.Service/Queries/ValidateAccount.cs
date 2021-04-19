@@ -3,7 +3,7 @@ using Dapper.QX.Abstract;
 using Dapper.QX.Interfaces;
 using System.Collections.Generic;
 
-namespace CoreNotify.Functions.Queries
+namespace CoreNotify.Service.Queries
 {
     public class ValidateAccount : TestableQuery<Account>
     {

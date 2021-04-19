@@ -14,6 +14,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CoreNotify.Database\CoreNotify.Database.csproj" />
+    <ProjectReference Include="..\CoreNotify.Service\CoreNotify.Service.csproj" />
     <ProjectReference Include="..\CoreNotify.Shared\CoreNotify.Shared.csproj" />
   </ItemGroup>
   <ItemGroup>
@@ -24,5 +25,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Queries\" />
   </ItemGroup>
 </Project>
