@@ -1,5 +1,5 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using CoreNotify.Functions.Helpers;
+using CoreNotify.Service.Extensions;
 using System;
 using System.Collections.Generic;
 

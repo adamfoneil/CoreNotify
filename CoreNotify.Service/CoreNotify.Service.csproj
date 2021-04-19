@@ -11,10 +11,12 @@
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="2.1.2" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="5.0.0" />
+    <PackageReference Include="SendGrid" Version="9.22.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CoreNotify.Database\CoreNotify.Database.csproj" />
+    <ProjectReference Include="..\CoreNotify.Shared\CoreNotify.Shared.csproj" />
   </ItemGroup>
 
 </Project>

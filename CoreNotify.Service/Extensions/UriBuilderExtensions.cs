@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CoreNotify.Functions.Helpers
+namespace CoreNotify.Service.Extensions
 {
     public static class UriBuilderExtensions
     {

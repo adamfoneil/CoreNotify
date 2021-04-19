@@ -1,12 +1,5 @@
-﻿using CoreNotify.Database;
-using CoreNotify.Functions.Queries;
-using Dapper.CX.SqlServer.Extensions.Int;
-using Microsoft.AspNetCore.Http;
-using Microsoft.Data.SqlClient;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using Microsoft.AspNetCore.Http;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace CoreNotify.Functions.Helpers
 {

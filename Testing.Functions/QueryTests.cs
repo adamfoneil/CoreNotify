@@ -1,4 +1,4 @@
-﻿using CoreNotify.Functions.Queries;
+﻿using CoreNotify.Service.Queries;
 using Dapper.QX;
 using Microsoft.Data.SqlClient;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
