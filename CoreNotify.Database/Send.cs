@@ -1,10 +1,9 @@
 ﻿using AO.Models;
 using CoreNotify.Database.Conventions;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace CoreNotify.Database
-{    
+{
     public class Send : LogTable
     {
         [References(typeof(Notification))]
@@ -22,7 +21,7 @@ namespace CoreNotify.Database
         public string Content { get; set; }
 
         public bool Bounced { get; set; }
-        
+
         public bool Unsubscribe { get; set; }
     }
 }

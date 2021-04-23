@@ -14,13 +14,13 @@ namespace CoreNotify.Database
         [Key]
         [MaxLength(50)]
         public string Name { get; set; }
-        
+
         [MaxLength(255)]
         public string Subject { get; set; }
-        
+
         [MaxLength(20)]
         public string Schedule { get; set; } // cron job expression
-        
+
         /// <summary>
         /// where do we get the recipients for this email?
         /// </summary>

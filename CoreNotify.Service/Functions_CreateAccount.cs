@@ -17,7 +17,7 @@ namespace CoreNotify.Service
             if (string.IsNullOrEmpty(account.ValidationKey)) account.ValidationKey = StringId.New(16, StringIdRanges.Upper | StringIdRanges.Lower | StringIdRanges.Numeric);
 
             var user = new SystemUser("system");
-            
+
             var plan = await connection.GetAsync<Plan>(account.PlanId);
             account.Price = plan.Price;
 
@@ -33,7 +33,7 @@ namespace CoreNotify.Service
 
             account.Key = accountKey.Key;
 
-            return account;            
+            return account;
         }
     }
 }

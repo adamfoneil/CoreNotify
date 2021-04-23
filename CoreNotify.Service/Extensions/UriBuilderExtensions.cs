@@ -11,7 +11,7 @@ namespace CoreNotify.Service.Extensions
             const char paramSeparator = '&';
             const char keyValueSepartor = '=';
 
-            var queryParams = (!string.IsNullOrEmpty(uriBuilder.Query)) ? 
+            var queryParams = (!string.IsNullOrEmpty(uriBuilder.Query)) ?
                 uriBuilder.Query.Split(paramSeparator).Select(item =>
                 {
                     var parts = item.Split(keyValueSepartor);
@@ -31,7 +31,7 @@ namespace CoreNotify.Service.Extensions
             })));
         }
 
-        public static void AddQueryParameter(this UriBuilder uriBuilder, string name, object value) => 
+        public static void AddQueryParameter(this UriBuilder uriBuilder, string name, object value) =>
             AddQueryParameters(uriBuilder, new Dictionary<string, object>()
             {
                 [name] = value

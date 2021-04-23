@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations;
 namespace CoreNotify.Database
 {
     public class AccountKey : BaseTable
-    {        
+    {
         [Key]
         [MaxLength(255)]
         public string Key { get; set; }

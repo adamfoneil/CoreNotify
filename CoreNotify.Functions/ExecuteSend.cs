@@ -3,7 +3,6 @@ using CoreNotify.Shared;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Net.Http;
 
 namespace CoreNotify.Functions
 {
@@ -13,16 +12,16 @@ namespace CoreNotify.Functions
 
         [FunctionName("ExecuteSend")]
         public static void Run(
-            [QueueTrigger(QueueName, Connection = "StorageAccount")]string message, 
+            [QueueTrigger(QueueName, Connection = "StorageAccount")] string message,
             ILogger log, ExecutionContext context)
-        {            
+        {
             try
             {
                 if (JsonHelper.TryParse(message, out Recipient recipient))
                 {
                     using (var cn = context.GetConnection())
                     {
-                        Service.Functions.ExecuteSend(context.GetSendGridKey(), recipient, cn, log);                        
+                        Service.Functions.ExecuteSend(context.GetSendGridKey(), recipient, cn, log);
                     }
                 }
             }
@@ -30,6 +29,6 @@ namespace CoreNotify.Functions
             {
                 log.LogError(exc, exc.Message);
             }
-        }                  
+        }
     }
 }

@@ -1,8 +1,5 @@
 using CoreNotify.Database;
-using CoreNotify.Functions.Classes;
 using CoreNotify.Functions.Helpers;
-using Dapper.CX.Classes;
-using Dapper.CX.SqlServer.Extensions.Int;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.WebJobs;
@@ -26,7 +23,7 @@ namespace CoreNotify.Functions
                 var updateAccount = await request.DeserializeAsync<Account>();
 
                 using (var cn = context.GetConnection())
-                {                    
+                {
                     await Service.Functions.UpdateAccount(cn, creds.name, creds.key, updateAccount, log);
                     return new OkResult();
                 }

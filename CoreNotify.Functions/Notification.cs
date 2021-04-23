@@ -17,7 +17,7 @@ namespace CoreNotify.Functions
         [FunctionName("Notification")]
         public static async Task<IActionResult> Run(
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", "delete", "put", Route = null)] HttpRequest request,
-            ILogger log, ExecutionContext context) => await new NotificationHandler(context, log).ExecuteAsync(request);        
+            ILogger log, ExecutionContext context) => await new NotificationHandler(context, log).ExecuteAsync(request);
     }
 
     public class NotificationHandler : DbFunctionHandler<Account, Notification, int>
@@ -33,7 +33,7 @@ namespace CoreNotify.Functions
             var (name, key) = request.GetCredentials();
             return await Service.Functions.AuthenticateAsync(connection, name, key, Logger);
         }
-                    
+
         protected override async Task<int> CreateAsync(SqlConnection connection, Notification model) =>
             await connection.SaveAsync(model);
 
@@ -47,7 +47,7 @@ namespace CoreNotify.Functions
             await connection.GetAsync<Notification>(id);
 
         protected override int GetKey(HttpRequest request) =>
-            DbFunctionHelpers.GetKey(request);      
+            DbFunctionHelpers.GetKey(request);
     }
 }
 

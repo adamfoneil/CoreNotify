@@ -12,7 +12,7 @@ namespace CoreNotify.Service
         public static async Task UpdateAccount(SqlConnection connection, string accountName, string accountKey, Account updateAccount, ILogger logger)
         {
             var account = await AuthenticateAsync(connection, accountName, accountKey, logger);
-            
+
             var ct = new ChangeTracker<Account>(updateAccount);
 
             // you can update only the account that you verified

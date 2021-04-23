@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace CoreNotify
 {
     public class CoreNotifyClient
-    {        
+    {
         private readonly ICoreNotifyClient _api;
         private readonly string _account;
         private readonly string _key;

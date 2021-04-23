@@ -5,8 +5,6 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using System;
-using System.IO;
-using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace CoreNotify.Functions.Classes
@@ -83,6 +81,6 @@ namespace CoreNotify.Functions.Classes
                 Logger.LogError(exc, exc.Message);
                 return new BadRequestObjectResult(exc.Message);
             }
-        }      
+        }
     }
 }

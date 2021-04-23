@@ -7,7 +7,7 @@ namespace CoreNotify.Database
     /// condition that cause a process to stop
     /// </summary>
     public class Error : LogTable
-    {        
+    {
         [MaxLength(255)]
         [Required]
         public string MethodName { get; set; }

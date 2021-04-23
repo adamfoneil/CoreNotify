@@ -4,7 +4,7 @@ using System.Linq;
 namespace CoreNotify.Functions.Helpers
 {
     public static class DbFunctionHelpers
-    {     
+    {
         public static int GetKey(HttpRequest request)
         {
             try

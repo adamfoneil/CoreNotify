@@ -28,7 +28,7 @@ namespace CoreNotify.Functions
 
                 var body = await request.DeserializeJsonAsync<Recipient>();
                 var receipt = await queueClient.SendAsync(body.json);
-                
+
                 return new OkObjectResult(receipt);
             }
             catch (Exception exc)

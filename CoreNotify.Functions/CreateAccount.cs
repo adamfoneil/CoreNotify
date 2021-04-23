@@ -28,7 +28,7 @@ namespace CoreNotify.Functions
                     account = await Service.Functions.CreateAccountAsync(account, cn);
                 }
 
-                return new OkObjectResult(account);                
+                return new OkObjectResult(account);
             }
             catch (Exception exc)
             {

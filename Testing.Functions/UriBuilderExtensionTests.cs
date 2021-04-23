@@ -1,5 +1,5 @@
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using CoreNotify.Service.Extensions;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 
@@ -18,7 +18,7 @@ namespace Testing
                 ["level"] = 1,
                 ["key"] = "something"
             });
-            
+
             Assert.IsTrue(builder.Uri.AbsoluteUri.Equals("https://whatever.com/this/that?greeting=hello&date=4/11/2021%2012:00:00%20AM&level=1&key=something"));
         }
 
@@ -33,7 +33,7 @@ namespace Testing
                 key = "something",
                 greeting = "avast!"
             });
-                                                        
+
             Assert.IsTrue(builder.Uri.AbsoluteUri.Equals("https://whatever.com/this/that?greeting=avast!&date=4/11/2021%2012:00:00%20AM&level=1&key=something"));
         }
 

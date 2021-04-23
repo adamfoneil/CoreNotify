@@ -9,7 +9,7 @@ namespace CoreNotify.Database
     public class Account : BaseTable
     {
         [Key]
-        [MaxLength(50)]        
+        [MaxLength(50)]
         public string Name { get; set; }
 
         [References(typeof(Plan))]
@@ -30,13 +30,13 @@ namespace CoreNotify.Database
         /// <summary>
         /// BYO SendGrid key if you want
         /// </summary>
-        [MaxLength(255)]        
+        [MaxLength(255)]
         public string SendGridApiKey { get; set; }
 
         /// <summary>
         /// used during initial account creation only, not populated on gets because there can be many
         /// </summary>
-        [NotMapped]        
+        [NotMapped]
         public string Key { get; set; }
     }
 }

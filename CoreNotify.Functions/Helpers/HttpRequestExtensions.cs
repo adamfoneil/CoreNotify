@@ -30,7 +30,7 @@ namespace CoreNotify.Functions.Helpers
             return (await DeserializeJsonAsync<T>(request)).item;
         }
 
-        public static async Task<string> ReadBodyAsync(this HttpRequest request) => 
+        public static async Task<string> ReadBodyAsync(this HttpRequest request) =>
             await new StreamReader(request.Body).ReadToEndAsync();
 
         public static (string name, string key) GetCredentials(this HttpRequest request)
@@ -65,21 +65,21 @@ namespace CoreNotify.Functions.Helpers
             foreach (var kp in collections)
             {
                 var items = Enumerable.Empty<KeyValuePair<string, StringValues>>();
-                
+
                 try
                 {
                     items = kp.Value.Invoke(request);
-                }                    
+                }
                 catch
                 {
                     /* ignore, can't access Form when content type = application/json */
                 }
-                                
+
                 if (items.Any())
                 {
                     output.AppendLine($"{kp.Key}:");
                     foreach (var item in items) output.AppendLine($"- {item.Key} = {item.Value}");
-                }                
+                }
             }
 
             log.LogDebug(output.ToString());

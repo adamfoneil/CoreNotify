@@ -10,7 +10,7 @@ namespace CoreNotify.Database
         Yearly = 2
     }
 
-    [Identity(nameof(Id))]    
+    [Identity(nameof(Id))]
     public class Plan
     {
         public int Id { get; set; }
