@@ -1,11 +1,14 @@
 ﻿using AO.Models;
+using AO.Models.Interfaces;
 using CoreNotify.Database.Conventions;
 using System.ComponentModel.DataAnnotations;
+using System.Data;
+using System.Threading.Tasks;
 
 namespace CoreNotify.Database
 {
     [UniqueConstraint(nameof(Key))]
-    public class Notification : BaseTable
+    public class Notification : BaseTable, IValidate
     {
         [Key]
         [References(typeof(Account))]
@@ -16,7 +19,14 @@ namespace CoreNotify.Database
         public string Name { get; set; }
 
         [MaxLength(255)]
+        [Required]
+        public string SenderEmail { get; set;  }
+
+        [MaxLength(255)]        
         public string Subject { get; set; }
+
+        [MaxLength(255)]
+        public string SubjectEndpoint { get; set; }
 
         [MaxLength(20)]
         public string Schedule { get; set; } // cron job expression
@@ -40,5 +50,17 @@ namespace CoreNotify.Database
         public string Key { get; set; }
 
         public bool IsActive { get; set; } = true;
+
+        public ValidateResult Validate()
+        {
+            if (string.IsNullOrWhiteSpace(Subject) && string.IsNullOrWhiteSpace(SubjectEndpoint))
+            {
+                return ValidateResult.Failed("Must provide either Subject or SubjectEndpoint");
+            }
+
+            return ValidateResult.Ok();
+        }
+
+        public async Task<ValidateResult> ValidateAsync(IDbConnection connection, IDbTransaction txn = null) => await Task.FromResult(Validate());        
     }
 }
