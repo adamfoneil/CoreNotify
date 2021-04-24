@@ -10,6 +10,9 @@ namespace Testing.Service
     [TestClass]
     public class ServiceTests
     {
+        /// <summary>
+        /// make sure TestApp is running (ctrl+F5) first
+        /// </summary>
         [TestMethod]
         public void ExecuteSend()
         {
@@ -27,7 +30,9 @@ namespace Testing.Service
             {
                 Name = "sample",
                 PlanId = 1,
-                ValidationKey = "hello"
+                ValidationKey = "hello",
+                CreatedBy = "test",
+                DateCreated = DateTime.Now
             };
 
             var id = cn.MergeAsync(account).Result;
@@ -37,8 +42,14 @@ namespace Testing.Service
                 AccountId = id,
                 Name = "sample",
                 SenderEmail = "adamosoftware@gmail.com",
-                RecipientEndpoint = "http://localhost"
+                RecipientEndpoint = "https://localhost:44349/Email/Recipients",
+                ContentEndpoint = "https://localhost:44349/Email/Content",
+                Key = "sample-key",
+                CreatedBy = "test",
+                DateCreated = DateTime.Now
             };
+
+            cn.MergeAsync(notification).Wait();
         }
     }
 }

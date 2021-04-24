@@ -104,7 +104,7 @@ namespace CoreNotify.Service
                     }
                 }
 
-                throw new Exception($"Expected header {header} not found.");
+                throw new Exception($"Expected header {Notification.SubjectHeader} not found.");
             }
         }
 
