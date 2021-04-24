@@ -6,11 +6,11 @@ using System.Linq;
 
 namespace CoreNotify.Filters
 {
-    public class CoreNotifyValidationFilter : IAuthorizationFilter
+    public class CoreNotifyAuthorizationFilter : IAuthorizationFilter
     {
         private readonly string _validationKey;
 
-        public CoreNotifyValidationFilter(string validationKey)
+        public CoreNotifyAuthorizationFilter(string validationKey)
         {
             _validationKey = validationKey;
         }

@@ -5,7 +5,7 @@ namespace CoreNotify.Extensions
 {
     public static class FilterCollectionExtensions
     {
-        public static void AddCoreNotifyValidation(this MvcOptions options, string key) => 
-            options.Filters.Add(new CoreNotifyValidationFilter(key));        
+        public static void AddCoreNotifyAuthorization(this MvcOptions options, string key) => 
+            options.Filters.Add(new CoreNotifyAuthorizationFilter(key));        
     }
 }

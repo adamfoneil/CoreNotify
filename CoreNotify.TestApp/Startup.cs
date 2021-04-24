@@ -22,7 +22,7 @@ namespace CoreNotify.TestApp
             var validationKey = Configuration["CoreNotify:ValidationKey"];
 
             services.AddRazorPages();
-            services.AddMvcCore(setup => setup.AddCoreNotifyValidation(validationKey));
+            services.AddMvcCore(setup => setup.AddCoreNotifyAuthorization(validationKey));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
