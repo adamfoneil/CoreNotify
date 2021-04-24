@@ -5,8 +5,7 @@ namespace CoreNotify.Shared.Interfaces
     public interface IRecipient
     {
         string NotificationKey { get; }
-        string Email { get; }
-        string Subject { get; }
+        string EmailAddress { get; }        
         IDictionary<string, object> Parameters { get; }
     }
 }

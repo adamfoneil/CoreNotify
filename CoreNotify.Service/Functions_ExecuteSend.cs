@@ -13,7 +13,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text.Json;
+using System.Runtime.CompilerServices;
 
 namespace CoreNotify.Service
 {
@@ -21,20 +21,48 @@ namespace CoreNotify.Service
     {
         static HttpClient client = new HttpClient();
 
-        public static void ExecuteSend(string sendGridKey, Recipient recipient, SqlConnection connection, ILogger log)
+        public static void ExecuteSend(
+            string sendGridKey, IRecipient recipient, SqlConnection connection, 
+            ILogger log)
         {          
             var request = ValidateRequest(connection, recipient, log);           
 
-            var email = GetContent(request, recipient, log);
+            var email = GetEmail(request, recipient, log);
 
             SendEmailAndLog(email, recipient, request, sendGridKey, log);
-        }               
+        }
 
-        private static (string subject, string body) GetContent((Notification notification, Account account) request, IRecipient recipient, ILogger log)
-        {            
-            log.LogTrace($"GetContent account: {JsonSerializer.Serialize(request.account)}");
-            log.LogTrace($"GetContent notfication: {JsonSerializer.Serialize(request.notification)}");
-            log.LogTrace($"GetContent recipient: {JsonSerializer.Serialize(recipient)}");
+        private static (Notification notification, Account account) ValidateRequest(
+            SqlConnection cn, IRecipient recipient,
+            ILogger log, [CallerMemberName]string callerName = null)
+        {
+            log.Trace(callerName, recipient);
+
+            var notification = cn.GetWhere<Notification>(new { key = recipient.NotificationKey });
+            if (notification == null)
+            {
+                throw new Exception($"Notification key {recipient.NotificationKey} not found.");
+            }
+
+            var account = cn.Get<Account>(notification.AccountId);
+            if (account.RenewalDate < DateTime.Now)
+            {
+                throw new Exception($"Account {account.Name} expired on {account.RenewalDate}");
+            }
+
+            var blocked = cn.GetWhere<Unsubscribe>(new { email = recipient.EmailAddress, notificationId = recipient.NotificationKey });
+            if (blocked != null) throw new Exception($"Recipient {recipient.EmailAddress} has unsubscribed from {notification.Name}, send skipped");
+
+            return (notification, account);
+        }
+
+        private static (string subject, string body) GetEmail(
+            (Notification notification, Account account) request, IRecipient recipient, 
+            ILogger log, [CallerMemberName]string callerName = null)
+        {
+            log.Trace(callerName, request.account);
+            log.Trace(callerName, request.notification);
+            log.Trace(callerName, recipient);
             
             try
             {
@@ -52,8 +80,7 @@ namespace CoreNotify.Service
                     request.notification.Subject :
                     GetSubjectFromResponse(response);
 
-                return (subject, body);
-                
+                return (subject, body);                
             }
             catch (Exception exc)
             {
@@ -83,43 +110,23 @@ namespace CoreNotify.Service
             }
         }
 
-        private static (Notification notification, Account account) ValidateRequest(SqlConnection cn, IRecipient recipient, ILogger log)
+        private static void SendEmailAndLog(
+            (string subject, string body) email, IRecipient recipient, 
+            (Notification notification, Account account) request, string sendGridKey, 
+            ILogger log, [CallerMemberName]string callerName = null)
         {
-            log.LogTrace($"ValidateRequest: {recipient}");
-
-            var notification = cn.GetWhere<Notification>(new { key = recipient.NotificationKey });
-            if (notification == null)
-            {
-                throw new Exception($"Notification key {recipient.NotificationKey} not found.");                
-            }
-
-            var account = cn.Get<Account>(notification.AccountId);
-            if (account.RenewalDate < DateTime.Now)
-            {
-                throw new Exception($"Account {account.Name} expired on {account.RenewalDate}");                
-            }
-
-            var blocked = cn.GetWhere<Unsubscribe>(new { email = recipient.Email, notificationId = recipient.NotificationKey });
-            if (blocked != null) throw new Exception($"Recipient {recipient.Email} has unsubscribed from {notification.Name}, send skipped");
-
-            return (notification, account);
-        }
-
-        private static void SendEmailAndLog((string subject, string body) email, IRecipient recipient, (Notification notification, Account account) request, string sendGridKey, ILogger log)
-        {
-            log.LogTrace("SendEmailAndLog ");
+            log.Trace(callerName, recipient);
 
             var sendGridClient = new SendGridClient(request.account.SendGridApiKey ?? sendGridKey);
 
             var message = MailHelper.CreateSingleEmail(
                 new EmailAddress(request.notification.SenderEmail),
-                new EmailAddress(recipient.Email), 
+                new EmailAddress(recipient.EmailAddress), 
                 email.subject,
                 null,
                 email.body);
 
             sendGridClient.SendEmailAsync(message).Wait();
         }
-
     }
 }
