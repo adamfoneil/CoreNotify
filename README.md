@@ -1,0 +1,7 @@
+CoreNotify is a service for sending scheduled and on-demand email notifications from .NET Core applications. Emails are built from HTML views, so your notifications are as personalized and detailed as necessary, yet as easy to make as any other HTML content in your application. You focus on your email content and recipients, while CoreNotify handles the scheduling, delivery, opt-out, and bounce tracking.
+
+# How it Works
+- You create an account at corenotify.dev and note [AuthorizationKey](https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.Database/Account.cs#L28) you receive. This will go in your application configuration.
+- Create MVC views or Razor pages that you want to send as email. The views you create will become the content of email messages.
+- Create Json endpoints that return a list of recipients for each email. Each recipient implements [IRecipient](https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.Shared/Interfaces/IRecipient.cs). CoreNotify can send emails one at a time to specific recipients, but it becomes more powerful when you send in bulk on a schedule.
+- At corenotify.dev, create a **Notification** for each kind of email you want to send. You specify, among other things, the Cronjob Schedule along with the Content and Recipient endpoints. See [Notification](https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.Database/Notification.cs) model.
