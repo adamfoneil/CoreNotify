@@ -19,9 +19,9 @@ namespace CoreNotify.TestApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var validationKey = Configuration["CoreNotify:ValidationKey"];
-
             services.AddRazorPages();
+
+            var validationKey = Configuration["CoreNotify:AuthorizationKey"];            
             services.AddMvcCore(setup => setup.AddCoreNotifyAuthorization(validationKey));
         }
 

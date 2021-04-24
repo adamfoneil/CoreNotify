@@ -42,6 +42,7 @@ namespace Testing.Service
                 Name = "sample",
                 PlanId = 1,
                 AuthorizationKey = "sample-auth-key",
+                RenewalDate = DateTime.Today.AddDays(30),
                 CreatedBy = "test",
                 DateCreated = DateTime.Now
             };
