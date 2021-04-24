@@ -68,7 +68,7 @@ namespace CoreNotify.Service
             {
                 var builder = new UriBuilder(request.notification.ContentEndpoint);
                 builder.AddQueryParameters(recipient.Parameters);
-                builder.AddQueryParameter("key", request.account.ValidationKey);
+                builder.AddQueryParameter(Notification.QueryStringKey, request.account.ValidationKey);
 
                 string contentUrl = builder.Uri.AbsoluteUri;
                 var response = client.GetAsync(contentUrl).Result;

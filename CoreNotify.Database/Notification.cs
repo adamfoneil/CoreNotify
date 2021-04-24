@@ -62,5 +62,6 @@ namespace CoreNotify.Database
         public bool IsActive { get; set; } = true;
 
         public const string SubjectHeader = "EmailSubject";
+        public const string QueryStringKey = "corenotify-key";
     }
 }
