@@ -1,14 +1,18 @@
 ﻿using AO.Models;
-using AO.Models.Interfaces;
 using CoreNotify.Database.Conventions;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
-using System.Threading.Tasks;
 
 namespace CoreNotify.Database
 {
+    public enum SubjectType
+    {
+        Static,
+        Dynamic
+    }
+
     [UniqueConstraint(nameof(Key))]
-    public class Notification : BaseTable, IValidate
+    public class Notification : BaseTable
     {
         [Key]
         [References(typeof(Account))]
@@ -22,17 +26,20 @@ namespace CoreNotify.Database
         [Required]
         public string SenderEmail { get; set;  }
 
+        /// <summary>
+        /// static subject line text (if null, then an "EmailSubject" header is expected from ContentEndpoint)
+        /// </summary>
         [MaxLength(255)]        
         public string Subject { get; set; }
 
-        [MaxLength(255)]
-        public string SubjectEndpoint { get; set; }
-
+        /// <summary>
+        /// cron job expression
+        /// </summary>
         [MaxLength(20)]
-        public string Schedule { get; set; } // cron job expression
+        public string Schedule { get; set; }
 
         /// <summary>
-        /// where do we get the recipients for this email?
+        /// where do we get the recipients for this email? Called during cronjob trigger
         /// </summary>
         [Required]
         [MaxLength(255)]
@@ -45,22 +52,14 @@ namespace CoreNotify.Database
         [MaxLength(255)]
         public string ContentEndpoint { get; set; }
 
+        /// <summary>
+        /// unique identifier used to query this during execution
+        /// </summary>
         [Required]
-        [MaxLength(50)]
+        [MaxLength(255)]
         public string Key { get; set; }
 
         public bool IsActive { get; set; } = true;
-
-        public ValidateResult Validate()
-        {
-            if (string.IsNullOrWhiteSpace(Subject) && string.IsNullOrWhiteSpace(SubjectEndpoint))
-            {
-                return ValidateResult.Failed("Must provide either Subject or SubjectEndpoint");
-            }
-
-            return ValidateResult.Ok();
-        }
-
-        public async Task<ValidateResult> ValidateAsync(IDbConnection connection, IDbTransaction txn = null) => await Task.FromResult(Validate());        
+        
     }
 }

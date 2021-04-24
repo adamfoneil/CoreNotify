@@ -8,8 +8,11 @@ using Microsoft.Extensions.Logging;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text.Json;
 
 namespace CoreNotify.Service
@@ -20,26 +23,14 @@ namespace CoreNotify.Service
 
         public static void ExecuteSend(string sendGridKey, Recipient recipient, SqlConnection connection, ILogger log)
         {          
-            var request = ValidateRequest(connection, recipient, log);
+            var request = ValidateRequest(connection, recipient, log);           
 
-            var subject = (!string.IsNullOrWhiteSpace(request.notification.SubjectEndpoint)) ?
-                GetSubject(request.notification.SubjectEndpoint, recipient, log) :
-                request.notification.Subject;
+            var email = GetContent(request, recipient, log);
 
-            var html = GetContent(request, recipient, log);
+            SendEmailAndLog(email, recipient, request, sendGridKey, log);
+        }               
 
-            SendEmailAndLog(html, recipient, request, sendGridKey, log);
-        }
-
-        private static string GetSubject(string subjectEndpoint, Recipient recipient, ILogger log)
-        {
-            log.LogTrace($"GetSubject: {subjectEndpoint}");
-            log.LogTrace($"GetSubject: {JsonSerializer.Serialize(recipient)}");
-
-            throw new NotImplementedException();
-        }
-
-        private static string GetContent((Notification notification, Account account) request, IRecipient recipient, ILogger log)
+        private static (string subject, string body) GetContent((Notification notification, Account account) request, IRecipient recipient, ILogger log)
         {            
             log.LogTrace($"GetContent account: {JsonSerializer.Serialize(request.account)}");
             log.LogTrace($"GetContent notfication: {JsonSerializer.Serialize(request.notification)}");
@@ -54,14 +45,41 @@ namespace CoreNotify.Service
                 string contentUrl = builder.Uri.AbsoluteUri;
                 var response = client.GetAsync(contentUrl).Result;
                 HttpStatusCode statusCode = response.StatusCode;
-                response.EnsureSuccessStatusCode();
+                response.EnsureSuccessStatusCode();                
 
-                return response.Content.ReadAsStringAsync().Result;
+                string body = response.Content.ReadAsStringAsync().Result;
+                string subject = (!string.IsNullOrWhiteSpace(request.notification.Subject)) ?
+                    request.notification.Subject :
+                    GetSubjectFromResponse(response);
+
+                return (subject, body);
+                
             }
             catch (Exception exc)
             {
                 log.LogError(exc, $"GetContent error: {exc.Message}");
                 throw;
+            }
+
+            string GetSubjectFromResponse(HttpResponseMessage response)
+            {
+                const string header = "EmailSubject";
+
+                var collections = new Func<HttpResponseMessage, HttpResponseHeaders>[]
+                {
+                    (response) => response.Headers,
+                    (response) => response.TrailingHeaders
+                };
+
+                foreach (var collection in collections)
+                {
+                    if (collection.Invoke(response).TryGetValues(header, out IEnumerable<string> values))
+                    {
+                        return values.First();
+                    }
+                }
+
+                throw new Exception($"Expected header {header} not found.");
             }
         }
 
@@ -87,7 +105,7 @@ namespace CoreNotify.Service
             return (notification, account);
         }
 
-        private static void SendEmailAndLog(string html, IRecipient recipient, (Notification notification, Account account) request, string sendGridKey, ILogger log)
+        private static void SendEmailAndLog((string subject, string body) email, IRecipient recipient, (Notification notification, Account account) request, string sendGridKey, ILogger log)
         {
             log.LogTrace("SendEmailAndLog ");
 
@@ -96,9 +114,9 @@ namespace CoreNotify.Service
             var message = MailHelper.CreateSingleEmail(
                 new EmailAddress(request.notification.SenderEmail),
                 new EmailAddress(recipient.Email), 
-                request.notification.Subject,
+                email.subject,
                 null,
-                html);
+                email.body);
 
             sendGridClient.SendEmailAsync(message).Wait();
         }
