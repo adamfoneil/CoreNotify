@@ -90,8 +90,6 @@ namespace CoreNotify.Service
 
             string GetSubjectFromResponse(HttpResponseMessage response)
             {
-                const string header = "EmailSubject";
-
                 var collections = new Func<HttpResponseMessage, HttpResponseHeaders>[]
                 {
                     (response) => response.Headers,
@@ -100,7 +98,7 @@ namespace CoreNotify.Service
 
                 foreach (var collection in collections)
                 {
-                    if (collection.Invoke(response).TryGetValues(header, out IEnumerable<string> values))
+                    if (collection.Invoke(response).TryGetValues(Notification.SubjectHeader, out IEnumerable<string> values))
                     {
                         return values.First();
                     }

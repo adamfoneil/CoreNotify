@@ -60,6 +60,7 @@ namespace CoreNotify.Database
         public string Key { get; set; }
 
         public bool IsActive { get; set; } = true;
-        
+
+        public const string SubjectHeader = "EmailSubject";
     }
 }
