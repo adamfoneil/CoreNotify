@@ -8,6 +8,8 @@ namespace CoreNotify.Service.Extensions
     {
         public static void AddQueryParameters(this UriBuilder uriBuilder, IDictionary<string, object> parameters)
         {
+            if (parameters == null) return;
+
             const char paramSeparator = '&';
             const char keyValueSepartor = '=';
 

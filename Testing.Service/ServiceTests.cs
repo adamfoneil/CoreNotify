@@ -1,9 +1,13 @@
 using CoreNotify.Database;
+using CoreNotify.Service;
+using CoreNotify.Shared;
 using Dapper.CX.SqlServer.Extensions.Int;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using SqlServer.LocalDb;
 using System;
+using Testing.Service.Helpers;
 
 namespace Testing.Service
 {
@@ -18,19 +22,26 @@ namespace Testing.Service
         {
             using (var cn = LocalDb.GetConnection("CoreNotify"))
             {
-                CreateSampleAccountAndNotification(cn);
+                CreateSampleObjects(cn);
 
+                var logger = LoggerFactory.Create(config => config.AddConsole()).CreateLogger("CoreNotify");                
 
+                var sendGridKey = ConfigHelper.Config["SendGrid:ApiKey"];
+                Functions.ExecuteSend(sendGridKey, new Recipient()
+                {
+                    EmailAddress = "adamosoftware@gmail.com",
+                    NotificationKey = "sample-notification"                    
+                }, cn, logger);
             }
         }
 
-        private void CreateSampleAccountAndNotification(SqlConnection cn)
+        private void CreateSampleObjects(SqlConnection cn)
         {
             var account = new Account()
             {
                 Name = "sample",
                 PlanId = 1,
-                ValidationKey = "hello",
+                AuthorizationKey = "sample-auth-key",
                 CreatedBy = "test",
                 DateCreated = DateTime.Now
             };
@@ -44,7 +55,7 @@ namespace Testing.Service
                 SenderEmail = "adamosoftware@gmail.com",
                 RecipientEndpoint = "https://localhost:44349/Email/Recipients",
                 ContentEndpoint = "https://localhost:44349/Email/Content",
-                Key = "sample-key",
+                Key = "sample-notification",
                 CreatedBy = "test",
                 DateCreated = DateTime.Now
             };

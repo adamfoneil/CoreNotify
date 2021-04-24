@@ -50,7 +50,7 @@ namespace CoreNotify.Service
                 throw new Exception($"Account {account.Name} expired on {account.RenewalDate}");
             }
 
-            var blocked = cn.GetWhere<Unsubscribe>(new { email = recipient.EmailAddress, notificationId = recipient.NotificationKey });
+            var blocked = cn.GetWhere<Unsubscribe>(new { email = recipient.EmailAddress, notificationId = notification.Id });
             if (blocked != null) throw new Exception($"Recipient {recipient.EmailAddress} has unsubscribed from {notification.Name}, send skipped");
 
             return (notification, account);
@@ -68,7 +68,7 @@ namespace CoreNotify.Service
             {
                 var builder = new UriBuilder(request.notification.ContentEndpoint);
                 builder.AddQueryParameters(recipient.Parameters);
-                builder.AddQueryParameter(Notification.QueryStringKey, request.account.ValidationKey);
+                builder.AddQueryParameter(Notification.QueryStringKey, request.account.AuthorizationKey);
 
                 string contentUrl = builder.Uri.AbsoluteUri;
                 var response = client.GetAsync(contentUrl).Result;

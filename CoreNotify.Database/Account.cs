@@ -25,7 +25,7 @@ namespace CoreNotify.Database
         /// </summary>
         [MaxLength(50)]
         [Required]
-        public string ValidationKey { get; set; }
+        public string AuthorizationKey { get; set; }
 
         /// <summary>
         /// BYO SendGrid key if you want

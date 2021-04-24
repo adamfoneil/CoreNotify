@@ -14,7 +14,7 @@ namespace CoreNotify.Service
         {
             if (account.PlanId == 0) account.PlanId = (int)Plans.Monthly;
             account.RenewalDate = DateTime.Today.AddDays(30);
-            if (string.IsNullOrEmpty(account.ValidationKey)) account.ValidationKey = StringId.New(16, StringIdRanges.Upper | StringIdRanges.Lower | StringIdRanges.Numeric);
+            if (string.IsNullOrEmpty(account.AuthorizationKey)) account.AuthorizationKey = StringId.New(16, StringIdRanges.Upper | StringIdRanges.Lower | StringIdRanges.Numeric);
 
             var user = new SystemUser("system");
 
