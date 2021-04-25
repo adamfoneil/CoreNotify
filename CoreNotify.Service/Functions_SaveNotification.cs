@@ -12,7 +12,7 @@ namespace CoreNotify.Service
         /// <summary>
         /// used to create (post) or update (put) a Notification object
         /// </summary>
-        public static async Task SaveNotificationAsync(
+        public static async Task<int> SaveNotificationAsync(
             SqlConnection connection, string accountName, string accountKey, Notification notification, 
             ILogger logger)
         {
@@ -24,7 +24,7 @@ namespace CoreNotify.Service
             var user = new SystemUser(account.Name);
 
             // I use merge instead of save so the Notification.Name takes precedence over the Id
-            await connection.MergeAsync(notification, user: user);
+            return await connection.MergeAsync(notification, user: user);
         }
     }
 }

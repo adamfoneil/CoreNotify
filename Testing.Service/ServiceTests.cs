@@ -16,7 +16,7 @@ namespace Testing.Service
     {
         const string AccountName = "sample";
         const string AccountKey = "sample-account-key";
-        const string NotificationName = "sample";
+        const string NotificationName = "email1";
 
         /// <summary>
         /// make sure TestApp is running (ctrl+F5) first
@@ -49,7 +49,13 @@ namespace Testing.Service
                 CreateSampleObjects(cn);
                 var logger = LoggerFactory.Create(config => config.AddConsole()).CreateLogger("CoreNotify");
 
-                //Functions.SaveNotificationAsync(cn, )
+                var notification = SampleNotification(0);
+
+                var id = Functions.SaveNotificationAsync(cn, AccountName, AccountKey, notification, logger).Result;
+
+                var testRow = cn.Get<Notification>(id);
+                Assert.IsTrue(testRow.Name.Equals(NotificationName));
+                Assert.IsTrue(testRow.AccountId != 0);
             }
         }
 
@@ -75,19 +81,23 @@ namespace Testing.Service
                 CreatedBy = "test",
                 DateCreated = DateTime.Now
             }).Wait();
+            Notification notification = SampleNotification(id);
 
-            var notification = new Notification()
+            cn.MergeAsync(notification).Wait();
+        }
+
+        private static Notification SampleNotification(int accountId)
+        {
+            return new Notification()
             {
-                AccountId = id,
+                AccountId = accountId,
                 Name = NotificationName,
                 SenderEmail = "adamosoftware@gmail.com",
                 RecipientEndpoint = "https://localhost:44349/Email/Recipients",
-                ContentEndpoint = "https://localhost:44349/Email/Content",                
+                ContentEndpoint = "https://localhost:44349/Email/Content",
                 CreatedBy = "test",
                 DateCreated = DateTime.Now
             };
-
-            cn.MergeAsync(notification).Wait();
         }
     }
 }
