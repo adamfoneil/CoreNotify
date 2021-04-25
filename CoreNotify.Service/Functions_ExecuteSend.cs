@@ -1,6 +1,5 @@
 ﻿using CoreNotify.Database;
 using CoreNotify.Service.Extensions;
-using CoreNotify.Shared;
 using CoreNotify.Shared.Interfaces;
 using Dapper.CX.SqlServer.Extensions.Int;
 using Microsoft.Data.SqlClient;
@@ -22,53 +21,45 @@ namespace CoreNotify.Service
         static HttpClient client = new HttpClient();
 
         public static void ExecuteSend(
-            string sendGridKey, IRecipient recipient, SqlConnection connection, 
-            ILogger log)
-        {          
-            var request = ValidateRequest(connection, recipient, log);           
+            SqlConnection connection, ISendRequest request, ILogger log)
+        {
+            var account = AuthenticateAsync(connection, request.AccountName, request.AccountKey, log).Result;
 
-            var email = GetEmail(request, recipient, log);
+            var notification = GetNotification(connection, account.Id, request.NotificationName, log);
 
-            SendEmailAndLog(email, recipient, request, sendGridKey, log);
+            var email = GetEmail(account, notification, request, log);
+
+            SendEmailAndLog(email, request, account, notification, log);
         }
 
-        private static (Notification notification, Account account) ValidateRequest(
-            SqlConnection cn, IRecipient recipient,
-            ILogger log, [CallerMemberName]string callerName = null)
+        private static Notification GetNotification(
+            SqlConnection connection, int accountId, string notificationName,
+            ILogger log, [CallerMemberName] string callerName = null)
         {
-            log.Trace(callerName, recipient);
+            log.Trace(callerName, new { accountId, notificationName });
 
-            var notification = cn.GetWhere<Notification>(new { key = recipient.NotificationKey });
+            var notification = connection.GetWhere<Notification>(new { name = notificationName, accountId });
             if (notification == null)
             {
-                throw new Exception($"Notification key {recipient.NotificationKey} not found.");
+                throw new Exception($"Notification key {notificationName} not found.");
             }
 
-            var account = cn.Get<Account>(notification.AccountId);
-            if (account.RenewalDate < DateTime.Now)
-            {
-                throw new Exception($"Account {account.Name} expired on {account.RenewalDate}");
-            }
-
-            var blocked = cn.GetWhere<Unsubscribe>(new { email = recipient.EmailAddress, notificationId = notification.Id });
-            if (blocked != null) throw new Exception($"Recipient {recipient.EmailAddress} has unsubscribed from {notification.Name}, send skipped");
-
-            return (notification, account);
+            return notification;
         }
-
+      
         private static (string subject, string body) GetEmail(
-            (Notification notification, Account account) request, IRecipient recipient, 
+            Account account, Notification notification, ISendRequest request, 
             ILogger log, [CallerMemberName]string callerName = null)
         {
-            log.Trace(callerName, request.account);
-            log.Trace(callerName, request.notification);
-            log.Trace(callerName, recipient);
+            log.Trace(callerName, new { account.Name });
+            log.Trace(callerName, new { accountId = account.Id, notification.Name, notification.Id });
+            log.Trace(callerName, request);
             
             try
             {
-                var builder = new UriBuilder(request.notification.ContentEndpoint);
-                builder.AddQueryParameters(recipient.Parameters);
-                builder.AddQueryParameter(Notification.QueryStringKey, request.account.AuthorizationKey);
+                var builder = new UriBuilder(notification.ContentEndpoint);
+                builder.AddQueryParameters(request.Parameters);
+                builder.AddQueryParameter(Notification.QueryStringKey, account.AuthorizationKey);
 
                 string contentUrl = builder.Uri.AbsoluteUri;
                 var response = client.GetAsync(contentUrl).Result;
@@ -76,8 +67,8 @@ namespace CoreNotify.Service
                 response.EnsureSuccessStatusCode();                
 
                 string body = response.Content.ReadAsStringAsync().Result;
-                string subject = (!string.IsNullOrWhiteSpace(request.notification.Subject)) ?
-                    request.notification.Subject :
+                string subject = (!string.IsNullOrWhiteSpace(notification.Subject)) ?
+                    notification.Subject :
                     GetSubjectFromResponse(response);
 
                 return (subject, body);                
@@ -109,22 +100,25 @@ namespace CoreNotify.Service
         }
 
         private static void SendEmailAndLog(
-            (string subject, string body) email, IRecipient recipient, 
-            (Notification notification, Account account) request, string sendGridKey, 
-            ILogger log, [CallerMemberName]string callerName = null)
+            (string subject, string body) email, ISendRequest request,
+            Account account, Notification notification, ILogger log,
+            [CallerMemberName] string callerName = null)
         {
-            log.Trace(callerName, recipient);
+            log.Trace(callerName, account);
+            log.Trace(callerName, notification);
 
-            var sendGridClient = new SendGridClient(request.account.SendGridApiKey ?? sendGridKey);
+            var sendGridClient = new SendGridClient(account.SendGridApiKey);
 
             var message = MailHelper.CreateSingleEmail(
-                new EmailAddress(request.notification.SenderEmail),
-                new EmailAddress(recipient.EmailAddress), 
+                new EmailAddress(notification.SenderEmail),
+                new EmailAddress(request.EmailAddress), 
                 email.subject,
                 null,
                 email.body);
 
             sendGridClient.SendEmailAsync(message).Wait();
+
+            log.Info(callerName, new { notification, request });
         }
     }
 }

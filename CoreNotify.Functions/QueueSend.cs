@@ -26,7 +26,7 @@ namespace CoreNotify.Functions
                 var connectionStr = context.GetConfig()["StorageAccount"];
                 var queueClient = new QueueClient(connectionStr, ExecuteSend.QueueName);
 
-                var body = await request.DeserializeJsonAsync<Recipient>();
+                var body = await request.DeserializeJsonAsync<SendRequest>();
                 var receipt = await queueClient.SendAsync(body.json);
 
                 return new OkObjectResult(receipt);

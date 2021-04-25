@@ -14,6 +14,10 @@ namespace Testing.Service
     [TestClass]
     public class ServiceTests
     {
+        const string AccountName = "sample";
+        const string AccountKey = "sample-account-key";
+        const string NotificationName = "sample";
+
         /// <summary>
         /// make sure TestApp is running (ctrl+F5) first
         /// </summary>
@@ -26,12 +30,26 @@ namespace Testing.Service
 
                 var logger = LoggerFactory.Create(config => config.AddConsole()).CreateLogger("CoreNotify");                
 
-                var sendGridKey = ConfigHelper.Config["SendGrid:ApiKey"];
-                Functions.ExecuteSend(sendGridKey, new Recipient()
+                var sendGridKey = ConfigHelper.GetValue["SendGrid:ApiKey"];
+                Functions.ExecuteSend(cn, new SendRequest()
                 {
+                    AccountName = AccountName,
+                    AccountKey = AccountKey,
                     EmailAddress = "adamosoftware@gmail.com",
-                    NotificationKey = "sample-notification"                    
-                }, cn, logger);
+                    NotificationName = NotificationName
+                }, logger);
+            }
+        }
+
+        [TestMethod]
+        public void SaveNotification()
+        {
+            using (var cn = LocalDb.GetConnection("CoreNotify"))
+            {
+                CreateSampleObjects(cn);
+                var logger = LoggerFactory.Create(config => config.AddConsole()).CreateLogger("CoreNotify");
+
+                //Functions.SaveNotificationAsync(cn, )
             }
         }
 
@@ -39,24 +57,32 @@ namespace Testing.Service
         {
             var account = new Account()
             {
-                Name = "sample",
+                Name = AccountName,
                 PlanId = 1,
                 AuthorizationKey = "sample-auth-key",
                 RenewalDate = DateTime.Today.AddDays(30),
+                SendGridApiKey = ConfigHelper.GetValue["SendGrid:ApiKey"],
                 CreatedBy = "test",
                 DateCreated = DateTime.Now
             };
 
             var id = cn.MergeAsync(account).Result;
 
+            cn.MergeAsync(new AccountKey()
+            {
+                AccountId = id,
+                Key = AccountKey,
+                CreatedBy = "test",
+                DateCreated = DateTime.Now
+            }).Wait();
+
             var notification = new Notification()
             {
                 AccountId = id,
-                Name = "sample",
+                Name = NotificationName,
                 SenderEmail = "adamosoftware@gmail.com",
                 RecipientEndpoint = "https://localhost:44349/Email/Recipients",
-                ContentEndpoint = "https://localhost:44349/Email/Content",
-                Key = "sample-notification",
+                ContentEndpoint = "https://localhost:44349/Email/Content",                
                 CreatedBy = "test",
                 DateCreated = DateTime.Now
             };

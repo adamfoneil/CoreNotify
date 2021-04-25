@@ -4,14 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Data;
 
 namespace CoreNotify.Database
-{
-    public enum SubjectType
-    {
-        Static,
-        Dynamic
-    }
-
-    [UniqueConstraint(nameof(Key))]
+{    
     public class Notification : BaseTable
     {
         [Key]
@@ -51,13 +44,6 @@ namespace CoreNotify.Database
         [Required]
         [MaxLength(255)]
         public string ContentEndpoint { get; set; }
-
-        /// <summary>
-        /// unique identifier used to query this during execution
-        /// </summary>
-        [Required]
-        [MaxLength(255)]
-        public string Key { get; set; }
 
         public bool IsActive { get; set; } = true;
 

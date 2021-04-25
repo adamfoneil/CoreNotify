@@ -28,9 +28,10 @@ namespace CoreNotify.Database
         public string AuthorizationKey { get; set; }
 
         /// <summary>
-        /// BYO SendGrid key if you want
+        /// must BYO SendGrid key
         /// </summary>
         [MaxLength(255)]
+        [Required]
         public string SendGridApiKey { get; set; }
 
         /// <summary>

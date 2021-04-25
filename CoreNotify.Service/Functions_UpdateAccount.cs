@@ -9,7 +9,8 @@ namespace CoreNotify.Service
 {
     public static partial class Functions
     {
-        public static async Task UpdateAccount(SqlConnection connection, string accountName, string accountKey, Account updateAccount, ILogger logger)
+        public static async Task UpdateAccount(
+            SqlConnection connection, string accountName, string accountKey, Account updateAccount, ILogger logger)
         {
             var account = await AuthenticateAsync(connection, accountName, accountKey, logger);
 
@@ -33,7 +34,7 @@ namespace CoreNotify.Service
             // can't change the renewal date except by renewing (set here to prevent user from changing)
             updateAccount.RenewalDate = account.RenewalDate;
 
-            var user = new SystemUser("system");
+            var user = new SystemUser(account.Name);
             await connection.SaveAsync(updateAccount, ct, user: user);
         }
     }
