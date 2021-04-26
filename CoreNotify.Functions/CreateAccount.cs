@@ -25,7 +25,7 @@ namespace CoreNotify.Functions
 
                 using (var cn = context.GetConnection())
                 {
-                    account = await Service.Functions.CreateAccountAsync(account, cn);
+                    account = await Service.Functions.CreateAccountAsync(cn, account);
                 }
 
                 return new OkObjectResult(account);

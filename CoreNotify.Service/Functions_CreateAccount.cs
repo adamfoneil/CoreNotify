@@ -10,7 +10,7 @@ namespace CoreNotify.Service
 {
     public static partial class Functions
     {
-        public static async Task<Account> CreateAccountAsync(Account account, SqlConnection connection)
+        public static async Task<Account> CreateAccountAsync(SqlConnection connection, Account account)
         {
             if (account.PlanId == 0) account.PlanId = (int)Plans.Monthly;
             account.RenewalDate = DateTime.Today.AddDays(30);

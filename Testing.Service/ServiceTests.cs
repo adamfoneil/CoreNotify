@@ -5,6 +5,7 @@ using Dapper.CX.SqlServer.Extensions.Int;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using SetCronJob.ApiClient;
 using SqlServer.LocalDb;
 using System;
 using Testing.Service.Helpers;
@@ -48,10 +49,14 @@ namespace Testing.Service
             {
                 CreateSampleObjects(cn);
                 var logger = LoggerFactory.Create(config => config.AddConsole()).CreateLogger("CoreNotify");
+                var cronJobClient = new Client(ConfigHelper.GetValue["SetCronJob:Token"]);
 
                 var notification = SampleNotification(0);
 
-                var id = Functions.SaveNotificationAsync(cn, AccountName, AccountKey, notification, logger).Result;
+                var id = Functions.SaveNotificationAsync(
+                    cn, AccountName, AccountKey, notification, 
+                    cronJobClient, "https://aosoftware.ngrok.io/", ConfigHelper.GetValue["CallbackFunctionCode"], 
+                    logger).Result;
 
                 var testRow = cn.Get<Notification>(id);
                 Assert.IsTrue(testRow.Name.Equals(NotificationName));

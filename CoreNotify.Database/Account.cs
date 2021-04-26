@@ -34,6 +34,9 @@ namespace CoreNotify.Database
         [Required]
         public string SendGridApiKey { get; set; }
 
+        [MaxLength(255)]
+        public string TimeZone { get; set; }
+
         /// <summary>
         /// used during initial account creation only, not populated on gets because there can be many
         /// </summary>

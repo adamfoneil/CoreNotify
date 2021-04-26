@@ -45,9 +45,18 @@ namespace CoreNotify.Database
         [MaxLength(255)]
         public string ContentEndpoint { get; set; }
 
+        public int? CronJobId { get; set; }
+
+        /// <summary>
+        /// any error message from cron job API
+        /// </summary>
+        public string CronJobMessage { get; set; }
+
         public bool IsActive { get; set; } = true;
 
         public const string SubjectHeader = "EmailSubject";
         public const string QueryStringKey = "corenotify-key";
+
+        public bool IsCronJobEnabled => IsActive && !string.IsNullOrWhiteSpace(Schedule);
     }
 }
