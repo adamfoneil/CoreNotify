@@ -26,6 +26,23 @@ namespace CoreNotify.Service
             // notification must be in your account
             notification.AccountId = account.Id;            
 
+            
+            // update cron job in backend service
+            await UpdateCronJobAsync(account, notification, cronJobClient, baseUrl, callbackFunctionCode);
+
+            var user = new SystemUser(account.Name);
+
+            // set the Id to 0 and merge so that you can't overwrite someone else's record
+            notification.Id = 0;
+            var notificationId = await connection.MergeAsync(notification, user: user);
+
+            return notificationId;
+        }
+
+        private static async Task UpdateCronJobAsync(
+            Account account, Notification notification, ISetCronJobClient cronJobClient, 
+            string baseUrl, string callbackFunctionCode)
+        {
             var cronJob = new CronJob()
             {
                 Id = notification.CronJobId ?? 0,
@@ -38,20 +55,6 @@ namespace CoreNotify.Service
                 Url = baseUrl + $"api/CronJobExecute?code={callbackFunctionCode}&accountId={account.Id}&name={notification.Name}"
             };
 
-            // update cron job in backend service
-            await UpdateCronJobAsync(notification, cronJobClient, cronJob);
-
-            var user = new SystemUser(account.Name);
-
-            // set the Id to 0 and merge so that you can't overwrite someone else's record
-            notification.Id = 0;
-            var notificationId = await connection.MergeAsync(notification, user: user);
-
-            return notificationId;
-        }
-
-        private static async Task UpdateCronJobAsync(Notification notification, ISetCronJobClient cronJobClient, CronJob cronJob)
-        {
             string errorContext = null;
             try
             {
