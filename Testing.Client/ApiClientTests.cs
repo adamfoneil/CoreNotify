@@ -26,7 +26,8 @@ namespace Testing
             var client = new CoreNotifyClient("http://localhost:7071/");
             var result = client.CreateAccountAsync(new Account()
             {
-                Name = "hello"
+                Name = "hello",
+                SendGridApiKey = "whatever"
             }).Result;
 
             Assert.IsTrue(result != null);
@@ -38,7 +39,8 @@ namespace Testing
             var client = new CoreNotifyClient("http://localhost:7071/");
             var result = client.CreateAccountAsync(new Account()
             {
-                Name = "sample-" + StringId.New(4, StringIdRanges.Numeric | StringIdRanges.Upper)
+                Name = "sample-" + StringId.New(4, StringIdRanges.Numeric | StringIdRanges.Upper),
+                SendGridApiKey = "whatever"
             }).Result;
 
             client = new CoreNotifyClient("http://localhost:7071/", result.Name, result.Key);

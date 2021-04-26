@@ -17,11 +17,11 @@ namespace CoreNotify.Functions
         {
             try
             {
-                if (JsonHelper.TryParse(message, out SendRequest recipient))
+                if (JsonHelper.TryParse(message, out SendRequest request))
                 {
                     using (var cn = context.GetConnection())
                     {
-                        Service.Functions.ExecuteSend(cn, recipient, log);
+                        Service.Functions.ExecuteSend(cn, request, log);
                     }
                 }
             }
