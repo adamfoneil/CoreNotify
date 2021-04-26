@@ -61,6 +61,7 @@ namespace Testing.Service
                 var testRow = cn.Get<Notification>(id);
                 Assert.IsTrue(testRow.Name.Equals(NotificationName));
                 Assert.IsTrue(testRow.AccountId != 0);
+                Assert.IsTrue(testRow.CronJobId.HasValue);
             }
         }
 
@@ -100,6 +101,7 @@ namespace Testing.Service
                 SenderEmail = "adamosoftware@gmail.com",
                 RecipientEndpoint = "https://localhost:44349/Email/Recipients",
                 ContentEndpoint = "https://localhost:44349/Email/Content",
+                Schedule = "0 6 * * *",
                 CreatedBy = "test",
                 DateCreated = DateTime.Now
             };

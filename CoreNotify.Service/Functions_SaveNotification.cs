@@ -25,10 +25,9 @@ namespace CoreNotify.Service
             
             // notification must be in your account
             notification.AccountId = account.Id;            
-
             
             // update cron job in backend service
-            await UpdateCronJobAsync(account, notification, cronJobClient, baseUrl, callbackFunctionCode);
+            await UpdateCronJobAsync(account, notification, cronJobClient, baseUrl, callbackFunctionCode, logger);
 
             var user = new SystemUser(account.Name);
 
@@ -41,14 +40,13 @@ namespace CoreNotify.Service
 
         private static async Task UpdateCronJobAsync(
             Account account, Notification notification, ISetCronJobClient cronJobClient, 
-            string baseUrl, string callbackFunctionCode)
+            string baseUrl, string callbackFunctionCode, ILogger logger)
         {
             var cronJob = new CronJob()
             {
                 Id = notification.CronJobId ?? 0,
                 Expression = notification.Schedule,
-                Name = $"{account.Name}.{notification.Name}",
-                Group = account.Name,
+                Name = $"{account.Name}.{notification.Name}",                
                 Status = (notification.IsActive) ? JobStatus.Active : JobStatus.Disabled,
                 TimeZone = account.TimeZone,
                 Method = "GET",
@@ -74,7 +72,9 @@ namespace CoreNotify.Service
             }
             catch (Exception exc)
             {
-                notification.CronJobMessage = exc.Message + $" while {errorContext}";
+                string message = exc.Message + $" while {errorContext}";
+                notification.CronJobMessage = message;
+                logger?.LogError(exc, message);
             }
         }
     }
