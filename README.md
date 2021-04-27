@@ -1,5 +1,7 @@
 CoreNotify is a service for sending scheduled and on-demand email notifications from .NET Core applications. Emails are built from HTML views, so your notifications are as personalized and detailed as necessary, yet as easy to make as any other HTML content in your application. You focus on your email content and recipients, while CoreNotify handles the scheduling and delivery. You must provide a SendGrid API key.
 
+Here's a [PowerPoint](https://1drv.ms/v/s!AvguHRnyJtWMmvg7VYYu2haLfLgfkg?e=tC2zAk) walkthrough.
+
 # How it Would Work
 - You create an account at corenotify.dev and note the [AuthorizationKey](https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.Database/Account.cs#L28) you receive. This will go in your application configuration. You must also provide a [SendGridApiKey](https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.Database/Account.cs#L35). There will also be a CLI for this.
 - In your application, add forthcoming NuGet package [CoreNotify.Client](https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.Client/CoreNotify.Client.csproj). Create MVC views or Razor pages that you want to send as email. The views you create will become the content of email messages. See [sample controller](https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.TestApp/Controllers/EmailController.cs) and [sample app startup](https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.TestApp/Startup.cs#L24-L25). This show how to secure your endpoints for use by CoreNotify.
