@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing.Service", "Testing.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.TestApp", "CoreNotify.TestApp\CoreNotify.TestApp.csproj", "{8B161E6B-5BEC-4D3C-9CBD-0A0FFA4D77C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.Blazor.Server", "CoreNotify.Blazor.Server\CoreNotify.Blazor.Server.csproj", "{8A630353-33FE-4EEE-9CA9-B6935931B3E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.Blazor.Server", "CoreNotify.Blazor.Server\CoreNotify.Blazor.Server.csproj", "{8A630353-33FE-4EEE-9CA9-B6935931B3E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
