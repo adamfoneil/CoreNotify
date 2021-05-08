@@ -2,8 +2,16 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>aspnet-CoreNotify.Blazor.Server-91D737CB-82DC-40CF-8EC7-D4FCA8B23FD5</UserSecretsId>
+    <UserSecretsId>aspnet-CoreNotify.Blazor.Server-5B20A913-E705-486A-91AE-F1B47A997802</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Styles\app.css" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Styles\app.css" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.5" />
@@ -11,7 +19,14 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.5" />
-    <PackageReference Include="MudBlazor" Version="5.0.8" />
   </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\css\" />
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="npm run buildcss" />
+  </Target>
 
 </Project>
