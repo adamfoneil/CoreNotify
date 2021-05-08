@@ -14,13 +14,18 @@ namespace CoreNotify.Blazor.Server.Components
         Annotation,
         Cog,
         ClipboardCheck,
-        Database
+        Database,
+        CheckCircle,
+        Bookmark
     }
 
+    /// <summary>
+    /// get the SVG details from here https://heroicons.com/
+    /// </summary>
     public partial class HeroIcon : ComponentBase
     {
         [Parameter]
-        public IconType IconType { get; set; }
+        public IconType Image { get; set; }
 
         private static Dictionary<IconType, IEnumerable<string>> Imagery => new Dictionary<IconType, IEnumerable<string>>()
         {
@@ -37,7 +42,9 @@ namespace CoreNotify.Blazor.Server.Components
                 "M15 12a3 3 0 11-6 0 3 3 0 016 0z"
             },
             [IconType.ClipboardCheck] = new string[] { "M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" },
-            [IconType.Database] = new string[] { "M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" }
+            [IconType.Database] = new string[] { "M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4" },
+            [IconType.CheckCircle] = new string[] { "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" },
+            [IconType.Bookmark] = new string[] { "M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" }
         };
     }
 }
