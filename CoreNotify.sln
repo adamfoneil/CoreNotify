@@ -23,8 +23,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.TestApp", "CoreN
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.Blazor.Tailwind", "CoreNotify.Blazor.Tailwind\CoreNotify.Blazor.Tailwind.csproj", "{FA504871-2397-4DB0-805D-CD950AE9F0D8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.Blazor.Server", "CoreNotify.Blazor.Server\CoreNotify.Blazor.Server.csproj", "{F15D56FC-2F0C-477F-934E-B86C90E76B33}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,10 +69,6 @@ Global
 		{FA504871-2397-4DB0-805D-CD950AE9F0D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FA504871-2397-4DB0-805D-CD950AE9F0D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FA504871-2397-4DB0-805D-CD950AE9F0D8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F15D56FC-2F0C-477F-934E-B86C90E76B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F15D56FC-2F0C-477F-934E-B86C90E76B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F15D56FC-2F0C-477F-934E-B86C90E76B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F15D56FC-2F0C-477F-934E-B86C90E76B33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
