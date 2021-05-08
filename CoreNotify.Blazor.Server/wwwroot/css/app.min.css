@@ -676,9 +676,19 @@ video {
   background-color: rgba(55, 48, 163, var(--tw-bg-opacity));
 }
 
+.bg-teal-700 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(15, 118, 110, var(--tw-bg-opacity));
+}
+
 .hover\:bg-indigo-600:hover {
   --tw-bg-opacity: 1;
   background-color: rgba(79, 70, 229, var(--tw-bg-opacity));
+}
+
+.hover\:bg-teal-600:hover {
+  --tw-bg-opacity: 1;
+  background-color: rgba(13, 148, 136, var(--tw-bg-opacity));
 }
 
 .bg-gradient-to-r {
@@ -1483,11 +1493,6 @@ video {
   color: rgba(224, 231, 255, var(--tw-text-opacity));
 }
 
-.text-indigo-300 {
-  --tw-text-opacity: 1;
-  color: rgba(165, 180, 252, var(--tw-text-opacity));
-}
-
 .text-indigo-500 {
   --tw-text-opacity: 1;
   color: rgba(99, 102, 241, var(--tw-text-opacity));
@@ -1496,6 +1501,11 @@ video {
 .text-red-500 {
   --tw-text-opacity: 1;
   color: rgba(244, 63, 94, var(--tw-text-opacity));
+}
+
+.text-teal-300 {
+  --tw-text-opacity: 1;
+  color: rgba(94, 234, 212, var(--tw-text-opacity));
 }
 
 .focus-within\:text-gray-600:focus-within {
