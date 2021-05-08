@@ -11,17 +11,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.Functions", "Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.Client", "CoreNotify.Client\CoreNotify.Client.csproj", "{B7CE055E-CDF2-41B4-AE88-5E2D2E45E851}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.Blazor", "CoreNotify.Blazor\CoreNotify.Blazor.csproj", "{FE1B14D5-5D0D-4932-A655-E927E5B1816A}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing.Client", "Testing.Client\Testing.Client.csproj", "{9A8622B0-C022-4DD3-AE50-F3554B8526D0}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing.Functions", "Testing.Functions\Testing.Functions.csproj", "{E4600607-3982-4A26-8543-D77714704763}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.Service", "CoreNotify.Service\CoreNotify.Service.csproj", "{CD0D181F-51E6-4303-A899-5735ADE6AB1B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing.Service", "Testing.Service\Testing.Service.csproj", "{7C9975EE-9EC0-4DC3-99C0-2FD1FCE710B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Testing.Service", "Testing.Service\Testing.Service.csproj", "{7C9975EE-9EC0-4DC3-99C0-2FD1FCE710B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.TestApp", "CoreNotify.TestApp\CoreNotify.TestApp.csproj", "{8B161E6B-5BEC-4D3C-9CBD-0A0FFA4D77C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.TestApp", "CoreNotify.TestApp\CoreNotify.TestApp.csproj", "{8B161E6B-5BEC-4D3C-9CBD-0A0FFA4D77C9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoreNotify.Blazor.Tailwind", "CoreNotify.Blazor.Tailwind\CoreNotify.Blazor.Tailwind.csproj", "{FA504871-2397-4DB0-805D-CD950AE9F0D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.Blazor.Server", "CoreNotify.Blazor.Server\CoreNotify.Blazor.Server.csproj", "{F15D56FC-2F0C-477F-934E-B86C90E76B33}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +47,6 @@ Global
 		{B7CE055E-CDF2-41B4-AE88-5E2D2E45E851}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7CE055E-CDF2-41B4-AE88-5E2D2E45E851}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7CE055E-CDF2-41B4-AE88-5E2D2E45E851}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FE1B14D5-5D0D-4932-A655-E927E5B1816A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FE1B14D5-5D0D-4932-A655-E927E5B1816A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FE1B14D5-5D0D-4932-A655-E927E5B1816A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FE1B14D5-5D0D-4932-A655-E927E5B1816A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9A8622B0-C022-4DD3-AE50-F3554B8526D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A8622B0-C022-4DD3-AE50-F3554B8526D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9A8622B0-C022-4DD3-AE50-F3554B8526D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -69,6 +67,14 @@ Global
 		{8B161E6B-5BEC-4D3C-9CBD-0A0FFA4D77C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B161E6B-5BEC-4D3C-9CBD-0A0FFA4D77C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B161E6B-5BEC-4D3C-9CBD-0A0FFA4D77C9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA504871-2397-4DB0-805D-CD950AE9F0D8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA504871-2397-4DB0-805D-CD950AE9F0D8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FA504871-2397-4DB0-805D-CD950AE9F0D8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA504871-2397-4DB0-805D-CD950AE9F0D8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F15D56FC-2F0C-477F-934E-B86C90E76B33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F15D56FC-2F0C-477F-934E-B86C90E76B33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F15D56FC-2F0C-477F-934E-B86C90E76B33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F15D56FC-2F0C-477F-934E-B86C90E76B33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
