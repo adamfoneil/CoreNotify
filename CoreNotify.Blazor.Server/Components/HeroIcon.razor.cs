@@ -18,7 +18,8 @@ namespace CoreNotify.Blazor.Server.Components
         CheckCircle,
         Bookmark,
         OutlineX,
-        OutlineMenuAlt2
+        OutlineMenuAlt2,
+        Bell
     }
 
     /// <summary>
@@ -48,7 +49,8 @@ namespace CoreNotify.Blazor.Server.Components
             [IconType.CheckCircle] = new string[] { "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" },
             [IconType.Bookmark] = new string[] { "M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" },
             [IconType.OutlineX] = new string[] { "M6 18L18 6M6 6l12 12" },
-            [IconType.OutlineMenuAlt2] = new string[] { "M4 6h16M4 12h16M4 18h7" }
+            [IconType.OutlineMenuAlt2] = new string[] { "M4 6h16M4 12h16M4 18h7" },
+            [IconType.Bell] = new string[] { "M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" }
         };
     }
 }
