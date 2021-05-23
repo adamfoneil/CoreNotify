@@ -1,0 +1,53 @@
+﻿@inject QueuedJobRepository Jobs 
+@implements IDisposable
+
+<div class="px-4 py-2 text-sm text-gray-700 flex items-center">
+@if (JobInfo is not null)
+{
+    <div class="mr-2">
+        @if (JobInfo.IsRunning)
+        {            
+            <span><img src="/img/loading.gif"/></span>            
+        }
+        else if (JobInfo.Status == JobStatus.Succeeded)
+        {
+            <HeroIcon Image="IconType.CheckCircle" CssClass="text-green-800"/>
+        }
+        else if (JobInfo.Status == JobStatus.Failed)
+        {
+            <HeroIcon Image="IconType.Exclamation" CssClass="text-yellow-800"/>
+        }
+    </div>
+}
+</div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Jobs.Updated += JobUpdated;
+    }
+
+    [Parameter]
+    public QueuedJob JobInfo { get; set; }
+
+    [Parameter]
+    public EventCallback Cleared { get; set; }
+
+    async Task ClearNotification()
+    {
+        await Jobs.ClearJobAsync(JobInfo.Id);
+        await Cleared.InvokeAsync();
+    }
+
+    void JobUpdated(QueuedJob job)
+    {
+        if (job.Id == JobInfo.Id)
+        {
+            JobInfo = job;
+            InvokeAsync(StateHasChanged);            
+        }
+    }
+
+    public void Dispose() => Jobs.Updated -= JobUpdated;
+}
