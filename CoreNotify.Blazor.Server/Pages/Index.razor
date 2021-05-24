@@ -1,3 +1,20 @@
 ﻿@page "/"
+@inject QueuedJobRepository Jobs
+@inject QueueClientHelper QueueHelper
+@inject ILogger<Index> Logger
 
 <Heading>Dashboard</Heading>
+
+<button type="button" class="bg-indigo-700 text-white p-1 px-3 rounded" @onclick="RunTask">Queue a Task</button>
+
+
+@code {
+    async Task RunTask()
+    {
+        await QueueHelper.ZipBuilder.QueueJobAsync(QueuedJobRepository.UserName, new ZipRequest()
+        {
+            ContainerName = "sample-uploads",
+            BlobPrefix = "anonUser"
+        }, Jobs, Logger);
+    }
+} 

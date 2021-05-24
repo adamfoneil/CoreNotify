@@ -10,7 +10,9 @@ namespace CoreNotify.Blazor.Server.Services
 {
     public class QueuedJobRepository : JobRepositoryBase<QueuedJob, int>
     {
-        private readonly string _connectionString;        
+        private readonly string _connectionString;
+
+        public const string UserName = "demo-user";
 
         public QueuedJobRepository(string connectionString)
         {

@@ -3,8 +3,8 @@
 
 <div class="px-4 py-2 text-sm text-gray-700 flex items-center">
 @if (JobInfo is not null)
-{
-    <div class="mr-2">
+{    
+    <div class="mr-2 w-6 h-6">
         @if (JobInfo.IsRunning)
         {            
             <span><img src="/img/loading.gif"/></span>            
@@ -17,10 +17,31 @@
         {
             <HeroIcon Image="IconType.Exclamation" CssClass="text-orange-800"/>
         }
+        else if (JobInfo.Status == JobStatus.Aborted)
+        {
+            <HeroIcon Image="IconType.QuestionCircle" CssClass="text-gray-400"/>
+        }
+        else if (JobInfo.Status == JobStatus.Pending)
+        {
+            <HeroIcon Image="IconType.LightningBolt" CssClass="text-gray-400"/>
+        }
     </div>
-    <div>
-        
+
+    <div class="mr-2">
+        @if (JobInfo.IsJobType<ZipRequest, ZipResult>(out ZipRequest request, out ZipResult result))
+        {
+            <ZipJob Request="request" Result="result"/>
+        }
     </div>
+
+    @if (JobInfo.IsCompleted)
+    {
+        <div>
+            <button @onclick="ClearNotification" class="w-6 h-6">
+                <HeroIcon Image="IconType.Trash" CssClass="text-gray-400"/>
+            </button>
+        </div>
+    }
 }
 </div>
 

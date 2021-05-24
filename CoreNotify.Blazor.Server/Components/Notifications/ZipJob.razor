@@ -1,0 +1,19 @@
+﻿<div class="flex items-center">
+    <div class="p-2">
+        <span>Requested: </span>
+        <span class="ml-2">@Request.ContainerName</span>
+        <span class="ml-2">@Request.BlobPrefix</span>
+    </div>
+
+    @if (Result is not null)
+    {
+        <div class="p-2">
+            <a href="@Result.Url">Download</a>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public ZipRequest Request { get; set; }
+    [Parameter] public ZipResult Result { get; set; }
+}

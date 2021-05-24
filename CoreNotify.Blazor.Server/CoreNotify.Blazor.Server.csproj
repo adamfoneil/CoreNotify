@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AO.Azure.Queues" Version="1.0.4" />
+    <PackageReference Include="AO.Azure.Queues" Version="1.0.5" />
     <PackageReference Include="Dapper.CX.SqlServer.AspNetCore" Version="1.3.40" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="5.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.5" />
@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoreNotify.Database\CoreNotify.Database.csproj" />
+    <ProjectReference Include="..\CoreNotify.Service\CoreNotify.Service.csproj" />
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
