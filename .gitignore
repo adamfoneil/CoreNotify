@@ -363,3 +363,4 @@ MigrationBackup/
 FodyWeavers.xsd
 
 /CoreNotify.Blazor.Server/wwwroot/css/app.min.css
+/Database/CoreNotify.bacpac
