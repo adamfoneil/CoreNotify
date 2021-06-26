@@ -3,15 +3,23 @@ using CoreNotify.Shared;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Net.Http;
 
 namespace CoreNotify.Functions
 {
-    public static class ExecuteSend
+    public class ExecuteSend
     {
+        private readonly HttpClient httpClient;
+
+        public ExecuteSend(IHttpClientFactory httpClientFactory)
+        {
+            this.httpClient = httpClientFactory.CreateClient();
+        }
+
         public const string QueueName = "corenotify-send";
 
         [FunctionName("ExecuteSend")]
-        public static void Run(
+        public void Run(
             [QueueTrigger(QueueName, Connection = "StorageAccount")] string message,
             ILogger log, ExecutionContext context)
         {
@@ -21,7 +29,7 @@ namespace CoreNotify.Functions
                 {
                     using (var cn = context.GetConnection())
                     {
-                        Service.Functions.ExecuteSend(cn, request, log);
+                        Service.Functions.ExecuteSend(cn, request, log, httpClient);
                     }
                 }
             }

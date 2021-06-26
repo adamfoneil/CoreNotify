@@ -38,7 +38,7 @@ namespace Testing.Service
                     AccountKey = AccountKey,
                     EmailAddress = "adamosoftware@gmail.com",
                     NotificationName = NotificationName
-                }, logger);
+                }, logger, new System.Net.Http.HttpClient());
             }
         }
 

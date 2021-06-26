@@ -18,18 +18,18 @@ namespace CoreNotify.Service
 {
     public static partial class Functions
     {
-        static HttpClient client = new HttpClient();
+        //static HttpClient client = new HttpClient();
 
         public static void ExecuteSend(
-            SqlConnection connection, ISendRequest request, ILogger log)
+            SqlConnection connection, ISendRequest request, ILogger log, HttpClient client)
         {
             var account = AuthenticateAsync(connection, request.AccountName, request.AccountKey, log).Result;
 
             var notification = GetNotification(connection, account.Id, request.NotificationName, log);
 
-            var email = GetEmail(account, notification, request, log);
+            var email = GetEmail(account, notification, request, log, client);
 
-            SendEmailAndLog(email, request, account, notification, log);
+            SendEmailAndLog(email, request, account, notification, log, client);
         }
 
         private static Notification GetNotification(
@@ -49,7 +49,7 @@ namespace CoreNotify.Service
       
         private static (string subject, string body) GetEmail(
             Account account, Notification notification, ISendRequest request, 
-            ILogger log, [CallerMemberName]string callerName = null)
+            ILogger log, HttpClient client, [CallerMemberName]string callerName = null)
         {
             log.Trace(callerName, new { account.Name });
             log.Trace(callerName, new { accountId = account.Id, notification.Name, notification.Id });
@@ -101,13 +101,14 @@ namespace CoreNotify.Service
 
         private static void SendEmailAndLog(
             (string subject, string body) email, ISendRequest request,
-            Account account, Notification notification, ILogger log,
+            Account account, Notification notification, ILogger log, HttpClient httpClient,
             [CallerMemberName] string callerName = null)
         {
             log.Trace(callerName, account);
             log.Trace(callerName, notification);
 
-            var sendGridClient = new SendGridClient(account.SendGridApiKey);
+            var sendGridClient= new SendGridClient(httpClient, new SendGridClientOptions {ApiKey = account.SendGridApiKey });
+            //var sendGridClient = new SendGridClient(account.SendGridApiKey);
 
             var message = MailHelper.CreateSingleEmail(
                 new EmailAddress(notification.SenderEmail),
