@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <UserSecretsId>aspnet-CoreNotify.Blazor.Server-5B20A913-E705-486A-91AE-F1B47A997802</UserSecretsId>
   </PropertyGroup>
 
