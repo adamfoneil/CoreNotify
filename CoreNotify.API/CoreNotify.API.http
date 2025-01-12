@@ -1,6 +1,12 @@
-@CoreNotify.API_HostAddress = http://localhost:5285
+@CoreNotify.API_HostAddress = https://localhost:7080
 
-GET {{CoreNotify.API_HostAddress}}/weatherforecast/
+POST {{CoreNotify.API_HostAddress}}/api/account/register
 Accept: application/json
+Content-Type: application/json
+
+{
+  "email": "adamfoneil@proton.me",
+  "domainName": "sqlchartify.io"
+}
 
 ###

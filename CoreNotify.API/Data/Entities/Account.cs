@@ -22,5 +22,6 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
 		builder.Property(p => p.Email).IsRequired().HasMaxLength(50);
 		builder.Property(p => p.ApiKey).IsRequired().HasMaxLength(32);
 		builder.Property(p => p.DomainName).IsRequired().HasMaxLength(50);
+		builder.Property(p => p.RenewalDate).HasColumnType("timestamp without time zone");
 	}
 }

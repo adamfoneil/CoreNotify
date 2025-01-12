@@ -1,4 +1,5 @@
 ﻿using CoreNotify.API.Data.Entities;
+using CoreNotify.API.Data.Entities.Conventions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
@@ -7,6 +8,26 @@ namespace CoreNotify.API.Data;
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
 	public DbSet<Account> Accounts { get; set; }
+
+	protected override void OnModelCreating(ModelBuilder modelBuilder)
+	{
+		base.OnModelCreating(modelBuilder);
+		modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+
+		foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+		{
+			if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
+			{
+				modelBuilder.Entity(entityType.ClrType)
+					.Property(nameof(BaseEntity.CreatedAt))
+					.HasColumnType("timestamp without time zone");
+
+				modelBuilder.Entity(entityType.ClrType)
+					.Property(nameof(BaseEntity.UpdatedAt))
+					.HasColumnType("timestamp without time zone");
+			}
+		}
+	}
 }
 
 public class AppDbFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
