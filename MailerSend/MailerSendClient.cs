@@ -25,15 +25,15 @@ public class MailerSendClient(
 	private readonly HttpClient _httpClient = httpClientFactory.CreateClient();
 	private readonly ILogger<MailerSendClient> _logger = logger;
 
-	public async Task<string> SendAsync(Message message)
+	public async Task<string?> SendAsync(Message message)
 	{
-		if (_options.ApiKey is null)
+		if (string.IsNullOrEmpty(_options.ApiKey))
 		{
 			foreach (var recipient in message.To)
 			{
 				_logger.LogInformation("MailerSend API key not set, skipping email sending to {recipient}", recipient.Email);
 			}
-			return string.Empty;
+			return null;
 		}
 
 		if (message.From.Email is null)
@@ -68,8 +68,7 @@ public class MailerSendClient(
 			return values.First();
 		}
 
-		// sometimes the msgId is not returned even though the message sent
-		return $"fake:{Guid.NewGuid()}";
+		return null;
 	}
 
 	private static JsonSerializerOptions SerializerOptions => new()
