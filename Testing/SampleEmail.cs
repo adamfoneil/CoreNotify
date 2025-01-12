@@ -20,6 +20,7 @@ public sealed class SampleEmail
 		var client = services.GetRequiredService<MailerSendClient>();
 		var msgId = await client.SendAsync(new()
 		{
+			//From = "system2@sample.corenotify.net",
 			To = ["adamfoneil@proton.me"],
 			Subject = "Test email from MailerSend",
 			Html = "<p>This is a test email sent from MailerSend.</p>"
