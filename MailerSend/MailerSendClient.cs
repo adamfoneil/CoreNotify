@@ -68,6 +68,7 @@ public class MailerSendClient(
 			return values.First();
 		}
 
+		// sometimes, the response does not contain the X-Message-Id header even though email was sent successfully
 		return null;
 	}
 
