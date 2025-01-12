@@ -4,6 +4,13 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>AO.MailerSend</PackageId>
+    <Title>MailerSend Email API Client</Title>
+    <Authors>Adam O'Neil</Authors>
+    <Description>Email API client for mailersend.com, with IEmailSender support for ASP.NET Core Identity</Description>
+    <Copyright>Copyright (c) 2025 Adam O'Neil</Copyright>
+    <PackageProjectUrl>https://github.com/adamfoneil/CoreNotify</PackageProjectUrl>
   </PropertyGroup>
 
 	<ItemGroup>
