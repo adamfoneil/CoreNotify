@@ -12,6 +12,9 @@ public class AccountEmailSenderOptions
 	public string DomainName { get; set; } = default!;	
 }
 
+/// <summary>
+/// provides account notifications for ASP.NET Core Identity
+/// </summary>
 public class AccountEmailSender<TUser>(
 	IOptions<AccountEmailSenderOptions> options,
 	MailerSendClient mailerSendClient,
@@ -30,37 +33,37 @@ public class AccountEmailSender<TUser>(
 
 	public async Task SendConfirmationLinkAsync(TUser user, string email, string confirmationLink)
 	{
-		await _mailerSendClient.SendAsync(new()
+		var msgId = await _mailerSendClient.SendAsync(new()
 		{
 			To = [email],
 			Subject = ConfirmationSubject(user),
 			Html = ConfirmationBody(user, confirmationLink)
 		});
 
-		_logger.LogInformation("Confirmation email sent to {email}", email);
+		_logger.LogInformation("Confirmation email {msgId} sent to {email}", msgId, email);
 	}
 
 	public async Task SendPasswordResetCodeAsync(TUser user, string email, string resetCode)
 	{
-		await _mailerSendClient.SendAsync(new()
+		var msgId = await _mailerSendClient.SendAsync(new()
 		{
 			To = [email],
 			Subject = PasswordResetCodeSubject(user),
 			Html = PasswordResetCodeBody(user, resetCode)
 		});
 
-		_logger.LogInformation("Password reset code sent to {email}", email);
+		_logger.LogInformation("Password reset code {msgId} sent to {email}", msgId, email);
 	}
 
 	public async Task SendPasswordResetLinkAsync(TUser user, string email, string resetLink)
 	{
-		await _mailerSendClient.SendAsync(new()
+		var msgId = await _mailerSendClient.SendAsync(new()
 		{
 			To = [email],
 			Subject = PasswordResetLinkSubject(user),
 			Html = PasswordResetLinkBody(user, resetLink)
 		});
 
-		_logger.LogInformation("Password reset link sent to {email}", email);
+		_logger.LogInformation("Password reset link {msgId} sent to {email}", msgId, email);
 	}
 }
