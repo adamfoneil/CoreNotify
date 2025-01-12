@@ -2,7 +2,7 @@
 
 namespace MailerSend;
 
-public class AccountEmailSenderContent<TUser> where TUser : IdentityUser
+public class EmailSenderContent<TUser> where TUser : IdentityUser
 {
 	public virtual string ConfirmationSubject(TUser user, string domainName) => $"{domainName} - Please confirm your email";
 	public virtual string ConfirmationBody(TUser user, string domainName, string confirmationLink) => $"<p>Hi {user.UserName},</p><p>Please click <a href=\"{confirmationLink}\">here</a> to confirm your email address.</p><p>If you did not register at {domainName}, please ignore this. Someone entered your email by mistake.</p>";
