@@ -1,4 +1,5 @@
 @CoreNotify.API_HostAddress = https://localhost:7080
+@Token YWRhbWZvbmVpbEBwcm90b24ubWU6emRITlNXMFAwV2lwa3JLdWh2Y0JQc1lwU1YzYnF3aTc=
 
 POST {{CoreNotify.API_HostAddress}}/api/account/register
 Accept: application/json
@@ -10,3 +11,15 @@ Content-Type: application/json
 }
 
 ###
+
+POST {{CoreNotify.API_HostAddress}}/api/send/confirmation
+Accept: application/json
+Content-Type: application/json
+Authorization: Bearer {{Token}}
+
+{
+	"userName":"adamo",
+	"email":"adamfoneil@proton.me",
+	"domainName":"sqlchartify.io",
+	"confirmationLink":"https://localhost/whatever/confirm?something=else"
+}

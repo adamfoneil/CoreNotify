@@ -11,6 +11,7 @@ builder.Services
 	.AddLogging()	
 	.Configure<MailerSendOptions>(builder.Configuration.GetSection("MailerSend"))
 	.AddSingleton<MailerSendClient>()
+	.AddSingleton<EmailSenderContent>()
 	.AddDbContextFactory<ApplicationDbContext>(options => options.UseNpgsql(connectionString))
 	.AddControllers();
 
