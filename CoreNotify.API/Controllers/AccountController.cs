@@ -26,8 +26,7 @@ public class AccountController(
 			using var db = _dbFactory.CreateDbContext();
 			var account = new Account()
 			{
-				Email = request.Email,
-				DomainName = request.DomainName
+				Email = request.Email				
 			};
 			db.Accounts.Add(account);
 			await db.SaveChangesAsync();
@@ -36,10 +35,9 @@ public class AccountController(
 			{
 				To = [request.Email],
 				Subject = "CoreNotify Account Created",
-				Html = $"<p>Your account has been created. Your API key is: {account.ApiKey}</p>"
+				Html = $"<p>Your account has been created. Your API key is: <strong>{account.ApiKey}</strong></p><p>If you did not do this, please ignore. Someone entered your email by mistake.</p>"
 			});
-
-			// todo: domain validation?
+			
 			_logger.LogInformation("Account created for {email}", request.Email);
 
 			return Ok($"An email with your API key was sent to {request.Email}");

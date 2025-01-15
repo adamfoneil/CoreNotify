@@ -4,6 +4,8 @@ namespace API.Shared;
 
 public static class AuthorizationHeader
 {
+	public static void AddAuthorization(this HttpClient client, string email, string apiKey) => client.DefaultRequestHeaders.Add("Authorization", Encode(email, apiKey));
+
 	public static string Encode(string email, string apiKey) => $"Bearer: {Convert.ToBase64String(Encoding.UTF8.GetBytes($"{email}:{apiKey}"))}";
 
 	public static (string Email, string ApiKey) Decode(string header)

@@ -28,7 +28,9 @@ public class SendController(
 			To = [request.Email],
 			Subject = _content.ConfirmationSubject(request.UserName, request.DomainName),
 			Html = _content.ConfirmationBody(request.UserName, request.DomainName, request.ConfirmationLink)
-		});		
+		});
+
+		_logger.LogInformation("{account} sent confirmation email {msgId} to {email}", account.Email, msgId, request.Email);
 
 		_logger.LogInformation("Confirmation email {msgId} sent to {email} for account {account}", msgId, request.Email, account.Email);
 		return Ok(new SendConfirmation.Response() { MessageId = msgId! });

@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.API", "CoreNotif
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Shared", "API.Shared\API.Shared.csproj", "{400B1CB3-997F-4FD6-920E-D78AD36686F9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.CLI", "CoreNotify.CLI\CoreNotify.CLI.csproj", "{0DF64909-5D70-4671-9DFE-230AA376891D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "API.Client", "API.Client\API.Client.csproj", "{E9D9B93B-CA21-4899-924B-106C84BE97DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{400B1CB3-997F-4FD6-920E-D78AD36686F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{400B1CB3-997F-4FD6-920E-D78AD36686F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{400B1CB3-997F-4FD6-920E-D78AD36686F9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DF64909-5D70-4671-9DFE-230AA376891D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DF64909-5D70-4671-9DFE-230AA376891D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DF64909-5D70-4671-9DFE-230AA376891D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DF64909-5D70-4671-9DFE-230AA376891D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E9D9B93B-CA21-4899-924B-106C84BE97DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E9D9B93B-CA21-4899-924B-106C84BE97DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E9D9B93B-CA21-4899-924B-106C84BE97DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E9D9B93B-CA21-4899-924B-106C84BE97DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
