@@ -1,7 +1,9 @@
 ﻿using API.Shared.Models;
+using CoreNotify.API.Data;
 using CoreNotify.API.Data.Entities;
 using MailerSend;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CoreNotify.API.Controllers;
 
@@ -9,10 +11,12 @@ namespace CoreNotify.API.Controllers;
 [Route("api/[controller]")]
 [VerifyAccount]
 public class SendController(
+	IDbContextFactory<ApplicationDbContext> dbFactory,
 	ILogger<SendController> logger,
 	MailerSendClient mailerSendClient,
 	EmailSenderContent content) : ControllerBase
 {
+	private readonly IDbContextFactory<ApplicationDbContext> _dbFactory = dbFactory;
 	private readonly ILogger<SendController> _logger = logger;
 	private readonly MailerSendClient _mailerSendClient = mailerSendClient;
 	private readonly EmailSenderContent _content = content;
@@ -30,9 +34,10 @@ public class SendController(
 			Html = _content.ConfirmationBody(request.UserName, request.DomainName, request.ConfirmationLink)
 		});
 
-		_logger.LogInformation("{account} sent confirmation email {msgId} to {email}", account.Email, msgId, request.Email);
-
-		_logger.LogInformation("Confirmation email {msgId} sent to {email} for account {account}", msgId, request.Email, account.Email);
+		_logger.LogInformation(
+			"{account} sent confirmation email {msgId} from {mailbox}@{domain} to {email}", 
+			account.Email, msgId, request.SenderMailbox, request.DomainName, request.Email);
+		
 		return Ok(new SendConfirmation.Response() { MessageId = msgId! });
 	}
 }

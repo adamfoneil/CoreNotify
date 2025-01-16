@@ -10,6 +10,9 @@ public class Account : BaseEntity
 	public bool EmailConfirmed { get; set; }	
 	public string ApiKey { get; set; } = API.ApiKey.Generate(32);
 	public DateTime RenewalDate { get; set; } = DateTime.Today.AddDays(30);
+
+	public ICollection<DailyUsage> DailyUsage { get; set; } = [];
+	public ICollection<SentMessage> SentMessages { get; set; } = [];
 }
 
 public class AccountConfiguration : IEntityTypeConfiguration<Account>

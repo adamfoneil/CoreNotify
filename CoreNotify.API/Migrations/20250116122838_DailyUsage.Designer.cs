@@ -3,6 +3,7 @@ using System;
 using CoreNotify.API.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace CoreNotify.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250116122838_DailyUsage")]
+    partial class DailyUsage
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -97,64 +100,6 @@ namespace CoreNotify.API.Migrations
                     b.ToTable("DailyUsage");
                 });
 
-            modelBuilder.Entity("CoreNotify.API.Data.Entities.SentMessage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AccountId")
-                        .HasColumnType("integer");
-
-                    b.Property<DateTime?>("BounceDateTime")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<bool>("Bounced")
-                        .HasColumnType("boolean");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("FromDomain")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("FromMailbox")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("MessageId")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<int>("MessageType")
-                        .HasColumnType("integer");
-
-                    b.Property<string>("Recipient")
-                        .IsRequired()
-                        .HasMaxLength(64)
-                        .HasColumnType("character varying(64)");
-
-                    b.Property<DateTime>("Timestamp")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasAlternateKey("MessageId");
-
-                    b.HasIndex("AccountId");
-
-                    b.ToTable("SentMessage");
-                });
-
             modelBuilder.Entity("CoreNotify.API.Data.Entities.DailyUsage", b =>
                 {
                     b.HasOne("CoreNotify.API.Data.Entities.Account", "Account")
@@ -166,22 +111,9 @@ namespace CoreNotify.API.Migrations
                     b.Navigation("Account");
                 });
 
-            modelBuilder.Entity("CoreNotify.API.Data.Entities.SentMessage", b =>
-                {
-                    b.HasOne("CoreNotify.API.Data.Entities.Account", "Account")
-                        .WithMany("SentMessages")
-                        .HasForeignKey("AccountId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Account");
-                });
-
             modelBuilder.Entity("CoreNotify.API.Data.Entities.Account", b =>
                 {
                     b.Navigation("DailyUsage");
-
-                    b.Navigation("SentMessages");
                 });
 #pragma warning restore 612, 618
         }

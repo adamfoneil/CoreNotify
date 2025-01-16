@@ -8,6 +8,8 @@ namespace CoreNotify.API.Data;
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
 	public DbSet<Account> Accounts { get; set; }
+	public DbSet<DailyUsage> DailyUsage { get; set; }
+	public DbSet<SentMessage> SentMessage { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
@@ -28,6 +30,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 			}
 		}
 	}
+
+	//public Task LogActivityAsync(string messageId, )
 }
 
 public class AppDbFactory : IDesignTimeDbContextFactory<ApplicationDbContext>
