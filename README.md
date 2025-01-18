@@ -15,3 +15,8 @@ A few things to note about how this works:
 - For generic email capability with MailerSend, use [MailerSendClient](https://github.com/adamfoneil/CoreNotify/blob/master/MailerSend/MailerSendClient.cs). In that case, you use your own MailerSend API key.
 
 # Payment
+If you like this service, send $5 * number of months you'd like
+
+[paypal.me/adamosoftware](https://paypal.me/adamosoftware?country.x=US&locale.x=en_US)
+
+I will manually extend your account.
