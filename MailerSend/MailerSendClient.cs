@@ -25,15 +25,11 @@ public class MailerSendClient(
 	private readonly HttpClient _httpClient = httpClientFactory.CreateClient();
 	private readonly ILogger<MailerSendClient> _logger = logger;
 
-	public async Task<string?> SendAsync(Message message)
+	public async Task<string> SendAsync(Message message)
 	{
 		if (string.IsNullOrEmpty(_options.ApiKey))
 		{
-			foreach (var recipient in message.To)
-			{
-				_logger.LogInformation("MailerSend API key not set, skipping email sending to {recipient}", recipient.Email);
-			}
-			return null;
+			throw new InvalidOperationException("MailerSend API key not set");
 		}
 
 		if (message.From.Email is null)
@@ -68,8 +64,8 @@ public class MailerSendClient(
 			return values.First();
 		}
 
-		// sometimes, the response does not contain the X-Message-Id header even though email was sent successfully
-		return null;
+		// once in a while, the response does not contain the X-Message-Id header even though email was sent successfully
+		throw new MailerSendException();
 	}
 
 	private static JsonSerializerOptions SerializerOptions => new()

@@ -17,33 +17,40 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		response.ThrowIfProblemResponse();
 	}
 
-	public async Task ValidateAsync(string accountEmail, string apiKey)
+	public async Task GetUsageAsync(string accountEmail, string apiKey)
 	{
 		var client = _httpClientFactory.CreateClient();
 		client.AddAuthorization(accountEmail, apiKey);
-		var response = await client.GetAsync("api/account/validate");
+		var response = await client.GetAsync("api/account/usage");
 		response.ThrowIfProblemResponse();
-	}	
+	}
 
-	public async Task<SendConfirmation.Response?> SendConfirmationAsync(string accountEmail, string apiKey, SendConfirmation.Request request)
+	public async Task<string> SendConfirmationAsync(string accountEmail, string apiKey, SendConfirmationRequest request)
 	{
 		var client = _httpClientFactory.CreateClient();
 		client.AddAuthorization(accountEmail, apiKey);
 		var response = await client.PostAsJsonAsync("api/send/confirmation", request);
 		response.ThrowIfProblemResponse();
-		return await response.Content.ReadFromJsonAsync<SendConfirmation.Response>();
+		return await response.Content.ReadAsStringAsync();
 	}
-
-	/*
-	public async Task<SendResetLink.Response?> SendResetLinkAsync(string accountEmail, string apiKey, SendResetLink.Request request)
+	
+	public async Task<string> SendResetLinkAsync(string accountEmail, string apiKey, SendResetLinkRequest request)
 	{
 		var client = _httpClientFactory.CreateClient();
 		client.AddAuthorization(accountEmail, apiKey);
 		var response = await client.PostAsJsonAsync("api/send/resetlink", request);
 		response.ThrowIfProblemResponse();
-		return await response.Content.ReadFromJsonAsync<SendResetLink.Response>();
+		return await response.Content.ReadAsStringAsync();
 	}
-	*/
+
+	public async Task<string> SendResetCodeAsync(string accountEmail, string apiKey, SendResetCodeRequest request)
+	{
+		var client = _httpClientFactory.CreateClient();
+		client.AddAuthorization(accountEmail, apiKey);
+		var response = await client.PostAsJsonAsync("api/send/resetcode", request);
+		response.ThrowIfProblemResponse();
+		return await response.Content.ReadAsStringAsync();
+	}
 
 	private HttpClient GetHttpClient()
 	{

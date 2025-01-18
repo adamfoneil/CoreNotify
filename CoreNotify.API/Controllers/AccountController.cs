@@ -48,4 +48,36 @@ public class AccountController(
 			return Problem(exc.FullMessage());
 		}
 	}
+
+	[HttpGet("usage")]
+	[VerifyAccount]
+	public async Task<IActionResult> Usage()
+	{
+		var account = HttpContext.Items["Account"] as Account ?? throw new Exception("account missing");
+
+		using var db = _dbFactory.CreateDbContext();
+		var recent = await db.DailyUsage
+			.Where(row => row.AccountId == account.Id)
+			.OrderByDescending(row => row.Date).Take(7).ToListAsync();
+
+		try
+		{			
+			return Ok(new AccountUsageResponse()
+			{
+				RenewalDate = account.RenewalDate,
+				RecentUsage = recent.Select(row => new AccountUsageResponse.DailyUsage()
+				{
+					Date = row.Date,
+					Confirmations = row.Confirmations,
+					ResetCodes = row.ResetCodes,
+					ResetLinks = row.ResetLinks
+				}).ToArray()
+			});
+		}
+		catch (Exception exc)
+		{
+			_logger.LogError(exc, "Error getting usage for {email}", account.Email);
+			return Problem(exc.FullMessage());
+		}
+	}
 }

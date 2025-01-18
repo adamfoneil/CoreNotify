@@ -35,7 +35,7 @@ internal class SerilogCleanup(string connectionString, int retentionDays, ILogge
 
 				if (rows > 0)
 				{
-					_logger.LogInformation("Deleted {rows} rows from Serilog in {elapsed}", rows, sw.Elapsed);
+					_logger.LogInformation("Deleted {rows} rows older than {days} from Serilog in {elapsed}", rows, _retentionDays, sw.Elapsed);
 				}
 
 			} while (rows > 0);
