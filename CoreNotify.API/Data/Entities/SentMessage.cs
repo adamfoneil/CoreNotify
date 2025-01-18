@@ -13,8 +13,7 @@ public enum MessageType
 
 public class SentMessage : BaseEntity
 {
-	public string MessageId { get; set; } = default!;
-	public DateTime Timestamp { get; set; }
+	public string MessageId { get; set; } = default!;	
 	public int AccountId { get; set; }
 	public MessageType MessageType { get; set; }	
 	public string FromMailbox { get; set; } = default!;
@@ -31,8 +30,7 @@ public class SentMessageConfiguration : IEntityTypeConfiguration<SentMessage>
 	public void Configure(EntityTypeBuilder<SentMessage> builder)
 	{
 		builder.HasAlternateKey(nameof(SentMessage.MessageId));
-		builder.Property(p => p.MessageId).IsRequired().HasMaxLength(50);
-		builder.Property(p => p.Timestamp).HasColumnType("timestamp without time zone");
+		builder.Property(p => p.MessageId).IsRequired().HasMaxLength(50);		
 		builder.Property(p => p.Recipient).IsRequired().HasMaxLength(64);
 		builder.Property(p => p.BounceDateTime).HasColumnType("timestamp without time zone");
 		builder.Property(p => p.FromDomain).IsRequired().HasMaxLength(50);

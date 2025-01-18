@@ -32,7 +32,18 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		var response = await client.PostAsJsonAsync("api/send/confirmation", request);
 		response.ThrowIfProblemResponse();
 		return await response.Content.ReadFromJsonAsync<SendConfirmation.Response>();
-	}	
+	}
+
+	/*
+	public async Task<SendResetLink.Response?> SendResetLinkAsync(string accountEmail, string apiKey, SendResetLink.Request request)
+	{
+		var client = _httpClientFactory.CreateClient();
+		client.AddAuthorization(accountEmail, apiKey);
+		var response = await client.PostAsJsonAsync("api/send/resetlink", request);
+		response.ThrowIfProblemResponse();
+		return await response.Content.ReadFromJsonAsync<SendResetLink.Response>();
+	}
+	*/
 
 	private HttpClient GetHttpClient()
 	{

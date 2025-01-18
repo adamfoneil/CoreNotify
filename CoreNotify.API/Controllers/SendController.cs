@@ -30,14 +30,25 @@ public class SendController(
 		{
 			From = request.SenderMailbox + $"@{request.DomainName}.corenotify.net",
 			To = [request.Email],
-			Subject = _content.ConfirmationSubject(request.UserName, request.DomainName),
-			Html = _content.ConfirmationBody(request.UserName, request.DomainName, request.ConfirmationLink)
+			Subject = _content.ConfirmationSubject(request.UserName ?? request.Email, request.DomainName),
+			Html = _content.ConfirmationBody(request.UserName ?? request.Email, request.DomainName, request.ConfirmationLink)
 		});
 
 		_logger.LogInformation(
 			"{account} sent confirmation email {msgId} from {mailbox}@{domain} to {email}", 
 			account.Email, msgId, request.SenderMailbox, request.DomainName, request.Email);
-		
+
+		using var db = _dbFactory.CreateDbContext();
+		await db.LogActivityAsync(new()
+		{
+			AccountId = account.Id,
+			MessageId = msgId!,
+			Recipient = request.Email,
+			MessageType = MessageType.Confirmation,
+			FromDomain = request.DomainName,
+			FromMailbox = request.SenderMailbox
+		});
+
 		return Ok(new SendConfirmation.Response() { MessageId = msgId! });
 	}
 }

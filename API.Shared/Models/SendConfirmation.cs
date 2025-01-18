@@ -4,7 +4,7 @@ public class SendConfirmation
 {
 	public class Request
 	{
-		public string UserName { get; set; } = default!;
+		public string? UserName { get; set; }
 		public string SenderMailbox { get; set; } = "noreply";
 		public string Email { get; set; } = default!;
 		public string DomainName { get; set; } = default!;
