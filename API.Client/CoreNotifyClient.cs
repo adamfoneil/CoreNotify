@@ -17,17 +17,18 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		response.ThrowIfProblemResponse();
 	}
 
-	public async Task GetUsageAsync(string accountEmail, string apiKey)
+	public async Task<AccountUsageResponse> GetUsageAsync(string accountEmail, string apiKey)
 	{
-		var client = _httpClientFactory.CreateClient();
+		var client = GetHttpClient();
 		client.AddAuthorization(accountEmail, apiKey);
-		var response = await client.GetAsync("api/account/usage");
+		var response = await client.GetAsync("api/account/usage");		
 		response.ThrowIfProblemResponse();
+		return await response.Content.ReadFromJsonAsync<AccountUsageResponse>() ?? new();
 	}
 
 	public async Task<string> SendConfirmationAsync(string accountEmail, string apiKey, SendConfirmationRequest request)
 	{
-		var client = _httpClientFactory.CreateClient();
+		var client = GetHttpClient();
 		client.AddAuthorization(accountEmail, apiKey);
 		var response = await client.PostAsJsonAsync("api/send/confirmation", request);
 		response.ThrowIfProblemResponse();
@@ -36,7 +37,7 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 	
 	public async Task<string> SendResetLinkAsync(string accountEmail, string apiKey, SendResetLinkRequest request)
 	{
-		var client = _httpClientFactory.CreateClient();
+		var client = GetHttpClient();
 		client.AddAuthorization(accountEmail, apiKey);
 		var response = await client.PostAsJsonAsync("api/send/resetlink", request);
 		response.ThrowIfProblemResponse();
@@ -45,7 +46,7 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 
 	public async Task<string> SendResetCodeAsync(string accountEmail, string apiKey, SendResetCodeRequest request)
 	{
-		var client = _httpClientFactory.CreateClient();
+		var client = GetHttpClient();
 		client.AddAuthorization(accountEmail, apiKey);
 		var response = await client.PostAsJsonAsync("api/send/resetcode", request);
 		response.ThrowIfProblemResponse();

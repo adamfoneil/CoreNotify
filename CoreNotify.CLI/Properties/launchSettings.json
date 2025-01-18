@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CoreNotify.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "usage adamfoneil@proton.me"
+    }
+  }
+}
