@@ -13,29 +13,36 @@ internal class SerilogCleanup(string connectionString, int retentionDays, ILogge
 
 	public async Task ExecuteAsync()
 	{
-		using var cn = new NpgsqlConnection(_connectionString);
-		const int ChunkSize = 50;
-
-		int rows = 0;
-		do
+		try
 		{
-			var sw = Stopwatch.StartNew();
-			rows = await cn.ExecuteAsync(
-				$@"DELETE FROM serilog
-                WHERE id IN (
-                    SELECT id
-                    FROM serilog
-                    WHERE timestamp < NOW() - INTERVAL @retentionDays DAY
-                    ORDER BY timestamp
-                    LIMIT {ChunkSize}
-                )", new { retentionDays = _retentionDays }, commandTimeout: 0);
-			sw.Stop();
+			using var cn = new NpgsqlConnection(_connectionString);
+			const int ChunkSize = 50;
 
-			if (rows > 0)
+			int rows = 0;
+			do
 			{
-				_logger.LogInformation("Deleted {rows} rows from Serilog in {elapsed}", rows, sw.Elapsed);
-			}
+				var sw = Stopwatch.StartNew();
+				rows = await cn.ExecuteAsync(
+					$@"DELETE FROM serilog
+					WHERE id IN (
+						SELECT id
+						FROM serilog
+						WHERE timestamp < NOW() - INTERVAL @retentionDays || ' days'
+						ORDER BY timestamp
+						LIMIT {ChunkSize};
+					)", new { retentionDays = _retentionDays }, commandTimeout: 0);
+				sw.Stop();
 
-		} while (rows > 0);
+				if (rows > 0)
+				{
+					_logger.LogInformation("Deleted {rows} rows from Serilog in {elapsed}", rows, sw.Elapsed);
+				}
+
+			} while (rows > 0);
+		}
+		catch (Exception exc)
+		{
+			_logger.LogError(exc, "Error cleaning up Serilog");
+		}
 	}
 }
