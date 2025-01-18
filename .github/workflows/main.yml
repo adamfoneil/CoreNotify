@@ -36,5 +36,5 @@ jobs:
 
     - name: Build and push Docker image
       run: |
-        docker build -t ghcr.io/${{ github.repository_owner }}/core-notify:latest ./publish
+        # docker build -t ghcr.io/${{ github.repository_owner }}/core-notify:latest ./publish
         docker push ghcr.io/${{ github.repository_owner }}/core-notify:latest
