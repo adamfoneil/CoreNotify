@@ -16,6 +16,12 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Set up Docker
+      uses: docker/setup-docker@v1
+
+    - name: Start Docker service
+      run: sudo service docker start
+      
     - name: Set up .NET
       uses: actions/setup-dotnet@v2
       with:
