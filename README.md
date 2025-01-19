@@ -1,6 +1,6 @@
 When you create a new .NET web app, an `IdentityNoOpEmailSender` placeholder class is stubbed out so the `IEmailSender<TUser>` has an implementation. By design it doesn't work -- hence the "NoOp" in the name. You need to register with an email service like Mailgun, SendGrid, or others to have actual email capability in your application. Setting that up is not trivial. Email providers typically require you to prove ownership of your domain, and have unique APIs for interacting with their service.
 
-CoreNotify is a minimal email service for `IEmailSender<T>`, giving you working account notifications for ASP.NET Core web apps with very little setup. It has a 30-day free trial, and is $5/month thereafter. There's no credit card required, and no automatic recurring payment.
+CoreNotify solves this by offering a minimal email service for `IEmailSender<T>`, giving you working account notifications for ASP.NET Core web apps with very little setup. It has a 30-day free trial, and is $5/month thereafter. There's no credit card required, and no automatic recurring payment.
 
 1. Install the CoreNotify CLI.
 2. Create an API key: `corenotify register <youremail>` You will receive your CoreNotify API key at the email you provide.
