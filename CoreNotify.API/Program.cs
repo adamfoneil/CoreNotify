@@ -4,6 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Services;
 using Services.Data;
+using Services.Models;
+using System.Collections.Concurrent;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,8 +23,8 @@ builder.Services
 	.AddHttpClient()
 	.AddSerilog()
 	.AddScheduler()
-	.AddHostedService<WebhookHandler>()
-	.AddSingleton<WebhookHandler>()
+	.AddHostedService<BounceHandler>()
+	.AddSingleton<ConcurrentQueue<Bounce>>()
 	.Configure<MailerSendOptions>(builder.Configuration.GetSection("MailerSend"))
 	.AddSingleton<MailerSendClient>()
 	.AddSingleton<EmailSenderContent>()
