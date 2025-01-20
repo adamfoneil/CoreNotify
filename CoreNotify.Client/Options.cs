@@ -1,4 +1,4 @@
-﻿namespace API.Client;
+﻿namespace CoreNotify.Client;
 
 public class Options
 {

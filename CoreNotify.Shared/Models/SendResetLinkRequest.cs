@@ -1,4 +1,4 @@
-﻿namespace API.Shared.Models;
+﻿namespace CoreNotify.Shared.Models;
 
 public class SendResetLinkRequest : SendRequestBase
 {

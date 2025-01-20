@@ -1,4 +1,4 @@
-﻿using API.Client;
+﻿using CoreNotify.Client;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

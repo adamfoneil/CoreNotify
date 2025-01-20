@@ -1,4 +1,4 @@
-﻿using API.Client;
+﻿using CoreNotify.Client;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net.Http.Json;
 
-namespace API.Client;
+namespace CoreNotify.Client;
 
 internal static class ProblemResponseHelper
 {

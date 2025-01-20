@@ -40,7 +40,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\API.Shared\API.Shared.csproj" />
+    <ProjectReference Include="..\CoreNotify.Shared\CoreNotify.Shared.csproj" />
     <ProjectReference Include="..\Services\Services.csproj" />
   </ItemGroup>
 

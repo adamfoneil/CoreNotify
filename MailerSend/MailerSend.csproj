@@ -5,20 +5,37 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageId>AO.MailerSend</PackageId>
+    <PackageId>CoreNotify.MailerSend</PackageId>
     <Title>MailerSend Email API Client</Title>
     <Authors>Adam O'Neil</Authors>
     <Description>Email API client for mailersend.com, with IEmailSender support for ASP.NET Core Identity</Description>
     <Copyright>Copyright (c) 2025 Adam O'Neil</Copyright>
     <PackageProjectUrl>https://github.com/adamfoneil/CoreNotify</PackageProjectUrl>
+    <Version>1.0.0-beta</Version>
+    <RepositoryUrl>https://github.com/adamfoneil/CoreNotify</RepositoryUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\CoreNotify.Client\CoreNotifyClient.cs" Link="Client\CoreNotifyClient.cs" />
+    <Compile Include="..\CoreNotify.Client\Options.cs" Link="Client\Options.cs" />
+    <Compile Include="..\CoreNotify.Client\ProblemResponseHelper.cs" Link="Client\ProblemResponseHelper.cs" />
+    <Compile Include="..\CoreNotify.Shared\AuthorizationHeader.cs" Link="Shared\AuthorizationHeader.cs" />
+    <Compile Include="..\CoreNotify.Shared\Models\AccountUsageResponse.cs" Link="Shared\AccountUsageResponse.cs" />
+    <Compile Include="..\CoreNotify.Shared\Models\CreateAccountRequest.cs" Link="Shared\CreateAccountRequest.cs" />
+    <Compile Include="..\CoreNotify.Shared\Models\SendConfirmationRequest.cs" Link="Shared\SendConfirmationRequest.cs" />
+    <Compile Include="..\CoreNotify.Shared\Models\SendRequestBase.cs" Link="Shared\SendRequestBase.cs" />
+    <Compile Include="..\CoreNotify.Shared\Models\SendResetCodeRequest.cs" Link="Shared\SendResetCodeRequest.cs" />
+    <Compile Include="..\CoreNotify.Shared\Models\SendResetLinkRequest.cs" Link="Shared\SendResetLinkRequest.cs" />
+  </ItemGroup>
 
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\API.Client\API.Client.csproj" />
+	  <Folder Include="Client\" />
+	  <Folder Include="Shared\" />
 	</ItemGroup>
 	
 </Project>

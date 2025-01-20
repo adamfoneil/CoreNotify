@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace API.Shared;
+namespace CoreNotify.Shared;
 
 public static class AuthorizationHeader
 {

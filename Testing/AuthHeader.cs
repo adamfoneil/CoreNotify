@@ -1,4 +1,4 @@
-﻿using API.Shared;
+﻿using CoreNotify.Shared;
 
 namespace Testing;
 

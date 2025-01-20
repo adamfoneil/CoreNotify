@@ -1,9 +1,9 @@
-﻿using API.Shared;
-using API.Shared.Models;
+﻿using CoreNotify.Shared;
+using CoreNotify.Shared.Models;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
 
-namespace API.Client;
+namespace CoreNotify.Client;
 
 public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Options> options)
 {

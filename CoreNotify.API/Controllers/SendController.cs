@@ -1,5 +1,5 @@
-﻿using API.Shared.Models;
-using CoreNotify.API.Data.Entities;
+﻿using CoreNotify.API.Data.Entities;
+using CoreNotify.Shared.Models;
 using MailerSend;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

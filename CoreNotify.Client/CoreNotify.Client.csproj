@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\API.Shared\API.Shared.csproj" />
+    <ProjectReference Include="..\CoreNotify.Shared\CoreNotify.Shared.csproj" />
   </ItemGroup>
 
 </Project>
