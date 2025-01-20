@@ -25,7 +25,7 @@ public class WebhookController(
 			using var db = _dbFactory.CreateDbContext();
 			var msgId = model!.Data.Id;
 			_logger.LogInformation("Searching for messageId {messageId}", msgId);
-			var message = await db.SentMessages.SingleOrDefaultAsync(row => row.MessageId == msgId) ?? throw new Exception($"MessageId {msgId}");
+			var message = await db.SentMessages.SingleOrDefaultAsync(row => row.MessageId == msgId) ?? throw new Exception($"MessageId {msgId} not found");
 			message.Bounced = true;
 			message.BounceDateTime = DateTime.Now;
 			await db.SaveChangesAsync();
