@@ -2,7 +2,7 @@ When you create a new .NET web app, an `IdentityNoOpEmailSender` placeholder cla
 
 CoreNotify solves this by offering a minimal email service for `IEmailSender<T>`, giving you working account notifications for ASP.NET Core web apps with very little setup. It has a 30-day free trial, and is $5/month thereafter. There's no credit card required, and no automatic recurring payment.
 
-1. Install the CoreNotify CLI.
+1. Install the [CoreNotify CLI](https://www.nuget.org/packages/CoreNotify.CLI).
 ```
 dotnet tool install --global CoreNotify.CLI
 ```
@@ -12,12 +12,14 @@ corenotify register <youremail>
 ```
 You will receive your CoreNotify API key at the email you provide.
 
-3. Add the **CoreNotify.MailerSend** package to your project.
+3. Add the [CoreNotify.MailerSend](https://www.nuget.org/packages/CoreNotify.CLI/) package to your project.
 ```
 dotnet add package CoreNotify.MailerSend
 ```
-4. Add your API key from step 2 to your configuration. There are a number of ways to do this.
-5. Replace the `IdentityNoOpEmailSender` in your app with `CoreNotifyEmailSender`
+4. Add your API key from step 2 to your configuration. There are a number of ways to do this. See example in [DemoApp appsettings](https://github.com/adamfoneil/CoreNotify/blob/master/DemoApp/appsettings.json#L2)
+5. Replace the `IdentityNoOpEmailSender` in your app with `CoreNotifyEmailSender` using the `AddCoreNotify` extension method. See [demo](https://github.com/adamfoneil/CoreNotify/blob/master/DemoApp/Program.cs#L19)
+
+Note that the API key in the demo app no longer works, but I'm showing an example of how you can configure this in your own apps.
 
 A few things to note about how this works:
 - CoreNotify uses [MailerSend](https://www.mailersend.com/) under the hood.
