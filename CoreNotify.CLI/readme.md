@@ -1,4 +1,4 @@
-This is the command line tool for [CoreNotify](https://github.com/adamfoneil/CoreNotify). Use this interact with the CoreNotify backend API.
+This is the command line tool for [CoreNotify](https://github.com/adamfoneil/CoreNotify). Use this to interact with the CoreNotify backend API.
 
 To use CoreNotify you must register your email. You'll receive an API key at `<youremail>`. New accounts are free for 30 days.
 
