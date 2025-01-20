@@ -17,6 +17,13 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		response.ThrowIfProblemResponse();
 	}
 
+	public async Task ResendApiKeyAsync(string accountEmail)
+	{
+		var client = GetHttpClient();
+		var response = await client.PostAsJsonAsync("api/account/register", new CreateAccountRequest { Email = accountEmail });
+		response.ThrowIfProblemResponse();
+	}
+
 	public async Task<AccountUsageResponse> GetUsageAsync(string accountEmail, string apiKey)
 	{
 		var client = GetHttpClient();

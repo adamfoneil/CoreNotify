@@ -49,6 +49,31 @@ public class AccountController(
 		}
 	}
 
+	public async Task<IActionResult> Resend(CreateAccountRequest request)
+	{
+		try
+		{
+			using var db = _dbFactory.CreateDbContext();
+			var account = await db.Accounts.SingleOrDefaultAsync(row => row.Email == request.Email);
+			if (account is null) return NotFound();
+
+			await _mailerSendClient.SendAsync(new MailerSendClient.Message()
+			{
+				To = [request.Email],
+				Subject = "CoreNotify API Key",
+				Html = $"<p>Your API key is: <strong>{account.ApiKey}</strong></p><p>If you did not do this, please ignore. Someone entered your email by mistake.</p>"
+			});
+
+			_logger.LogInformation("API key resent to {email}", request.Email);
+			return Ok($"An email with your API key was sent to {request.Email}");
+		}
+		catch (Exception exc)
+		{
+			_logger.LogError(exc, "Error resending API key to {email}", request.Email);
+			return Problem(exc.FullMessage());
+		}
+	}
+
 	[HttpGet("usage")]
 	[VerifyAccount]
 	public async Task<IActionResult> Usage()

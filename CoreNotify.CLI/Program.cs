@@ -30,4 +30,9 @@ switch (args[0])
 		Console.WriteLine($"Renewal date: {usage.RenewalDate:M/d/yy}");
 		Console.WriteLine($"Total recent messages: {usage.TotalRecentMessages:n0}");		
 		break;
+
+	case "resend":
+		await client.ResendApiKeyAsync(args[1]);
+		Console.WriteLine($"Your CoreNotify API key was resent to {args[1]}");
+		break;
 }
