@@ -37,7 +37,7 @@ public class BounceHandler(
 					_logger.LogError(exc, "Error processing bounce");
 				}
 			}
-			await Task.Delay(1000, stoppingToken);
+			await Task.Delay(3000, stoppingToken);
 		}
 	}
 }
