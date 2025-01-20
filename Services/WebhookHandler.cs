@@ -31,6 +31,7 @@ public class WebhookHandler(
 				message.BounceDateTime = DateTime.Now;
 				await db.SaveChangesAsync(stoppingToken);
 			}
+			await Task.Delay(1000, stoppingToken);
 		}
 	}
 }
