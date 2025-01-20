@@ -56,4 +56,3 @@ catch (Exception exc)
 }
 
 Console.ResetColor();
-Console.ReadLine();
