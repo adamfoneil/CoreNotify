@@ -1,9 +1,7 @@
 name: Build and Push to GHCR
 
 on:
-  push:
-    branches:
-      - master
+  workflow_dispatch:
 
 jobs:
   build:
