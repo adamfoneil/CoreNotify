@@ -20,7 +20,6 @@ var services = new ServiceCollection()
 	.BuildServiceProvider();
 	
 var client = services.GetRequiredService<CoreNotifyClient>();
-var myKey = config["CoreNotifyApiKey"] ?? args[2];
 
 Console.ResetColor();
 try
@@ -33,6 +32,7 @@ try
 			break;
 
 		case "usage":
+			var myKey = config["CoreNotifyApiKey"] ?? args[2];
 			var usage = await client.GetUsageAsync(args[1], myKey);
 			Console.WriteLine($"Renewal date: {usage.RenewalDate:M/d/yy}");
 			Console.WriteLine($"Total recent messages: {usage.TotalRecentMessages:n0}");
@@ -53,6 +53,10 @@ catch (Exception exc)
 {
 	Console.ForegroundColor = ConsoleColor.Red;
 	Console.WriteLine(exc.Message);
+	Console.ResetColor();
+	Console.WriteLine("Args received:");
+	foreach (var arg in args) Console.WriteLine(arg);
+	Console.WriteLine("Service URL: {client.ServiceUrl}");
 }
 
 Console.ResetColor();
