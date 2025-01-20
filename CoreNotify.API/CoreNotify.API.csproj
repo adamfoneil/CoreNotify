@@ -21,7 +21,8 @@
     <ContainerPort Include="8081" />
   </ItemGroup>
 
-  <ItemGroup>        
+  <ItemGroup>
+	<PackageReference Include="Humanizer" Version="2.14.1" />
     <PackageReference Include="Coravel" Version="6.0.2" />        
     <PackageReference Include="Dapper" Version="2.1.35" />        
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.0" />
@@ -33,6 +34,9 @@
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.2" />
     <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
     <PackageReference Include="Serilog.Sinks.PostgreSQL" Version="2.3.0" />
+	<PackageReference Include="Pekspro.BuildInformationGenerator" Version="0.3.0" PrivateAssets="all" ExcludeAssets="runtime">
+		<IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
   </ItemGroup>
 
   <ItemGroup>

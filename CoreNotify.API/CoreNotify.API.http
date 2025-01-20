@@ -70,3 +70,5 @@ Content-Type: application/json
 }
 
 ###
+
+GET {{CoreNotify.API_HostAddress}}/api/info
