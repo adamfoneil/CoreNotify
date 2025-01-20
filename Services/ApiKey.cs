@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace CoreNotify.API;
+namespace Services;
 
 public static class ApiKey
 {

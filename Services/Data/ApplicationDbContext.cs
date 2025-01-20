@@ -2,8 +2,10 @@
 using CoreNotify.API.Data.Entities.Conventions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.Configuration;
+using Services.Data.Entities;
 
-namespace CoreNotify.API.Data;
+namespace Services.Data;
 
 public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : DbContext(options)
 {
@@ -29,7 +31,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 					.HasColumnType("timestamp without time zone");
 			}
 		}
-	}	
+	}
 
 	public async Task LogActivityAsync(SentMessage message)
 	{
@@ -38,10 +40,10 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 		SentMessages.Add(message);
 
 		var today = new DateOnly(DateTime.Today.Year, DateTime.Today.Month, DateTime.Today.Day);
-		var usage = await DailyUsage.SingleOrDefaultAsync(u => u.AccountId == message.AccountId && u.Date == today) ?? new() 
-		{ 
-			AccountId = message.AccountId, 
-			Date = today 
+		var usage = await DailyUsage.SingleOrDefaultAsync(u => u.AccountId == message.AccountId && u.Date == today) ?? new()
+		{
+			AccountId = message.AccountId,
+			Date = today
 		};
 
 		switch (message.MessageType)
@@ -75,7 +77,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 		{
 			if (entry.State == EntityState.Modified) entry.Entity.UpdatedAt = DateTime.Now;
 		}
-		
+
 		return await base.SaveChangesAsync(acceptAllChangesOnSuccess, cancellationToken);
 	}
 }

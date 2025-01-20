@@ -1,6 +1,7 @@
 ﻿using CoreNotify.API.Data.Entities.Conventions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Services.Data.Entities;
 
 namespace CoreNotify.API.Data.Entities;
 

@@ -1,8 +1,8 @@
 ﻿using API.Shared;
-using CoreNotify.API.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.EntityFrameworkCore;
+using Services.Data;
 
 namespace CoreNotify.API;
 

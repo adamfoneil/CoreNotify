@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace CoreNotify.API.Models;
+namespace Services.Models;
 
 public class Bounce
 {
@@ -10,7 +9,7 @@ public class Bounce
 	[JsonPropertyName("data")]
 	public Data Data { get; set; } = new();
 	[JsonPropertyName("type")]
-	public string Type { get; set; }
+	public string Type { get; set; } = default!;
 	[JsonPropertyName("domain_id")]
 	public string DomainId { get; set; } = default!;
 	[JsonPropertyName("created_at")]

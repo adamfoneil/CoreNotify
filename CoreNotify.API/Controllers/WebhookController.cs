@@ -1,8 +1,7 @@
-﻿using CoreNotify.API.Data;
-using CoreNotify.API.Models;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Services;
+using Services.Models;
 
 namespace CoreNotify.API.Controllers;
 
@@ -11,24 +10,18 @@ namespace CoreNotify.API.Controllers;
 [AllowAnonymous]
 public class WebhookController(
 	ILogger<WebhookController> logger,
-	IDbContextFactory<ApplicationDbContext> dbFactory) : ControllerBase
+	WebhookHandler handler) : ControllerBase
 {
 	private readonly ILogger<WebhookController> _logger = logger;
-	private readonly IDbContextFactory<ApplicationDbContext> _dbFactory = dbFactory;
+	private readonly WebhookHandler _handler = handler;
 
 	[HttpPost("bounce")]
 	public async Task<IActionResult> Bounce()
 	{
 		try
 		{
-			var model = await Request.ReadFromJsonAsync<Bounce>();
-			using var db = _dbFactory.CreateDbContext();
-			var msgId = model!.Data.Id;
-			_logger.LogInformation("Searching for messageId {messageId}", msgId);
-			var message = await db.SentMessages.SingleOrDefaultAsync(row => row.MessageId == msgId) ?? throw new Exception($"MessageId {msgId} not found");
-			message.Bounced = true;
-			message.BounceDateTime = DateTime.Now;
-			await db.SaveChangesAsync();
+			var model = await Request.ReadFromJsonAsync<Bounce>() ?? throw new Exception("Couldn't deserialize bounce model");
+			_handler.AddBounce(model);
 		}
 		catch (Exception exc)
 		{
