@@ -1,6 +1,7 @@
 using DemoApp.Components;
 using DemoApp.Components.Account;
 using DemoApp.Data;
+using MailerSend.Extensions;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,7 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
-//builder.Services.Configure<CoreNotifyOptions>
+builder.Services.AddCoreNotify<ApplicationUser>(builder.Configuration);
 
 builder.Services.AddAuthentication(options =>
 	{
@@ -33,8 +34,6 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
 	.AddEntityFrameworkStores<ApplicationDbContext>()
 	.AddSignInManager()
 	.AddDefaultTokenProviders();
-
-builder.Services.AddSingleton<IEmailSender<ApplicationUser>, IdentityNoOpEmailSender>();
 
 var app = builder.Build();
 
