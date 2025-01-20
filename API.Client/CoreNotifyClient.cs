@@ -66,4 +66,6 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		client.BaseAddress = new Uri(_options.BaseUrl);
 		return client;
 	}
+
+	public string ServiceUrl => _options.BaseUrl;
 }

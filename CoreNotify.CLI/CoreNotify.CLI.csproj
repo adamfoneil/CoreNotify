@@ -6,6 +6,18 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <UserSecretsId>d8a4c5af-79af-4ebd-a6a0-791dbd8ac6a6</UserSecretsId>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>CoreNotify.CLI</PackageId>
+    <Title>CoreNotify command line tool</Title>
+    <Authors>Adam O'Neil</Authors>
+    <Description>Interact with the CoreNotify service from the command line</Description>
+    <Copyright>Copyright (c) 2025 Adam O'Neil</Copyright>
+    <PackageProjectUrl>https://github.com/adamfoneil/CoreNotify</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/adamfoneil/CoreNotify</RepositoryUrl>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
+    <PackAsTool>True</PackAsTool>
+    <ToolCommandName>corenotify</ToolCommandName>
+    <Version>0.9.0-beta</Version>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,6 +34,13 @@
   <ItemGroup>
     <None Update="appsettings.Development.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="appsettings.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="readme.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
 
