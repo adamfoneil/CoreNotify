@@ -25,6 +25,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\API.Shared\API.Shared.csproj" />
 	  <ProjectReference Include="..\MailerSend\MailerSend.csproj" />
+	  <ProjectReference Include="..\Services\Services.csproj" />
 	</ItemGroup>
 	
 </Project>

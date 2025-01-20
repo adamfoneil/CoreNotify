@@ -1,11 +1,11 @@
-﻿
-using Dapper;
+﻿using Dapper;
+using Microsoft.Extensions.Logging;
 using Npgsql;
 using System.Diagnostics;
 
-namespace CoreNotify.API;
+namespace Services;
 
-internal class SerilogCleanup(string connectionString, int retentionDays, ILogger<SerilogCleanup> logger) 
+public class SerilogCleanup(string connectionString, int retentionDays, ILogger<SerilogCleanup> logger)
 {
 	private readonly string _connectionString = connectionString;
 	private readonly int _retentionDays = retentionDays;
@@ -18,19 +18,21 @@ internal class SerilogCleanup(string connectionString, int retentionDays, ILogge
 			using var cn = new NpgsqlConnection(_connectionString);
 			const int ChunkSize = 50;
 
+			var sql =
+				$@"DELETE FROM serilog
+				WHERE id IN (
+					SELECT id
+					FROM serilog
+					WHERE timestamp < NOW() - INTERVAL '1 day' * $1
+					ORDER BY timestamp
+					LIMIT {ChunkSize};
+				);";
+
 			int rows = 0;
 			do
-			{
+			{				
 				var sw = Stopwatch.StartNew();
-				rows = await cn.ExecuteAsync(
-					$@"DELETE FROM serilog
-					WHERE id IN (
-						SELECT id
-						FROM serilog
-						WHERE timestamp < NOW() - INTERVAL @retentionDays || ' days'
-						ORDER BY timestamp
-						LIMIT {ChunkSize};
-					)", new { retentionDays = _retentionDays }, commandTimeout: 0);
+				rows = await cn.ExecuteAsync(sql, new { retentionDays = _retentionDays }, commandTimeout: 0);
 				sw.Stop();
 
 				if (rows > 0)

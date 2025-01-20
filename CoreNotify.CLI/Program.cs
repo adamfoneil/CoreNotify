@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 var config = new ConfigurationBuilder()
 	.AddJsonFile("appsettings.Development.json", optional: true)
-	.AddUserSecrets("d8a4c5af-79af-4ebd-a6a0-791dbd8ac6a6")
+	.AddUserSecrets("d8a4c5af-79af-4ebd-a6a0-791dbd8ac6a6")	
 	.AddEnvironmentVariables()
 	.Build();
 

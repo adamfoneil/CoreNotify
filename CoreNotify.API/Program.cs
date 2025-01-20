@@ -1,9 +1,9 @@
 using Coravel;
-using CoreNotify.API;
 using CoreNotify.API.Data;
 using MailerSend;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
