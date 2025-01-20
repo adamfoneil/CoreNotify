@@ -14,9 +14,9 @@ public class InfoController : ControllerBase
 		{
 			BuildInfo = new
 			{
-				BuildInfo.LocalBuildTime,
+				LocalTime = BuildInfo.LocalBuildTime,
 				BuildInfo.Git.ShortCommitId,
-				BuildAge = BuildInfo.LocalBuildTime.Humanize()
+				Age = BuildInfo.LocalBuildTime.Humanize()
 			}
 		});
 	}
