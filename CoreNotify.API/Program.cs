@@ -11,8 +11,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 var serilogRetentionDays = builder.Configuration.GetValue<int?>("SerilogRetentionDays") ?? 15;
 
 Log.Logger = new LoggerConfiguration()
-	.MinimumLevel.Warning()
-	.MinimumLevel.Override("CoreNotify", Serilog.Events.LogEventLevel.Information)
+	.MinimumLevel.Information()
+	.MinimumLevel.Override("CoreNotify", Serilog.Events.LogEventLevel.Debug)
 	.WriteTo.Console()
 	.WriteTo.PostgreSQL(connectionString, "serilog", needAutoCreateTable: true)
 	.CreateLogger();
@@ -23,11 +23,11 @@ builder.Services
 	.AddScheduler()
 	.Configure<MailerSendOptions>(builder.Configuration.GetSection("MailerSend"))
 	.AddSingleton<MailerSendClient>()
-	.AddSingleton<EmailSenderContent>()	
+	.AddSingleton<EmailSenderContent>()
 	.AddSingleton(sp => new SerilogCleanup(connectionString, serilogRetentionDays, sp.GetRequiredService<ILogger<SerilogCleanup>>()))
-	.AddDbContextFactory<ApplicationDbContext>(options => options.UseNpgsql(connectionString))
+	.AddDbContextFactory<ApplicationDbContext>(options => options.UseNpgsql(connectionString))	
 	.AddControllers();
-
+	
 var app = builder.Build();
 
 app.Services.UseScheduler(scheduler =>
