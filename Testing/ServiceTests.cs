@@ -15,6 +15,8 @@ public class ServiceTests
 
 		var cleanup = new SerilogCleanup(connectionString, 10, logger);
 		await cleanup.ExecuteAsync();
+
+		Assert.IsTrue(cleanup.Success);
 	}
 
 	private static IConfiguration Config => new ConfigurationBuilder()

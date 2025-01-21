@@ -11,8 +11,11 @@ public class SerilogCleanup(string connectionString, int retentionDays, ILogger<
 	private readonly int _retentionDays = retentionDays;
 	private readonly ILogger<SerilogCleanup> _logger = logger;
 
+	public bool Success { get; private set; }
+
 	public async Task ExecuteAsync()
 	{
+		Success = false;
 		try
 		{
 			using var cn = new NpgsqlConnection(_connectionString);
@@ -23,10 +26,10 @@ public class SerilogCleanup(string connectionString, int retentionDays, ILogger<
 				WHERE id IN (
 					SELECT id
 					FROM serilog
-					WHERE timestamp < NOW() - INTERVAL '1 day' * $1
+					WHERE timestamp < NOW() - INTERVAL '1 day' * @retentionDays
 					ORDER BY timestamp
-					LIMIT {ChunkSize};
-				);";
+					LIMIT {ChunkSize}
+				)";
 
 			int rows = 0;
 			do
@@ -41,6 +44,8 @@ public class SerilogCleanup(string connectionString, int retentionDays, ILogger<
 				}
 
 			} while (rows > 0);
+
+			Success = true;
 		}
 		catch (Exception exc)
 		{
