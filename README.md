@@ -12,7 +12,7 @@ corenotify register <youremail>
 ```
 You will receive your CoreNotify API key at the email you provide.
 
-3. Add the [CoreNotify.MailerSend](https://www.nuget.org/packages/CoreNotify.CLI/) package to your project.
+3. Add the [CoreNotify.MailerSend](https://www.nuget.org/packages/CoreNotify.MailerSend/) package to your project.
 ```
 dotnet add package CoreNotify.MailerSend
 ```
@@ -28,7 +28,7 @@ A few things to note about how this works:
 - For generic email capability with MailerSend, use [MailerSendClient](https://github.com/adamfoneil/CoreNotify/blob/master/MailerSend/MailerSendClient.cs). In that case, you use your own MailerSend API key.
 
 # Payment
-If you like this service, send $5 * number of months you'd like
+All accounts have a 30 day free trial. If you like this service, send $5 * number of months you'd like
 
 [paypal.me/adamosoftware](https://paypal.me/adamosoftware?country.x=US&locale.x=en_US)
 
