@@ -12,7 +12,7 @@ corenotify register <youremail>
 ```
 You will receive your CoreNotify API key at the email you provide.
 
-3. Add the [CoreNotify.MailerSend](https://www.nuget.org/packages/CoreNotify.CLI/) package to your project.
+3. Add the [CoreNotify.MailerSend](https://www.nuget.org/packages/CoreNotify.MailerSend/) package to your project.
 ```
 dotnet add package CoreNotify.MailerSend
 ```
