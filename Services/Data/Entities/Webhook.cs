@@ -8,8 +8,7 @@ public class Webhook : BaseEntity
 {
 	public int AccountId { get; set; }
 	public string Name { get; set; } = default!;
-	public string Url { get; set; } = default!;
-	public string? QueryString { get; set; }
+	public string Url { get; set; } = default!;	
 	public string? CronExpression { get; set; }
 	/// <summary>
 	/// true when the background service is currently executing

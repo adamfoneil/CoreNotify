@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Services;
 using Services.Data;
 using Services.Data.Entities;
+using System.Text.Json;
 
 namespace CoreNotify.API;
 
@@ -15,14 +16,15 @@ public class SerilogAlertService(
 {
 	private readonly MailerSendClient _mailerSendClient = mailerSendClient;
 
-	protected override async Task<(string Response, bool WebhookModified)> ProcessResponseAsync(HttpResponseMessage? response, ApplicationDbContext db, Webhook webhook)
+	protected override async Task<string> ProcessResponseAsync(HttpResponseMessage? response, ApplicationDbContext db, Webhook webhook)
 	{
-		if (response == null) return ("No response", false);
+		if (response == null) return string.Empty;
 
 		var logEntries = await response.Content.ReadFromJsonAsync<SerilogEntry[]>() ?? [];
 		var nextId = logEntries.Any() ? logEntries.Max(entry => entry.Id) : 0;
 
-		webhook.QueryString = $"?fromId={nextId}";
-		return ($"Received {logEntries.Length} new log entries", true);
+
+
+		return JsonSerializer.Serialize(logEntries);
 	}
 }

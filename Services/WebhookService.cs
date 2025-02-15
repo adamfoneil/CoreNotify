@@ -2,8 +2,8 @@
 using Microsoft.Extensions.Logging;
 using Services.Data;
 using Services.Data.Entities;
-using Services.Extensions;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 
 namespace Services;
 
@@ -43,7 +43,7 @@ public abstract class WebhookService(
 		return results;
 	}
 
-	protected abstract Task<(string Response, bool WebhookModified)> ProcessResponseAsync(HttpResponseMessage? response, ApplicationDbContext db, Webhook webhook);
+	protected abstract Task<string> ProcessResponseAsync(HttpResponseMessage? response, ApplicationDbContext db, Webhook webhook);
 
 	public async Task ExecuteAsync(Webhook webhook, bool manualInvocation)
 	{
@@ -59,39 +59,33 @@ public abstract class WebhookService(
 		webhook.IsLocked = true;
 		await db.SaveChangesAsync();
 
-		var url = UrlBuilder.AppendQueryString(webhook.Url, webhook.QueryString);
-
 		var log = new WebhookLog
 		{
 			WebhookId = webhook.Id,
-			Url = url,
+			Url = webhook.Url,
 			ManuallyInvoked = manualInvocation,
 			Timestamp = DateTimeOffset.Now
 		};
 
 		var client = _httpClientFactory.CreateClient();
+		client.DefaultRequestHeaders.Add("User-Agent", "CoreNotify.WebhookService");
+		client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("ApiKey", webhook.Account.ApiKey);
+
 		try
 		{
-			Logger.LogDebug("Calling webhook {name} at {url}", webhook.Name, url);
+			Logger.LogDebug("Calling webhook {name} at {url}", webhook.Name, webhook.Url);
+			
 			var sw = Stopwatch.StartNew();			
-			var response = await client.GetAsync(url);
+			var response = await client.GetAsync(webhook.Url);
 			sw.Stop();
-			log.IsSuccessResult = response.IsSuccessStatusCode;
 
-			var (logResponse, webhookModified) = await ProcessResponseAsync(response, db, webhook);
-			log.Response = logResponse;
+			log.IsSuccessResult = response.IsSuccessStatusCode;			
+			log.Response = await ProcessResponseAsync(response, db, webhook); 
 			log.ElapsedMS = sw.ElapsedMilliseconds;
-
-			if (webhookModified)
-			{
-				Logger.LogDebug("Webhook {name} was modified by response handler, saving changes", webhook.Name);
-				db.Webhooks.Update(webhook);
-				await db.SaveChangesAsync();
-			}
 		}
 		catch (Exception ex)
 		{
-			Logger.LogError(ex, "Error calling webhook {name} at {url}", webhook.Name, url);
+			Logger.LogError(ex, "Error calling webhook {name} at {url}", webhook.Name, webhook.Url);
 			log.IsSuccessResult = false;
 			log.Response = ex.Message;
 		}

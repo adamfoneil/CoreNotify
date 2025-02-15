@@ -8,4 +8,5 @@ public class SerilogEntry
 	public string MessageTemplate { get; set; } = default!;
 	public string Level { get; set; } = default!;
 	public string? Exception { get; set; }
+	public Dictionary<string, object?> Properties { get; set; } = [];
 }
