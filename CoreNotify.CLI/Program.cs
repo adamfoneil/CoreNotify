@@ -47,6 +47,25 @@ try
 		case "info":
 			Console.WriteLine($"Service URL: {client.ServiceUrl}");
 			break;
+
+		case "webhooks":
+			switch (args[1])
+			{
+				case "list":
+					// list active webhooks and last 3 logs each
+					// list inactive webhooks
+					break;
+
+				case "save":
+					break;
+
+				case "activate":
+					break;
+
+				case "deactivate":
+					break;
+			}
+			break;
 	}	
 }
 catch (Exception exc)

@@ -12,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\CoreNotify.SerilogAlerts.Shared\SerilogEntry.cs" Link="SerilogEntry.cs" />
     <Compile Include="..\MailerSend\EmailSenderContent.cs" Link="EmailSenderContent.cs" />
     <Compile Include="..\MailerSend\MailerSendClient.cs" Link="MailerSendClient.cs" />
     <Compile Include="..\MailerSend\MailerSendException.cs" Link="MailerSendException.cs" />

@@ -12,6 +12,8 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 	public DbSet<Account> Accounts { get; set; }
 	public DbSet<DailyUsage> DailyUsage { get; set; }
 	public DbSet<SentMessage> SentMessages { get; set; }
+	public DbSet<Webhook> Webhooks { get; set; }
+	public DbSet<WebhookLog> WebhookLogs { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
