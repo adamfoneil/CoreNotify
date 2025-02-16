@@ -21,24 +21,7 @@ public static class AppExtensions
 
 		endpoints.MapGet(route, async (HttpRequest request, IOptions<WebhookOptions> options, ISerilogQuery query, ILogger<T> logger) =>
 		{
-			if (request.Headers.TryGetValue("ApiKey", out var apiKeyValues) == false || apiKeyValues.Count == 0)
-			{
-				logger.LogWarning("No ApiKey header found in request");
-				return Results.Unauthorized();
-			}
-
-			var apiKey = options.Value.ApiKey;
-			if (string.IsNullOrWhiteSpace(apiKey))
-			{
-				logger.LogWarning("No ApiKey configured for Serilog alert webhook");
-				return Results.Unauthorized();
-			}
-
-			if (apiKey != apiKeyValues[0])
-			{
-				logger.LogWarning("Invalid ApiKey header found in request");
-				return Results.Unauthorized();
-			}
+			if (!Authorized(request, logger, options.Value.ApiKey)) return Results.Unauthorized();
 
 			try
 			{
@@ -53,5 +36,28 @@ public static class AppExtensions
 				return Results.Problem(exc.Message);
 			}
 		});
+	}
+
+	private static bool Authorized<T>(HttpRequest request, ILogger<T> logger, string apiKey)
+	{
+		if (request.Headers.TryGetValue("ApiKey", out var apiKeyValues) == false || apiKeyValues.Count == 0)
+		{
+			logger.LogWarning("No ApiKey header found in request");
+			return false;
+		}
+
+		if (string.IsNullOrWhiteSpace(apiKey))
+		{
+			logger.LogWarning("No ApiKey configured for Serilog alert webhook");
+			return false;
+		}
+
+		if (apiKey != apiKeyValues[0])
+		{
+			logger.LogWarning("Invalid ApiKey header found in request");
+			return false;
+		}
+
+		return apiKey.Equals(apiKeyValues.First());
 	}
 }

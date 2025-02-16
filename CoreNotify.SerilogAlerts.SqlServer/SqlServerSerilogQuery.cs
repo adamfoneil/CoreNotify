@@ -8,24 +8,36 @@ using System.Diagnostics;
 namespace CoreNotify.SerilogAlerts.SqlServer;
 
 public class SqlServerSerilogQuery(
-	IOptions<SerilogQueryOptions> options,
+	IOptions<SqlServerSerilogQuery.Options> options,
 	ISerilogEntryPropertyParser parser,
 	ISerilogContinuationMarker marker,
 	ILogger<SqlServerSerilogQuery> logger) : ISerilogQuery
 {
-	private readonly SerilogQueryOptions _options = options.Value;
+	private readonly Options _options = options.Value;
 	private readonly ISerilogEntryPropertyParser _parser = parser;
 	private readonly ISerilogContinuationMarker _marker = marker;
 	private readonly ILogger<SqlServerSerilogQuery> _logger = logger;
+
+	public class Options
+	{
+		public string ConnectionString { get; set; } = default!;
+		public string TableName { get; set; } = "Serilog";
+		public string SchemaName { get; set; } = "dbo";
+		public int? MaxRows { get; set; }
+		public int QueryTimeout { get; set; } = 30;
+		public string QueryCriteria { get; set; } = "[Level]='Error'";
+		public KeyValuePair<string, string>[] ExcludeProperties { get; set; } = [];
+		public string[] ExcludeMessageTemplates { get; set; } = [];
+	}
 
 	public async Task<SerilogEntry[]> QueryNewEntriesAsync()
 	{
 		try
 		{
-			_logger.LogDebug("Getting serilog continuation marker...");
-			var id = await _marker.GetIdAsync();
-
 			using var cn = new SqlConnection(_options.ConnectionString);
+
+			_logger.LogDebug("Getting serilog continuation marker...");
+			var id = await _marker.GetIdAsync(cn);			
 
 			var top = _options.MaxRows.HasValue ? $" TOP ({_options.MaxRows.Value})" : string.Empty;
 
@@ -55,7 +67,7 @@ public class SqlServerSerilogQuery(
 			sw.Stop();
 			_logger.LogDebug("Parsed properties and applied filters in {elapsed}", sw.Elapsed);
 
-			await _marker.SetIdAsync(maxId);
+			await _marker.SetIdAsync(cn, maxId);
 			_logger.LogDebug("Marked serilog entries up to Id {maxId}", maxId);
 
 			return [.. logRows];
