@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\CoreNotify.SerilogAlerts.Shared\FilterHelper.cs" Link="FilterHelper.cs" />
     <Compile Include="..\CoreNotify.SerilogAlerts.Shared\ISerilogContinuationMarker.cs" Link="ISerilogContinuationMarker.cs" />
     <Compile Include="..\CoreNotify.SerilogAlerts.Shared\ISerilogEntryPropertyParser.cs" Link="ISerilogEntryPropertyParser.cs" />
     <Compile Include="..\CoreNotify.SerilogAlerts.Shared\ISerilogQuery.cs" Link="ISerilogQuery.cs" />
