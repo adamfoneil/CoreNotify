@@ -18,10 +18,10 @@ public class SerilogAlertService(
 
 	protected override async Task<string> ProcessResponseAsync(HttpResponseMessage? response, ApplicationDbContext db, Webhook webhook)
 	{
-		if (response == null) return string.Empty;
+		if (response == null) throw new Exception("Unexpected empty response");
 
 		var logEntries = await response.Content.ReadFromJsonAsync<SerilogEntry[]>() ?? [];
-		var nextId = logEntries.Any() ? logEntries.Max(entry => entry.Id) : 0;
+		
 
 
 
