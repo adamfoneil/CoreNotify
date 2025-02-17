@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.SerilogAlerts.Sh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.SerilogAlerts.SqlServer", "CoreNotify.SerilogAlerts.SqlServer\CoreNotify.SerilogAlerts.SqlServer.csproj", "{5575DE0D-A64B-CBBF-BF37-B82380418386}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing.SerilogAlerts.Shared", "Testing.SerilogAlerts.Shared\Testing.SerilogAlerts.Shared.csproj", "{98DFFD14-04CD-4466-A417-DFB3A175BA97}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -69,6 +71,10 @@ Global
 		{5575DE0D-A64B-CBBF-BF37-B82380418386}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5575DE0D-A64B-CBBF-BF37-B82380418386}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5575DE0D-A64B-CBBF-BF37-B82380418386}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98DFFD14-04CD-4466-A417-DFB3A175BA97}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98DFFD14-04CD-4466-A417-DFB3A175BA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98DFFD14-04CD-4466-A417-DFB3A175BA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98DFFD14-04CD-4466-A417-DFB3A175BA97}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

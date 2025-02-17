@@ -51,8 +51,7 @@ public class SqlServerSerilogContinuationMarker(IOptions<SqlServerSerilogContinu
 	public async Task<long> GetIdAsync(IDbConnection connection) => 
 		await connection.QuerySingleOrDefaultAsync<long>($"SELECT [LogEntryId] FROM [{_options.SchemaName}].[{_options.TableName}]");
 
-	public Task SetIdAsync(IDbConnection connection, long id)
-	{
-		throw new NotImplementedException();
-	}
+	public async Task SetIdAsync(IDbConnection connection, long id) =>
+		await connection.ExecuteAsync($@"
+			UPDATE [{_options.SchemaName}].[{_options.TableName}] SET [LogEntryId] = @id", new { id });
 }
