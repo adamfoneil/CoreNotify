@@ -59,6 +59,9 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 			case MessageType.ResetLink:
 				usage.ResetLinks++;
 				break;
+			case MessageType.Alert:
+				usage.Alerts++;
+				break;
 		}
 
 		if (usage.Id == 0)

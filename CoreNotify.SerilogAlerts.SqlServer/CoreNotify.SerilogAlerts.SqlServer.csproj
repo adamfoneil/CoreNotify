@@ -4,6 +4,17 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>CoreNotify.SerilogAlerts.SqlServer</PackageId>
+    <Title>CoreNotify Serilog Alerts for SQL Server</Title>
+    <Version>0.9.0-alpha</Version>
+    <Authors>Adam O'Neil</Authors>
+    <Copyright>Copyright (c) 2025 Adam O'Neil</Copyright>
+    <PackageProjectUrl>https://github.com/adamfoneil/CoreNotify</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/adamfoneil/CoreNotify</RepositoryUrl>
+    <PackageTags>serilog alerts</PackageTags>
+    <Description>Use CoreNotify to send email alerts to yourself of Serilog data from SQL Server</Description>
+    <PackageReadmeFile></PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>

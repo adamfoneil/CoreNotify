@@ -18,7 +18,7 @@ public class SqlServerSerilogContinuationMarker(IOptions<SqlServerSerilogContinu
 	/// <summary>
 	/// help from https://chatgpt.com/share/67b26ad5-ea34-8011-87f4-426da8dc37fd
 	/// </summary>
-	public async Task EnsureCreatedAsync(IDbConnection connection)
+	public void EnsureCreated(IDbConnection connection)
 	{
 		string schemaCheckQuery = @"
             IF NOT EXISTS (SELECT 1 FROM sys.schemas WHERE name = @SchemaName)
@@ -43,9 +43,9 @@ public class SqlServerSerilogContinuationMarker(IOptions<SqlServerSerilogContinu
 			INSERT INTO [{_options.SchemaName}].[{_options.TableName}] ([LogEntryId]) VALUES (1);
 		";	
 
-		await connection.ExecuteAsync(schemaCheckQuery, new { _options.SchemaName });
-		await connection.ExecuteAsync(tableCheckQuery, new { _options.SchemaName, _options.TableName });
-		await connection.ExecuteAsync(insertSeedValueQuery);
+		connection.Execute(schemaCheckQuery, new { _options.SchemaName });
+		connection.Execute(tableCheckQuery, new { _options.SchemaName, _options.TableName });
+		connection.Execute(insertSeedValueQuery);
 	}
 
 	public async Task<long> GetIdAsync(IDbConnection connection) => 

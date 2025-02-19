@@ -9,7 +9,8 @@ public enum MessageType
 {
 	Confirmation = 1,
 	ResetLink = 2,
-	ResetCode = 3
+	ResetCode = 3,
+	Alert = 4
 }
 
 public class SentMessage : BaseEntity

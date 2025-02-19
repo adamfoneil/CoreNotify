@@ -23,6 +23,7 @@
     <Compile Include="..\CoreNotify.Shared\AuthorizationHeader.cs" Link="Shared\AuthorizationHeader.cs" />
     <Compile Include="..\CoreNotify.Shared\Models\AccountUsageResponse.cs" Link="Shared\AccountUsageResponse.cs" />
     <Compile Include="..\CoreNotify.Shared\Models\CreateAccountRequest.cs" Link="Shared\CreateAccountRequest.cs" />
+    <Compile Include="..\CoreNotify.Shared\Models\SendAlertRequest.cs" Link="Shared\SendAlertRequest.cs" />
     <Compile Include="..\CoreNotify.Shared\Models\SendConfirmationRequest.cs" Link="Shared\SendConfirmationRequest.cs" />
     <Compile Include="..\CoreNotify.Shared\Models\SendRequestBase.cs" Link="Shared\SendRequestBase.cs" />
     <Compile Include="..\CoreNotify.Shared\Models\SendResetCodeRequest.cs" Link="Shared\SendResetCodeRequest.cs" />

@@ -60,6 +60,14 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		return await response.Content.ReadAsStringAsync();
 	}
 
+	public async Task SendAlertAsync(string accountEmail, string apiKey, SendAlertRequest request)
+	{
+		var client = GetHttpClient();
+		client.AddAuthorization(accountEmail, apiKey);
+		var response = await client.PostAsJsonAsync("api/send/alert", request);
+		response.ThrowIfProblemResponse();
+	}
+
 	private HttpClient GetHttpClient()
 	{
 		var client = _httpClientFactory.CreateClient();

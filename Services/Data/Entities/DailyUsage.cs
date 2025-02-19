@@ -12,6 +12,7 @@ public class DailyUsage : BaseEntity
 	public int Confirmations { get; set; }
 	public int ResetCodes { get; set; }
 	public int ResetLinks { get; set; }
+	public int Alerts { get; set; }
 
 	public Account Account { get; set; } = default!;
 }
