@@ -58,6 +58,7 @@ public class SendController(
 		return Ok(msgId);
 	}
 
+	[HttpPost("Alert")]
 	public async Task<IActionResult> Alert(SendAlertRequest request)
 	{
 		var account = HttpContext.Items["Account"] as Account ?? throw new Exception("account missing");
