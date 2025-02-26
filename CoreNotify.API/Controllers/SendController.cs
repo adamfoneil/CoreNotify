@@ -58,26 +58,41 @@ public class SendController(
 		return Ok(msgId);
 	}
 
-	private async Task<string> SendInnerAsync(MessageType messageType, Account account, SendRequestBase request, string subject, string html)
+	public async Task<IActionResult> Alert(SendAlertRequest request)
 	{
+		var account = HttpContext.Items["Account"] as Account ?? throw new Exception("account missing");
+
+		var msgId = await SendInnerAsync(MessageType.Alert, account, request,
+			request.Subject,
+			request.HtmlBody, 
+			account.Email); // to prevent abuse, alerts may be sent only to the account email
+
+		return Ok(msgId);
+	}
+
+	private async Task<string> SendInnerAsync(
+		MessageType messageType, Account account, SendRequestBase request, string subject, string html,
+		string? overrideRecipient = null)
+	{
+		var sendTo = overrideRecipient ?? request.Email;
 		var msgId = await _mailerSendClient.SendAsync(new()
 		{
 			From = request.SenderMailbox + $"@{request.DomainName}.corenotify.net",
-			To = [request.Email],
+			To = [ sendTo ],
 			Subject = subject,
 			Html = html
 		});
 
 		_logger.LogInformation(
-			"{account} sent confirmation email {msgId} from {mailbox}@{domain} to {email}",
-			account.Email, msgId, request.SenderMailbox, request.DomainName, request.Email);
+			"{account} sent {messageType} email {msgId} from {mailbox}@{domain} to {email}",
+			account.Email, messageType, msgId, request.SenderMailbox, request.DomainName, sendTo);
 
 		using var db = _dbFactory.CreateDbContext();
 		await db.LogActivityAsync(new()
 		{
 			AccountId = account.Id,
 			MessageId = msgId!,
-			Recipient = request.Email,
+			Recipient = sendTo,
 			MessageType = messageType,
 			FromDomain = request.DomainName,
 			FromMailbox = request.SenderMailbox
