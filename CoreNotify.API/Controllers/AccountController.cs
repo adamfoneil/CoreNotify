@@ -93,13 +93,14 @@ public class AccountController(
 			return Ok(new AccountUsageResponse()
 			{
 				RenewalDate = account.RenewalDate,
-				RecentUsage = recent.Select(row => new AccountUsageResponse.DailyUsage()
+				RecentUsage = [.. recent.Select(row => new AccountUsageResponse.DailyUsage()
 				{
 					Date = row.Date,
 					Confirmations = row.Confirmations,
 					ResetCodes = row.ResetCodes,
-					ResetLinks = row.ResetLinks
-				}).ToArray()
+					ResetLinks = row.ResetLinks,
+					Alerts = row.Alerts
+				})]
 			});
 		}
 		catch (Exception exc)
