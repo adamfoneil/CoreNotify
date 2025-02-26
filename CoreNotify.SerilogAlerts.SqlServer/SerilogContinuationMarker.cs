@@ -5,7 +5,7 @@ using System.Data;
 
 namespace CoreNotify.SerilogAlerts.SqlServer;
 
-public class SqlServerSerilogContinuationMarker(IOptions<SqlServerSerilogContinuationMarker.Options> options) : ISerilogContinuationMarker
+public class SerilogContinuationMarker(IOptions<SerilogContinuationMarker.Options> options) : ISerilogContinuationMarker
 {
 	private readonly Options _options = options.Value;
 

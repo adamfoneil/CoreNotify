@@ -18,6 +18,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="..\CoreNotify.Client\CoreNotifyClient.cs" Link="Client\CoreNotifyClient.cs" />
+    <Compile Include="..\CoreNotify.Client\Options.cs" Link="Client\Options.cs" />
+    <Compile Include="..\CoreNotify.Client\ProblemResponseHelper.cs" Link="Client\ProblemResponseHelper.cs" />
     <Compile Include="..\CoreNotify.SerilogAlerts.Shared\FilterHelper.cs" Link="FilterHelper.cs" />
     <Compile Include="..\CoreNotify.SerilogAlerts.Shared\ISerilogContinuationMarker.cs" Link="ISerilogContinuationMarker.cs" />
     <Compile Include="..\CoreNotify.SerilogAlerts.Shared\ISerilogEntryPropertyParser.cs" Link="ISerilogEntryPropertyParser.cs" />
@@ -30,8 +33,13 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <PackageReference Include="Coravel" Version="6.0.2" />
 	  <PackageReference Include="Dapper" Version="2.1.66" />
 	  <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Client\" />
 	</ItemGroup>
 	
 </Project>

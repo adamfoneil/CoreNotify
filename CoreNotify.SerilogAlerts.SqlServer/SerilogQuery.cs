@@ -7,16 +7,16 @@ using System.Diagnostics;
 
 namespace CoreNotify.SerilogAlerts.SqlServer;
 
-public class SqlServerSerilogQuery(
-	IOptions<SqlServerSerilogQuery.Options> options,
+public class SerilogQuery(
+	IOptions<SerilogQuery.Options> options,
 	ISerilogEntryPropertyParser parser,
 	ISerilogContinuationMarker marker,
-	ILogger<SqlServerSerilogQuery> logger) : ISerilogQuery
+	ILogger<SerilogQuery> logger) : ISerilogQuery
 {
 	private readonly Options _options = options.Value;
 	private readonly ISerilogEntryPropertyParser _parser = parser;
 	private readonly ISerilogContinuationMarker _marker = marker;
-	private readonly ILogger<SqlServerSerilogQuery> _logger = logger;
+	private readonly ILogger<SerilogQuery> _logger = logger;
 
 	public class Options
 	{
@@ -57,7 +57,7 @@ public class SqlServerSerilogQuery(
 			{
 				if (entry.Id > maxId) maxId = entry.Id;
 				entry.PropertyDictionary = _parser.ParseProperties(entry.Properties);
-				entry.Properties = null; // after parsing, we don't need this value anymore, so let's save some webhook bandwidth
+				entry.Properties = null; // after parsing, we don't need this value anymore
 
 				if (Exclude(entry)) exclude.Add(entry.Id);
 			}
