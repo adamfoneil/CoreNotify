@@ -4,14 +4,6 @@ using Microsoft.Extensions.Options;
 
 namespace MailerSend;
 
-public class CoreNotifyOptions
-{
-	public string AccountEmail { get; set; } = default!;
-	public string ApiKey { get; set; } = default!;
-	public string DomainName { get; set; } = default!;
-	public string SenderMailbox { get; set; } = "noreply";
-}
-
 /// <summary>
 /// provides account notifications (confirmations, resets) for ASP.NET Core Identity using your CoreNotify account
 /// </summary>
