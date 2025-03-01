@@ -1,10 +1,14 @@
+using CoreNotify.SerilogAlerts.Shared;
+using CoreNotify.SerilogAlerts.SqlServer;
 using DemoApp.Components;
 using DemoApp.Components.Account;
 using DemoApp.Data;
+using DemoApp.SerilogAlerts;
 using MailerSend.Extensions;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 
@@ -28,6 +32,12 @@ builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 builder.Services.AddCoreNotify<ApplicationUser>(builder.Configuration);
 
+builder.Services.Configure<SerilogQuery.Options>(builder.Configuration.GetSection("SerilogAlerts"));
+builder.Services.AddSingleton<ISerilogEntryPropertyParser, XmlPropertyParser>();
+builder.Services.AddSingleton<ISerilogContinuationMarker, ContinuationMarker>();
+builder.Services.AddSingleton<ISerilogQuery, SerilogQuery>();
+builder.Services.AddSingleton<SerilogAlertService>();
+
 builder.Services.AddSerilog();
 
 builder.Services.AddAuthentication(options =>
@@ -44,6 +54,13 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
 	.AddEntityFrameworkStores<ApplicationDbContext>()
 	.AddSignInManager()
 	.AddDefaultTokenProviders();
+
+var registeredServices = builder.Services.Select(descriptor => new
+	{
+		ServiceType = descriptor.ServiceType.FullName,
+		ImplementationType = descriptor.ImplementationType?.FullName,
+		descriptor.Lifetime
+	}).ToArray();
 
 var app = builder.Build();
 
