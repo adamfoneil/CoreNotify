@@ -7,7 +7,7 @@ using System.Text;
 
 namespace CoreNotify.SerilogAlerts.SqlServer;
 
-class SerilogAlertService(
+public class SerilogAlertService(
 	ISerilogQuery query, 
 	CoreNotifyClient client,
 	IOptions<CoreNotifyOptions> options) : IInvocable
@@ -15,11 +15,6 @@ class SerilogAlertService(
 	private readonly ISerilogQuery _query = query;
 	private readonly CoreNotifyClient _client = client;
 	private readonly CoreNotifyOptions _options = options.Value;
-
-	public async Task InvokeManual()
-	{
-		// intended for interactive testing
-	}
 
 	public async Task Invoke()
 	{
