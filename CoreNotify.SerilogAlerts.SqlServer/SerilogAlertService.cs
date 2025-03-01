@@ -16,10 +16,20 @@ public class SerilogAlertService(
 	private readonly CoreNotifyClient _client = client;
 	private readonly CoreNotifyOptions _options = options.Value;
 
+	public async Task TestAsync(int limitRows)
+	{
+		var data = await _query.TestAsync(limitRows);
+		await SendAlertInnerAsync(data);
+	}
+
 	public async Task Invoke()
 	{
 		var data = await _query.QueryNewEntriesAsync();
+		await SendAlertInnerAsync(data);
+	}
 
+	private async Task SendAlertInnerAsync(SerilogEntry[] data)
+	{
 		if (!data.Any()) return;
 
 		StringBuilder sb = new();
