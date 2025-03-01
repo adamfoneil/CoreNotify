@@ -18,23 +18,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\CoreNotify.Client\CoreNotifyClient.cs" Link="Client\CoreNotifyClient.cs" />
-    <Compile Include="..\CoreNotify.Client\Options.cs" Link="Client\Options.cs" />
-    <Compile Include="..\CoreNotify.Client\ProblemResponseHelper.cs" Link="Client\ProblemResponseHelper.cs" />
     <Compile Include="..\CoreNotify.SerilogAlerts.Shared\FilterHelper.cs" Link="FilterHelper.cs" />
     <Compile Include="..\CoreNotify.SerilogAlerts.Shared\ISerilogContinuationMarker.cs" Link="ISerilogContinuationMarker.cs" />
     <Compile Include="..\CoreNotify.SerilogAlerts.Shared\ISerilogEntryPropertyParser.cs" Link="ISerilogEntryPropertyParser.cs" />
     <Compile Include="..\CoreNotify.SerilogAlerts.Shared\ISerilogQuery.cs" Link="ISerilogQuery.cs" />
     <Compile Include="..\CoreNotify.SerilogAlerts.Shared\SerilogEntry.cs" Link="SerilogEntry.cs" />
     <Compile Include="..\CoreNotify.Shared\AuthorizationHeader.cs" Link="Shared\AuthorizationHeader.cs" />
-    <Compile Include="..\CoreNotify.Shared\Models\AccountUsageResponse.cs" Link="Client\AccountUsageResponse.cs" />
-    <Compile Include="..\CoreNotify.Shared\Models\CreateAccountRequest.cs" Link="Client\CreateAccountRequest.cs" />
-    <Compile Include="..\CoreNotify.Shared\Models\SendAlertRequest.cs" Link="Client\SendAlertRequest.cs" />
-    <Compile Include="..\CoreNotify.Shared\Models\SendConfirmationRequest.cs" Link="Client\SendConfirmationRequest.cs" />
-    <Compile Include="..\CoreNotify.Shared\Models\SendRequestBase.cs" Link="Client\SendRequestBase.cs" />
-    <Compile Include="..\CoreNotify.Shared\Models\SendResetCodeRequest.cs" Link="Client\SendResetCodeRequest.cs" />
-    <Compile Include="..\CoreNotify.Shared\Models\SendResetLinkRequest.cs" Link="Client\SendResetLinkRequest.cs" />
-    <Compile Include="..\CoreNotify.MailerSend\CoreNotifyOptions.cs" Link="MailerSend\CoreNotifyOptions.cs" />
   </ItemGroup>
 
 	<ItemGroup>
@@ -43,13 +32,12 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Coravel" Version="6.0.2" />
+	  <PackageReference Include="CoreNotify.MailerSend" Version="1.0.5" />
 	  <PackageReference Include="Dapper" Version="2.1.66" />
 	  <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Client\" />
-	  <Folder Include="MailerSend\" />
 	  <Folder Include="Shared\" />
 	</ItemGroup>
 	

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 
@@ -32,7 +33,13 @@ builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 builder.Services.AddCoreNotify<ApplicationUser>(builder.Configuration);
 
-builder.Services.Configure<SerilogQuery.Options>(builder.Configuration.GetSection("SerilogAlerts"));
+SerilogQuery.Options options = new();
+builder.Configuration.GetSection("SerilogAlerts").Bind(options);
+// this comes from secrets, so I have to load it separately
+options.ConnectionString = builder.Configuration.GetConnectionString("SpayWise") ?? throw new InvalidOperationException("Connection string 'SpayWise' not found.");
+
+//builder.Services.Configure<SerilogQuery.Options>(builder.Configuration.GetSection("SerilogAlerts"));
+builder.Services.AddSingleton(Options.Create(options));
 builder.Services.AddSingleton<ISerilogEntryPropertyParser, XmlPropertyParser>();
 builder.Services.AddSingleton<ISerilogContinuationMarker, ContinuationMarker>();
 builder.Services.AddSingleton<ISerilogQuery, SerilogQuery>();
@@ -54,13 +61,6 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
 	.AddEntityFrameworkStores<ApplicationDbContext>()
 	.AddSignInManager()
 	.AddDefaultTokenProviders();
-
-var registeredServices = builder.Services.Select(descriptor => new
-	{
-		ServiceType = descriptor.ServiceType.FullName,
-		ImplementationType = descriptor.ImplementationType?.FullName,
-		descriptor.Lifetime
-	}).ToArray();
 
 var app = builder.Build();
 
