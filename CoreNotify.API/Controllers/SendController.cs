@@ -25,6 +25,8 @@ public class SendController(
 	[HttpPost("Confirmation")]
 	public async Task<IActionResult> Confirmation(SendConfirmationRequest request)
 	{
+		_logger.LogDebug("Sending confirmation {@request}", request);
+
 		var account = HttpContext.Items["Account"] as Account ?? throw new Exception("account missing");
 
 		var msgId = await SendInnerAsync(MessageType.Confirmation, account, request,
@@ -37,6 +39,8 @@ public class SendController(
 	[HttpPost("ResetLink")]
 	public async Task<IActionResult> ResetLink(SendResetLinkRequest request)
 	{
+		_logger.LogDebug("Sending reset link {@request}", request);
+
 		var account = HttpContext.Items["Account"] as Account ?? throw new Exception("account missing");
 
 		var msgId = await SendInnerAsync(MessageType.ResetLink, account, request,
@@ -49,6 +53,8 @@ public class SendController(
 	[HttpPost("ResetCode")]
 	public async Task<IActionResult> ResetCode(SendResetCodeRequest request)
 	{
+		_logger.LogDebug("Sending reset code {@request}", request);
+
 		var account = HttpContext.Items["Account"] as Account ?? throw new Exception("account missing");
 
 		var msgId = await SendInnerAsync(MessageType.ResetCode, account, request,
@@ -61,6 +67,8 @@ public class SendController(
 	[HttpPost("Alert")]
 	public async Task<IActionResult> Alert(SendAlertRequest request)
 	{
+		_logger.LogDebug("Sending alert {@request}", request);
+
 		var account = HttpContext.Items["Account"] as Account ?? throw new Exception("account missing");
 
 		var msgId = await SendInnerAsync(MessageType.Alert, account, request,
