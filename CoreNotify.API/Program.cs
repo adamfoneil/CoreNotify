@@ -10,7 +10,7 @@ using System.Collections.Concurrent;
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection string 'DefaultConnection' not found");
-var serilogRetentionDays = builder.Configuration.GetValue<int?>("SerilogRetentionDays") ?? 15;
+var serilogRetentionDays = builder.Configuration.GetValue<int?>("SerilogRetentionDays") ?? 5;
 
 Log.Logger = new LoggerConfiguration()
 	.MinimumLevel.Information()
