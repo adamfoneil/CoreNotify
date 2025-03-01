@@ -16,7 +16,7 @@ public sealed class PropertyParsing
 			["RequestId"] = "0HM9T9H9V6F1F:00000001"
 		};
 
-		Assert.IsTrue(FilterHelper.ExcludeByProperty(excludeProperties, entryProperties));
+		Assert.IsTrue(FilterHelper.ExcludeByProperty(excludeProperties, entryProperties, out _));
 	}
 
 	[TestMethod]
@@ -28,7 +28,7 @@ public sealed class PropertyParsing
 			["RequestId"] = "0HM9T9H9V6F1F:00000001"
 		};
 
-		Assert.IsFalse(FilterHelper.ExcludeByProperty(DefaultExclusions(), entryProperties));
+		Assert.IsFalse(FilterHelper.ExcludeByProperty(DefaultExclusions(), entryProperties, out _));
 	}
 
 	private static KeyValuePair<string, string>[] DefaultExclusions() =>
