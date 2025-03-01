@@ -13,7 +13,7 @@
     <PackageProjectUrl>https://github.com/adamfoneil/CoreNotify</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamfoneil/CoreNotify</RepositoryUrl>
     <PackageTags>serilog alerts</PackageTags>
-    <Description>Use CoreNotify to send email alerts to yourself of Serilog data from SQL Server</Description>
+    <Description>Send scheduled email alerts to yourself (via Coravel) from Serilog data stored in SQL Server tables</Description>
     <PackageReadmeFile></PackageReadmeFile>
   </PropertyGroup>
 
