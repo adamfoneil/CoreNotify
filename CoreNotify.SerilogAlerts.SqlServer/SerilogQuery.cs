@@ -68,9 +68,10 @@ public class SerilogQuery(
 	{
 		var sw = Stopwatch.StartNew();
 
+		var sql = $"SELECT {top} * FROM [{_options.SchemaName}].[{_options.TableName}] WHERE [Id] > @Id AND {_options.QueryCriteria}";
+
 		var logRows = (await cn.QueryAsync<SerilogEntry>(
-			$"SELECT{top} * FROM [{_options.SchemaName}].[{_options.TableName}] WHERE [Id] > @Id AND {_options.QueryCriteria}",
-			new { id }, commandTimeout: _options.QueryTimeout)).ToList();
+			sql, new { id }, commandTimeout: _options.QueryTimeout)).ToList();
 
 		_logger.LogDebug("Queried {count} serilog entries in {elapsed}", logRows.Count, sw.Elapsed);
 
