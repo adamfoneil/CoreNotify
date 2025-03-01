@@ -23,7 +23,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <ProjectReference Include="..\MailerSend\MailerSend.csproj" />
+	  <ProjectReference Include="..\CoreNotify.API\CoreNotify.API.csproj" />
 	  <ProjectReference Include="..\Services\Services.csproj" />
 	</ItemGroup>
 	

@@ -5,8 +5,6 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{74E5A13F-41C3-460B-9513-6E0793378E2E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MailerSend", "MailerSend\MailerSend.csproj", "{1E77A025-4303-4FB8-AA5F-E4BCDD5E2C7B}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.API", "CoreNotify.API\CoreNotify.API.csproj", "{EF6D0B31-375F-4B9E-B861-2C7A1A2F36E0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.CLI", "CoreNotify.CLI\CoreNotify.CLI.csproj", "{0DF64909-5D70-4671-9DFE-230AA376891D}"
@@ -25,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.SerilogAlerts.Sq
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing.SerilogAlerts.Shared", "Testing.SerilogAlerts.Shared\Testing.SerilogAlerts.Shared.csproj", "{98DFFD14-04CD-4466-A417-DFB3A175BA97}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreNotify.MailerSend", "CoreNotify.MailerSend\CoreNotify.MailerSend.csproj", "{0E1DE79D-2F7F-0660-B5D3-DC7649A23DBD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +35,6 @@ Global
 		{74E5A13F-41C3-460B-9513-6E0793378E2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{74E5A13F-41C3-460B-9513-6E0793378E2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{74E5A13F-41C3-460B-9513-6E0793378E2E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1E77A025-4303-4FB8-AA5F-E4BCDD5E2C7B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E77A025-4303-4FB8-AA5F-E4BCDD5E2C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E77A025-4303-4FB8-AA5F-E4BCDD5E2C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E77A025-4303-4FB8-AA5F-E4BCDD5E2C7B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EF6D0B31-375F-4B9E-B861-2C7A1A2F36E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EF6D0B31-375F-4B9E-B861-2C7A1A2F36E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EF6D0B31-375F-4B9E-B861-2C7A1A2F36E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -75,6 +71,10 @@ Global
 		{98DFFD14-04CD-4466-A417-DFB3A175BA97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98DFFD14-04CD-4466-A417-DFB3A175BA97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{98DFFD14-04CD-4466-A417-DFB3A175BA97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0E1DE79D-2F7F-0660-B5D3-DC7649A23DBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0E1DE79D-2F7F-0660-B5D3-DC7649A23DBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0E1DE79D-2F7F-0660-B5D3-DC7649A23DBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0E1DE79D-2F7F-0660-B5D3-DC7649A23DBD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

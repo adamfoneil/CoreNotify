@@ -34,7 +34,7 @@
     <Compile Include="..\CoreNotify.Shared\Models\SendRequestBase.cs" Link="Client\SendRequestBase.cs" />
     <Compile Include="..\CoreNotify.Shared\Models\SendResetCodeRequest.cs" Link="Client\SendResetCodeRequest.cs" />
     <Compile Include="..\CoreNotify.Shared\Models\SendResetLinkRequest.cs" Link="Client\SendResetLinkRequest.cs" />
-    <Compile Include="..\MailerSend\CoreNotifyOptions.cs" Link="MailerSend\CoreNotifyOptions.cs" />
+    <Compile Include="..\CoreNotify.MailerSend\CoreNotifyOptions.cs" Link="MailerSend\CoreNotifyOptions.cs" />
   </ItemGroup>
 
 	<ItemGroup>
