@@ -11,6 +11,10 @@ public class Account : BaseEntity
 	public bool EmailConfirmed { get; set; }
 	public string ApiKey { get; set; } = Services.ApiKey.Generate(32);
 	public DateTime RenewalDate { get; set; } = DateTime.Today.AddDays(30);
+	/// <summary>
+	/// allow system-level admin view of activity from the API
+	/// </summary>
+	public bool IsAdmin { get; set; }
 
 	public ICollection<DailyUsage> DailyUsage { get; set; } = [];
 	public ICollection<SentMessage> SentMessages { get; set; } = [];

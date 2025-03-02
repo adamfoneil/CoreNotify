@@ -7,7 +7,7 @@ using Services.Data;
 namespace CoreNotify.API;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class VerifyAccountAttribute : Attribute, IAsyncActionFilter
+public class VerifyAccountAttribute(bool requireAdmin = false) : Attribute, IAsyncActionFilter
 {
 	private ILogger<VerifyAccountAttribute>? _logger;
 
@@ -32,6 +32,12 @@ public class VerifyAccountAttribute : Attribute, IAsyncActionFilter
 				if (account!.RenewalDate < DateTime.UtcNow)
 				{
 					_logger.LogDebug("Attempted use of expired key {key} from {email}", decoded.ApiKey, decoded.Email);
+					goto unauthorized;
+				}
+
+				if (requireAdmin && !account.IsAdmin)
+				{
+					_logger.LogDebug("Attempted use of non-admin key {key} from {email}", decoded.ApiKey, decoded.Email);
 					goto unauthorized;
 				}
 

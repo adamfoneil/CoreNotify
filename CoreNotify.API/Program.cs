@@ -13,7 +13,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 var serilogRetentionDays = builder.Configuration.GetValue<int?>("SerilogRetentionDays") ?? 5;
 
 Log.Logger = new LoggerConfiguration()
-	.MinimumLevel.Information()
+	.MinimumLevel.Warning()
 	.MinimumLevel.Override("CoreNotify", Serilog.Events.LogEventLevel.Debug)
 	.WriteTo.Console()
 	.WriteTo.PostgreSQL(connectionString, "serilog", needAutoCreateTable: true)
