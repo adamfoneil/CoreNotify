@@ -14,7 +14,7 @@ public class ServiceTests
 		var logger = new LoggerFactory().CreateLogger<SerilogCleanup>();
 
 		var cleanup = new SerilogCleanup(connectionString, 10, logger);
-		await cleanup.ExecuteAsync();
+		await cleanup.Invoke();
 
 		Assert.IsTrue(cleanup.Success);
 	}
