@@ -14,7 +14,8 @@ var serilogRetentionDays = builder.Configuration.GetValue<int?>("SerilogRetentio
 
 Log.Logger = new LoggerConfiguration()
 	.MinimumLevel.Warning()
-	.MinimumLevel.Override("CoreNotify", Serilog.Events.LogEventLevel.Debug)
+	.MinimumLevel.Override("CoreNotify.API", Serilog.Events.LogEventLevel.Debug)
+	.MinimumLevel.Override("Services", Serilog.Events.LogEventLevel.Debug)
 	.WriteTo.Console()
 	.WriteTo.PostgreSQL(connectionString, "serilog", needAutoCreateTable: true)
 	.CreateLogger();
