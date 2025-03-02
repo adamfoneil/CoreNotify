@@ -31,8 +31,8 @@ public class SerilogQuery(
 	public async Task<SerilogEntry[]> TestAsync(int limitRows)
 	{
 		using var cn = new SqlConnection(_options.ConnectionString);
-		var results = await QueryInternalAsync(cn, 0, $"TOP {limitRows}");
-		return [.. results.logRows];
+		var (logRows, _) = await QueryInternalAsync(cn, 0, $"TOP {limitRows}");
+		return [.. logRows];
 	}
 
 	public async Task<SerilogEntry[]> QueryNewEntriesAsync()
