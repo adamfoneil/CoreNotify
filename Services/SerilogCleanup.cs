@@ -16,13 +16,13 @@ public class SerilogCleanup(string connectionString, int retentionDays, ILogger<
 
 	public async Task Invoke()
 	{
-		_logger.LogDebug("Cleaning up Serilog older than {days}", _retentionDays);
+		_logger.LogDebug("Cleaning up Serilog older than {days} days", _retentionDays);
 
 		Success = false;
 		try
 		{
 			using var cn = new NpgsqlConnection(_connectionString);
-			const int ChunkSize = 50;
+			const int ChunkSize = 250;
 
 			var sql =
 				$@"DELETE FROM serilog
