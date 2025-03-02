@@ -14,6 +14,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 	public DbSet<SentMessage> SentMessages { get; set; }
 	public DbSet<Webhook> Webhooks { get; set; }
 	public DbSet<WebhookLog> WebhookLogs { get; set; }
+	public DbSet<Serilog> Serilog { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{
