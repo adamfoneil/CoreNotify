@@ -16,4 +16,15 @@
     <ProjectReference Include="..\CoreNotify.SerilogAlerts.Shared\CoreNotify.SerilogAlerts.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="MSTest.Analyzers" Version="3.8.2">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="17.14.2" />
+  </ItemGroup>
+
 </Project>
