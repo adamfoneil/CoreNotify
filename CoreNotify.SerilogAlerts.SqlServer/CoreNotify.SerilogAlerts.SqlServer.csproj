@@ -20,7 +20,6 @@
   <ItemGroup>
     <Compile Include="..\CoreNotify.SerilogAlerts.Shared\FilterHelper.cs" Link="FilterHelper.cs" />
     <Compile Include="..\CoreNotify.SerilogAlerts.Shared\ISerilogContinuationMarker.cs" Link="ISerilogContinuationMarker.cs" />
-    <Compile Include="..\CoreNotify.SerilogAlerts.Shared\ISerilogEntryPropertyParser.cs" Link="ISerilogEntryPropertyParser.cs" />
     <Compile Include="..\CoreNotify.SerilogAlerts.Shared\ISerilogQuery.cs" Link="ISerilogQuery.cs" />
     <Compile Include="..\CoreNotify.SerilogAlerts.Shared\SerilogEntry.cs" Link="SerilogEntry.cs" />
     <Compile Include="..\CoreNotify.Shared\AuthorizationHeader.cs" Link="Shared\AuthorizationHeader.cs" />

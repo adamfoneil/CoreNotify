@@ -9,12 +9,10 @@ namespace CoreNotify.SerilogAlerts.SqlServer;
 
 public class SerilogQuery(
 	IOptions<SerilogQuery.Options> options,
-	ISerilogEntryPropertyParser parser,
 	ISerilogContinuationMarker marker,
 	ILogger<SerilogQuery> logger) : ISerilogQuery
 {
-	private readonly Options _options = options.Value;
-	private readonly ISerilogEntryPropertyParser _parser = parser;
+	private readonly Options _options = options.Value;	
 	private readonly ISerilogContinuationMarker _marker = marker;
 	private readonly ILogger<SerilogQuery> _logger = logger;
 
@@ -66,6 +64,7 @@ public class SerilogQuery(
 
 	private async Task<(List<SerilogEntry> logRows, long maxId)> QueryInternalAsync(SqlConnection cn, long id, string top)
 	{
+		var parser = new XmlPropertyParser();
 		var sw = Stopwatch.StartNew();
 
 		var sql = $"SELECT {top} * FROM [{_options.SchemaName}].[{_options.TableName}] WHERE [Id] > @Id AND {_options.QueryCriteria}";
@@ -80,7 +79,7 @@ public class SerilogQuery(
 		foreach (var entry in logRows)
 		{
 			if (entry.Id > maxId) maxId = entry.Id;
-			entry.PropertyDictionary = _parser.ParseProperties(entry.Properties);
+			entry.PropertyDictionary = parser.ParseProperties(entry.Properties);
 			entry.Properties = null; // after parsing, we don't need this value anymore
 
 			if (Exclude(entry)) exclude.Add(entry.Id);

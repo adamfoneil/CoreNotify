@@ -1,9 +1,8 @@
-﻿using CoreNotify.SerilogAlerts.Shared;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 namespace CoreNotify.SerilogAlerts.SqlServer;
 
-public class XmlPropertyParser : ISerilogEntryPropertyParser
+public class XmlPropertyParser
 {
 	public Dictionary<string, object?> ParseProperties(string? properties)
 	{

@@ -38,9 +38,7 @@ builder.Configuration.GetSection("SerilogAlerts").Bind(options);
 // this comes from secrets, so I have to load it separately
 options.ConnectionString = builder.Configuration.GetConnectionString("SpayWise") ?? throw new InvalidOperationException("Connection string 'SpayWise' not found.");
 
-//builder.Services.Configure<SerilogQuery.Options>(builder.Configuration.GetSection("SerilogAlerts"));
 builder.Services.AddSingleton(Options.Create(options));
-builder.Services.AddSingleton<ISerilogEntryPropertyParser, XmlPropertyParser>();
 builder.Services.AddSingleton<ISerilogContinuationMarker, ContinuationMarker>();
 builder.Services.AddSingleton<ISerilogQuery, SerilogQuery>();
 builder.Services.AddSingleton<SerilogAlertService>();
