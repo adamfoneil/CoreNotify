@@ -41,6 +41,8 @@ public class SerilogAlertService(
 
 		await _client.SendAlertAsync(_options.AccountEmail, _options.ApiKey, new()
 		{
+			Email = _options.AccountEmail,
+			DomainName = _options.DomainName,
 			Subject = "Serilog Alert",
 			HtmlBody = sb.ToString()
 		});
