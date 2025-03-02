@@ -4,7 +4,7 @@ using System.Data;
 
 namespace DemoApp.SerilogAlerts;
 
-public class ContinuationMarker : ISerilogContinuationMarker
+public class MyContinuationMarker : ISerilogContinuationMarker
 {
 	public void EnsureCreated(IDbConnection connection)
 	{
@@ -21,7 +21,7 @@ public class ContinuationMarker : ISerilogContinuationMarker
 				NOT EXISTS(SELECT 1 FROM [changetracking].[Marker] WHERE [Name]=@name)", new { name = MarkerName });
 	}
 
-	private const string MarkerName = "SerilogAlert";
+	private const string MarkerName = "SerilogAlerts";
 
 	public async Task<long> GetIdAsync(IDbConnection connection) => 
 		await connection.QuerySingleAsync<long>(

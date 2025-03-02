@@ -1,4 +1,4 @@
-using CoreNotify.SerilogAlerts.Shared;
+using Coravel;
 using CoreNotify.SerilogAlerts.SqlServer;
 using DemoApp.Components;
 using DemoApp.Components.Account;
@@ -8,8 +8,6 @@ using MailerSend.Extensions;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using Serilog;
 using Serilog.Sinks.MSSqlServer;
 
@@ -19,6 +17,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 Log.Logger = new LoggerConfiguration()
 	.MinimumLevel.Information()
+	.MinimumLevel.Override("CoreNotify", Serilog.Events.LogEventLevel.Debug)
 	.WriteTo.MSSqlServer(connectionString, new MSSqlServerSinkOptions() { AutoCreateSqlTable = true, TableName = "Serilog", SchemaName = "log"})
 	.WriteTo.Console()
 	.CreateLogger();
@@ -27,21 +26,13 @@ Log.Logger = new LoggerConfiguration()
 builder.Services.AddRazorComponents()
 	.AddInteractiveServerComponents();
 
+builder.Services.AddScheduler();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 builder.Services.AddCoreNotify<ApplicationUser>(builder.Configuration);
-
-SerilogQuery.Options options = new();
-builder.Configuration.GetSection("SerilogAlerts").Bind(options);
-// this comes from secrets, so I have to load it separately
-options.ConnectionString = builder.Configuration.GetConnectionString("SpayWise") ?? throw new InvalidOperationException("Connection string 'SpayWise' not found.");
-
-builder.Services.AddSingleton(Options.Create(options));
-builder.Services.AddSingleton<ISerilogContinuationMarker, ContinuationMarker>();
-builder.Services.AddSingleton<ISerilogQuery, SerilogQuery>();
-builder.Services.AddSingleton<SerilogAlertService>();
+builder.Services.AddCoreNotifySerilogAlerts<MyContinuationMarker>(builder.Configuration, "SerilogAlerts");
 
 builder.Services.AddSerilog();
 
@@ -61,6 +52,11 @@ builder.Services.AddIdentityCore<ApplicationUser>(options => options.SignIn.Requ
 	.AddDefaultTokenProviders();
 
 var app = builder.Build();
+
+app.Services.UseScheduler(scheduler =>
+{
+	scheduler.Schedule<SerilogAlertService>().EveryFiveMinutes();
+});
 
 app.UseSerilogRequestLogging();
 
