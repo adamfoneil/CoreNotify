@@ -28,7 +28,7 @@ builder.Services
 	.Configure<MailerSendOptions>(builder.Configuration.GetSection("MailerSend"))
 	.AddSingleton<MailerSendClient>()
 	.AddSingleton<EmailSenderContent>()
-	.AddSingleton(sp => new SerilogCleanup(connectionString, serilogRetentionDays, sp.GetRequiredService<ILogger<SerilogCleanup>>()))
+	.AddScoped(sp => new SerilogCleanup(connectionString, serilogRetentionDays, sp.GetRequiredService<ILogger<SerilogCleanup>>()))
 	.AddDbContextFactory<ApplicationDbContext>(options => options.UseNpgsql(connectionString))	
 	.AddControllers();
 	
@@ -36,11 +36,9 @@ var app = builder.Build();
 
 app.Services.UseScheduler(scheduler =>
 {
-	var cleanup = app.Services.GetRequiredService<SerilogCleanup>();
-	scheduler.Schedule(async () => await cleanup.ExecuteAsync()).DailyAtHour(23);
+	scheduler.Schedule<SerilogCleanup>().Hourly();
 });
 
 app.UseHttpsRedirection();
 app.MapControllers();
 app.Run();
-

@@ -1,11 +1,12 @@
-﻿using Dapper;
+﻿using Coravel.Invocable;
+using Dapper;
 using Microsoft.Extensions.Logging;
 using Npgsql;
 using System.Diagnostics;
 
 namespace Services;
 
-public class SerilogCleanup(string connectionString, int retentionDays, ILogger<SerilogCleanup> logger)
+public class SerilogCleanup(string connectionString, int retentionDays, ILogger<SerilogCleanup> logger) : IInvocable
 {
 	private readonly string _connectionString = connectionString;
 	private readonly int _retentionDays = retentionDays;
@@ -13,8 +14,10 @@ public class SerilogCleanup(string connectionString, int retentionDays, ILogger<
 
 	public bool Success { get; private set; }
 
-	public async Task ExecuteAsync()
+	public async Task Invoke()
 	{
+		_logger.LogDebug("Cleaning up Serilog older than {days}", _retentionDays);
+
 		Success = false;
 		try
 		{
@@ -33,7 +36,7 @@ public class SerilogCleanup(string connectionString, int retentionDays, ILogger<
 
 			int rows = 0;
 			do
-			{				
+			{
 				var sw = Stopwatch.StartNew();
 				rows = await cn.ExecuteAsync(sql, new { retentionDays = _retentionDays }, commandTimeout: 0);
 				sw.Stop();
