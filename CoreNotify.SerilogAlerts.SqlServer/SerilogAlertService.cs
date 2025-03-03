@@ -43,6 +43,8 @@ public class SerilogAlertService(
 
 		StringBuilder sb = new();
 
+		sb.Append($"<p>Log date range: {data.Min(row => row.Timestamp)} to {data.Max(row => row.Timestamp)}</p>");
+
 		foreach (var msgGroup in data.GroupBy(row => Left(row.MessageTemplate, 50)).OrderByDescending(grp => grp.Count()))
 		{
 			sb.AppendLine($"<p><strong>{msgGroup.Count()}</strong>: <span>{msgGroup.Key}</span></p>");
