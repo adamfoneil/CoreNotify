@@ -38,7 +38,11 @@ public class SerilogAlertService(
 
 	private async Task SendAlertInnerAsync(SerilogEntry[] data)
 	{
-		if (!data.Any()) return;
+		if (!data.Any())
+		{
+			_logger.LogDebug("No new serilog entries found, skipping alert.");
+			return;
+		}
 
 		_logger.LogDebug("Sending alert with {count} entries...", data.Length);
 
