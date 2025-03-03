@@ -2,6 +2,7 @@
 using CoreNotify.Client;
 using CoreNotify.SerilogAlerts.Shared;
 using MailerSend;
+using Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Text;
@@ -43,7 +44,9 @@ public class SerilogAlertService(
 
 		StringBuilder sb = new();
 
-		sb.Append($"<p>Log date range: {data.Min(row => row.Timestamp)} to {data.Max(row => row.Timestamp)}</p>");
+		sb.AppendLine($"<p>Log date range: {data.Min(row => row.Timestamp)} to {data.Max(row => row.Timestamp)}</p>");
+
+		sb.AppendLine("<hr />");
 
 		foreach (var msgGroup in data.GroupBy(row => Left(row.MessageTemplate, 50)).OrderByDescending(grp => grp.Count()))
 		{
