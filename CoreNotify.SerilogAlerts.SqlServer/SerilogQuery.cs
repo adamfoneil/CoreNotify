@@ -22,7 +22,7 @@ public class SerilogQuery(
 
 	public class Options
 	{
-		public string ConnectionString { get; set; } = default!;
+		public string ConnectionString { get; set; } = default!; // tip: use '@' to reference a named connection string that's valid in your IConfiguration scope
 		public string TableName { get; set; } = "Serilog";
 		public string SchemaName { get; set; } = "dbo";
 		public string ApplicationName { get; set; } = "MyApp";

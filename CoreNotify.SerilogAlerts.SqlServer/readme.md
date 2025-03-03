@@ -4,14 +4,8 @@ Scheduling capability is provided by [Coravel](https://github.com/jamesmh/corave
 
 # Getting Started
 1. Add CoreNotify to your project by installing NuGet package [CoreNotify.MailerSend](https://www.nuget.org/packages/CoreNotify.MailerSend), and setup your account as described in the CoreNotify readme linked above.
-2. Decide on a strategy for managing the Serilog continuation marker. You can use the built-in class `SqlServerContinuationMarker` or implement your own. 
-2. Add the **CoreNotify.SerilogAlerts.SqlServer** package to your project, and add the appropriate services to your startup.
-
-<details>
-	<summary>Example</summary>
-
-	```csharp
-	```
-
-</details>
-
+2. Add the [CoreNotify.SerilogAlerts.SqlServer](https://www.nuget.org/packages/CoreNotify.SerilogAlerts.SqlServer/) package to your project.
+3. Add a "SerilogAlerts" section to your `appsettings.json` file. See this [example](https://github.com/adamfoneil/CoreNotify/blob/master/DemoApp/appsettings.json#L11) along with all the [configuration options](https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.SerilogAlerts.SqlServer/SerilogQuery.cs#L23).
+4. Add Serilog Alerts to your project startup, [example](https://github.com/adamfoneil/CoreNotify/blob/master/DemoApp/Program.cs#L34)
+5. Add Coravel scheduler service to your project startup, [example](https://github.com/adamfoneil/CoreNotify/blob/master/DemoApp/Program.cs#L28).
+6. Use Coravel scheduler in your pipeline, [example](https://github.com/adamfoneil/CoreNotify/blob/master/DemoApp/Program.cs#L55).
