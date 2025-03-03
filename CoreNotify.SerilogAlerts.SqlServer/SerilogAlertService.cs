@@ -10,11 +10,13 @@ namespace CoreNotify.SerilogAlerts.SqlServer;
 
 public class SerilogAlertService(
 	ISerilogQuery query, 
+	IOptions<SerilogQuery.Options> queryOptions,
 	CoreNotifyClient client,
 	IOptions<CoreNotifyOptions> options, 
 	ILogger<SerilogAlertService> logger) : IInvocable
 {
 	private readonly ISerilogQuery _query = query;
+	private readonly SerilogQuery.Options _queryOptions = queryOptions.Value;
 	private readonly CoreNotifyClient _client = client;
 	private readonly ILogger<SerilogAlertService> _logger = logger;
 	private readonly CoreNotifyOptions _options = options.Value;
@@ -52,7 +54,7 @@ public class SerilogAlertService(
 			{
 				Email = _options.AccountEmail,
 				DomainName = _options.DomainName,
-				Subject = "Serilog Alert",
+				Subject = $"Serilog Alert - {_queryOptions.ApplicationName}",
 				HtmlBody = sb.ToString()
 			});
 		}
