@@ -26,8 +26,8 @@ public class SerilogConfiguration : IEntityTypeConfiguration<Serilog>
 {
 	public void Configure(EntityTypeBuilder<Serilog> builder)
 	{
-		builder.HasKey(e => e.Id).HasName("serilog_pkey");
-		builder.ToTable("serilog");
+		builder.ToTable("serilog", builder => builder.ExcludeFromMigrations());
+		builder.HasKey(e => e.Id).HasName("serilog_pkey");		
 		builder.HasIndex(e => e.SourceContext, "idx_serilog_source_context");
 		builder.Property(e => e.Id).HasColumnName("id");
 		builder.Property(e => e.Exception).HasColumnName("exception");

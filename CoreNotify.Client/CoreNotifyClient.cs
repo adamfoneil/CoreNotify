@@ -2,6 +2,7 @@
 using CoreNotify.Shared.Models;
 using Microsoft.Extensions.Options;
 using System.Net.Http.Json;
+using System.Text.Json;
 
 namespace CoreNotify.Client;
 
@@ -65,6 +66,25 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		var client = GetHttpClient();
 		client.AddAuthorization(accountEmail, apiKey);
 		var response = await client.PostAsJsonAsync("api/send/alert", request);
+		response.ThrowIfProblemResponse();
+	}
+
+	public async Task<long> GetContinuationMarkerAsync(string accountEmail, string apiKey, string name)
+	{
+		var client = GetHttpClient();
+		client.AddAuthorization(accountEmail, apiKey);
+		var response = await client.GetAsync($"api/marker/{name}");
+		response.ThrowIfProblemResponse();
+
+		using JsonDocument doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
+		return doc.RootElement.GetProperty("logEntryId").GetInt64();
+	}
+
+	public async Task SetContinuationMarker(string accountEmail, string apiKey, string name, long value)
+	{
+		var client = GetHttpClient();
+		client.AddAuthorization(accountEmail, apiKey);
+		var response = await client.PutAsync($"api/marker/{name}/{value}", new StringContent(""));
 		response.ThrowIfProblemResponse();
 	}
 

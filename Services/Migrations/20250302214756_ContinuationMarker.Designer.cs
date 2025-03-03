@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Services.Data;
@@ -11,9 +12,11 @@ using Services.Data;
 namespace CoreNotify.API.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250302214756_ContinuationMarker")]
+    partial class ContinuationMarker
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -227,8 +230,7 @@ namespace CoreNotify.API.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
@@ -238,7 +240,7 @@ namespace CoreNotify.API.Migrations
                     b.HasIndex("AccountId", "Name")
                         .IsUnique();
 
-                    b.ToTable("ContinuationMarkers");
+                    b.ToTable("SerilogContinuationMarker");
                 });
 
             modelBuilder.Entity("Services.Data.Entities.Webhook", b =>

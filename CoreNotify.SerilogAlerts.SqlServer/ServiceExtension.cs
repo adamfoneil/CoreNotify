@@ -7,10 +7,7 @@ namespace CoreNotify.SerilogAlerts.SqlServer;
 
 public static class ServiceExtension
 {
-	public static void AddCoreNotifySerilogAlerts(this IServiceCollection services, IConfiguration config, string configSection = "SerilogAlerts") =>
-		AddCoreNotifySerilogAlerts<SerilogContinuationMarker>(services, config, configSection);
-
-	public static void AddCoreNotifySerilogAlerts<TContinuationMarker>(this IServiceCollection services, IConfiguration config, string configSection = "SerilogAlerts") where TContinuationMarker : class, ISerilogContinuationMarker
+	public static void AddCoreNotifySerilogAlerts(this IServiceCollection services, IConfiguration config, string configSection = "SerilogAlerts")
 	{
 		SerilogQuery.Options options = new();
 		config.GetSection(configSection).Bind(options);
@@ -21,8 +18,7 @@ public static class ServiceExtension
 			options.ConnectionString = config.GetConnectionString(connectionName) ?? throw new InvalidOperationException($"Connection string '{connectionName}' not found.");
 		}
 
-		services.AddSingleton(Options.Create(options));
-		services.AddSingleton<ISerilogContinuationMarker, TContinuationMarker>();
+		services.AddSingleton(Options.Create(options));		
 		services.AddSingleton<ISerilogQuery, SerilogQuery>();
 		services.AddSingleton<SerilogAlertService>();
 	}

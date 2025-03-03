@@ -15,6 +15,7 @@ public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options
 	public DbSet<Webhook> Webhooks { get; set; }
 	public DbSet<WebhookLog> WebhookLogs { get; set; }
 	public DbSet<Serilog> Serilog { get; set; }
+	public DbSet<SerilogContinuationMarker> ContinuationMarkers { get; set; }
 
 	protected override void OnModelCreating(ModelBuilder modelBuilder)
 	{

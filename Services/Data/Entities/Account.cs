@@ -19,6 +19,7 @@ public class Account : BaseEntity
 	public ICollection<DailyUsage> DailyUsage { get; set; } = [];
 	public ICollection<SentMessage> SentMessages { get; set; } = [];
 	public ICollection<Webhook> Webhooks { get; set; } = [];
+	public ICollection<SerilogContinuationMarker> SerilogContinuationMarkers { get; set; } = [];
 }
 
 public class AccountConfiguration : IEntityTypeConfiguration<Account>

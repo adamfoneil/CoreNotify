@@ -72,3 +72,13 @@ Content-Type: application/json
 ###
 
 GET {{CoreNotify.API_HostAddress}}/api/info
+
+###
+
+GET {{CoreNotify.API_HostAddress}}/api/marker/myapp
+Authorization: Bearer {{Token}}
+
+###
+
+PUT {{CoreNotify.API_HostAddress}}/api/marker/myapp/232
+Authorization: Bearer {{Token}}

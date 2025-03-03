@@ -3,7 +3,6 @@ using CoreNotify.SerilogAlerts.SqlServer;
 using DemoApp.Components;
 using DemoApp.Components.Account;
 using DemoApp.Data;
-using DemoApp.SerilogAlerts;
 using MailerSend.Extensions;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -32,7 +31,7 @@ builder.Services.AddScoped<IdentityUserAccessor>();
 builder.Services.AddScoped<IdentityRedirectManager>();
 builder.Services.AddScoped<AuthenticationStateProvider, IdentityRevalidatingAuthenticationStateProvider>();
 builder.Services.AddCoreNotify<ApplicationUser>(builder.Configuration);
-builder.Services.AddCoreNotifySerilogAlerts<MyContinuationMarker>(builder.Configuration, "SerilogAlerts");
+builder.Services.AddCoreNotifySerilogAlerts(builder.Configuration);
 
 builder.Services.AddSerilog();
 

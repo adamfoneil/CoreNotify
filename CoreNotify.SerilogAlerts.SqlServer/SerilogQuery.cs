@@ -1,5 +1,7 @@
-﻿using CoreNotify.SerilogAlerts.Shared;
+﻿using CoreNotify.Client;
+using CoreNotify.SerilogAlerts.Shared;
 using Dapper;
+using MailerSend;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -8,12 +10,14 @@ using System.Diagnostics;
 namespace CoreNotify.SerilogAlerts.SqlServer;
 
 public class SerilogQuery(
-	IOptions<SerilogQuery.Options> options,
-	ISerilogContinuationMarker marker,
+	IOptions<SerilogQuery.Options> queryOptions,	
+	IOptions<CoreNotifyOptions> coreNotifyOptions,
+	CoreNotifyClient coreNotifyClient,
 	ILogger<SerilogQuery> logger) : ISerilogQuery
 {
-	private readonly Options _options = options.Value;	
-	private readonly ISerilogContinuationMarker _marker = marker;
+	private readonly Options _queryOptions = queryOptions.Value;
+	private readonly CoreNotifyOptions _coreNotifyOptions = coreNotifyOptions.Value;
+	private readonly CoreNotifyClient _coreNotifyClient = coreNotifyClient;
 	private readonly ILogger<SerilogQuery> _logger = logger;
 
 	public class Options
@@ -21,6 +25,7 @@ public class SerilogQuery(
 		public string ConnectionString { get; set; } = default!;
 		public string TableName { get; set; } = "Serilog";
 		public string SchemaName { get; set; } = "dbo";
+		public string ApplicationName { get; set; } = "MyApp";
 		public int? MaxRows { get; set; }
 		public int QueryTimeout { get; set; } = 30;
 		public string QueryCriteria { get; set; } = "[Level]='Error'";
@@ -30,7 +35,7 @@ public class SerilogQuery(
 
 	public async Task<SerilogEntry[]> TestAsync(int limitRows)
 	{
-		using var cn = new SqlConnection(_options.ConnectionString);
+		using var cn = new SqlConnection(_queryOptions.ConnectionString);
 		var (logRows, _) = await QueryInternalAsync(cn, 0, $"TOP {limitRows}");
 		return [.. logRows];
 	}
@@ -39,18 +44,18 @@ public class SerilogQuery(
 	{
 		try
 		{
-			using var cn = new SqlConnection(_options.ConnectionString);
+			using var cn = new SqlConnection(_queryOptions.ConnectionString);
 
 			_logger.LogDebug("Getting serilog continuation marker...");
-			var id = await _marker.GetIdAsync(cn);
+			var id = await _coreNotifyClient.GetContinuationMarkerAsync(_coreNotifyOptions.AccountEmail, _coreNotifyOptions.ApiKey, _queryOptions.ApplicationName);
 
-			var top = _options.MaxRows.HasValue ? $" TOP ({_options.MaxRows.Value})" : string.Empty;
+			var top = _queryOptions.MaxRows.HasValue ? $" TOP ({_queryOptions.MaxRows.Value})" : string.Empty;
 
 			_logger.LogDebug("Querying serilog with starting Id {id}...", id);
 
 			(List<SerilogEntry> logRows, long maxId) = await QueryInternalAsync(cn, id, top);
 
-			await _marker.SetIdAsync(cn, maxId);
+			await _coreNotifyClient.SetContinuationMarker(_coreNotifyOptions.AccountEmail, _coreNotifyOptions.ApiKey, _queryOptions.ApplicationName, maxId);
 			_logger.LogDebug("Marked serilog entries up to Id {maxId}", maxId);
 
 			return [.. logRows];
@@ -67,10 +72,10 @@ public class SerilogQuery(
 		var parser = new XmlPropertyParser();
 		var sw = Stopwatch.StartNew();
 
-		var sql = $"SELECT {top} * FROM [{_options.SchemaName}].[{_options.TableName}] WHERE [Id] > @Id AND {_options.QueryCriteria}";
+		var sql = $"SELECT {top} * FROM [{_queryOptions.SchemaName}].[{_queryOptions.TableName}] WHERE [Id] > @Id AND {_queryOptions.QueryCriteria}";
 
 		var logRows = (await cn.QueryAsync<SerilogEntry>(
-			sql, new { id }, commandTimeout: _options.QueryTimeout)).ToList();
+			sql, new { id }, commandTimeout: _queryOptions.QueryTimeout)).ToList();
 
 		_logger.LogDebug("Queried {count} serilog entries in {elapsed}", logRows.Count, sw.Elapsed);
 
@@ -94,7 +99,7 @@ public class SerilogQuery(
 
 	private bool Exclude(SerilogEntry entry)
 	{
-		foreach (var excludeTemplate in _options.ExcludeMessageTemplates)
+		foreach (var excludeTemplate in _queryOptions.ExcludeMessageTemplates)
 		{
 			if (entry.MessageTemplate.Contains(excludeTemplate, StringComparison.OrdinalIgnoreCase))
 			{
@@ -103,7 +108,7 @@ public class SerilogQuery(
 			}
 		}
 
-		if (FilterHelper.ExcludeByProperty(_options.ExcludeProperties, entry.PropertyDictionary, out var excluded))
+		if (FilterHelper.ExcludeByProperty(_queryOptions.ExcludeProperties, entry.PropertyDictionary, out var excluded))
 		{
 			_logger.LogDebug("Excluding entry id {id} because {entry} contained {value}", 
 				entry.Id, excluded!.Value.entryValue, excluded.Value.criteriaValue);
