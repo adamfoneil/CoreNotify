@@ -1,7 +1,7 @@
 ﻿using Coravel.Invocable;
 using CoreNotify.Client;
+using CoreNotify.MailerSend;
 using CoreNotify.SerilogAlerts.Shared;
-using MailerSend;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Text;

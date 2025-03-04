@@ -1,7 +1,7 @@
 ﻿using CoreNotify.Client;
+using CoreNotify.MailerSend;
 using CoreNotify.SerilogAlerts.Shared;
 using Dapper;
-using MailerSend;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

@@ -7,7 +7,7 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>CoreNotify.SerilogAlerts.SqlServer</PackageId>
     <Title>CoreNotify Serilog Alerts for SQL Server</Title>
-    <Version>0.9.1-alpha</Version>
+    <Version>0.9.2-alpha</Version>
     <Authors>Adam O'Neil</Authors>
     <Copyright>Copyright (c) 2025 Adam O'Neil</Copyright>
     <PackageProjectUrl>https://github.com/adamfoneil/CoreNotify</PackageProjectUrl>
@@ -30,7 +30,7 @@
 
 	<ItemGroup>
 	  <PackageReference Include="Coravel" Version="6.0.2" />
-	  <PackageReference Include="CoreNotify.MailerSend" Version="1.0.6" />
+	  <PackageReference Include="CoreNotify.MailerSend" Version="1.0.7" />
 	  <PackageReference Include="Dapper" Version="2.1.66" />
 	  <PackageReference Include="Microsoft.Data.SqlClient" Version="6.0.1" />
 	</ItemGroup>

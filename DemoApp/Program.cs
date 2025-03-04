@@ -1,9 +1,9 @@
 using Coravel;
+using CoreNotify.MailerSend.Extensions;
 using CoreNotify.SerilogAlerts.SqlServer;
 using DemoApp.Components;
 using DemoApp.Components.Account;
 using DemoApp.Data;
-using MailerSend.Extensions;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
