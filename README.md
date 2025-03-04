@@ -29,6 +29,11 @@ A few things to note about how this works:
 
 Note that the backend API is hosted at url https://plankton-app-evwok.ondigitalocean.app, a DigitalOcean "starter" url. One day I might get a more appropriate host name.
 
+# Serilog Alerts
+If you're self-hosting Serilog in your projects using the SQL Server sink, have you wanted to get alerts automatically?
+
+Please see the [Serilog Alerts project](https://github.com/adamfoneil/CoreNotify/tree/master/CoreNotify.SerilogAlerts.SqlServer).
+
 # Payment
 All accounts have a 30 day free trial. If you like this service, send $5 * number of months you'd like
 
