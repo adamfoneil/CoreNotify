@@ -17,9 +17,9 @@ You will receive your CoreNotify API key at the email you provide.
 dotnet add package CoreNotify.MailerSend
 ```
 4. Add your API key from step 2 to your configuration. There are a number of ways to do this. See example in [DemoApp appsettings](https://github.com/adamfoneil/CoreNotify/blob/master/DemoApp/appsettings.json#L2)
-5. Replace the `IdentityNoOpEmailSender` in your app with `CoreNotifyEmailSender` using the `AddCoreNotify` extension method. See [demo](https://github.com/adamfoneil/CoreNotify/blob/master/DemoApp/Program.cs#L19)
+5. Replace the `IdentityNoOpEmailSender` in your app with `CoreNotifyEmailSender` using the `AddCoreNotify` extension method. See [demo](https://github.com/adamfoneil/CoreNotify/blob/master/DemoApp/Program.cs#L33)
 
-Note that the API key in the demo app no longer works, but I'm showing an example of how you can configure this in your own apps.
+Note that the API key in the demo app no longer works (or may work intermittently between recycles), but I'm showing an example of how you can configure this in your own apps.
 
 A few things to note about how this works:
 - CoreNotify uses [MailerSend](https://www.mailersend.com/) under the hood.
