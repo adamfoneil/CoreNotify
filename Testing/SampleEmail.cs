@@ -1,4 +1,4 @@
-﻿using MailerSend;
+﻿using CoreNotify.MailerSend;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 

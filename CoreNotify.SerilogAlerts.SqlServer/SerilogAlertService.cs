@@ -2,7 +2,6 @@
 using CoreNotify.Client;
 using CoreNotify.SerilogAlerts.Shared;
 using MailerSend;
-using Microsoft.AspNetCore.Mvc.RazorPages.Infrastructure;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.Text;

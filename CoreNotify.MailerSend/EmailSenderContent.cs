@@ -1,4 +1,4 @@
-﻿namespace MailerSend;
+﻿namespace CoreNotify.MailerSend;
 
 public class EmailSenderContent
 {

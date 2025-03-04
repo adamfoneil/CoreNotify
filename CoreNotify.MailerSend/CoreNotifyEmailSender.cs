@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 
-namespace MailerSend;
+namespace CoreNotify.MailerSend;
 
 /// <summary>
 /// provides account notifications (confirmations, resets) for ASP.NET Core Identity using your CoreNotify account

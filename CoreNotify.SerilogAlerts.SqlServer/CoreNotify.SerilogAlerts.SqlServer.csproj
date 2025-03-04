@@ -7,14 +7,14 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>CoreNotify.SerilogAlerts.SqlServer</PackageId>
     <Title>CoreNotify Serilog Alerts for SQL Server</Title>
-    <Version>0.9.0-alpha</Version>
+    <Version>0.9.1-alpha</Version>
     <Authors>Adam O'Neil</Authors>
     <Copyright>Copyright (c) 2025 Adam O'Neil</Copyright>
     <PackageProjectUrl>https://github.com/adamfoneil/CoreNotify</PackageProjectUrl>
     <RepositoryUrl>https://github.com/adamfoneil/CoreNotify</RepositoryUrl>
     <PackageTags>serilog alerts</PackageTags>
     <Description>Send email alerts to yourself from Serilog data stored in SQL Server tables. Uses Coravel to support scheduling.</Description>
-    <PackageReadmeFile></PackageReadmeFile>
+    <PackageReadmeFile>readme.md</PackageReadmeFile>
   </PropertyGroup>
 
   <ItemGroup>
@@ -37,6 +37,13 @@
 
 	<ItemGroup>
 	  <Folder Include="Shared\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="readme.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 	
 </Project>

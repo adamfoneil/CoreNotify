@@ -1,5 +1,5 @@
 using Coravel;
-using MailerSend;
+using CoreNotify.MailerSend;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using Services;
