@@ -4,12 +4,16 @@ using Services.Data;
 
 namespace Services;
 
-public class ExpirationReminder(IDbContextFactory<ApplicationDbContext> dbFactory) : IInvocable
+public class ExpirationReminder(
+	IDbContextFactory<ApplicationDbContext> dbFactory) : IInvocable
 {
 	private readonly IDbContextFactory<ApplicationDbContext> _dbFactory = dbFactory;
+	//private readonly MailerSendClient _mailerSendClient = mailerSendClient;
 
-	public Task Invoke()
+	public async Task Invoke()
 	{
-		throw new NotImplementedException();
+		using var db = _dbFactory.CreateDbContext();
+
+		
 	}
 }

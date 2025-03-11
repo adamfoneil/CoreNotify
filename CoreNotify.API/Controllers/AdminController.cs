@@ -12,8 +12,10 @@ public class AdminController(IDbContextFactory<ApplicationDbContext> dbFactory) 
 {
 	private readonly IDbContextFactory<ApplicationDbContext> _dbFactory = dbFactory;
 
+	/*
 	public async Task<IActionResult> Logs(LogsRequest request)
 	{
 		throw new NotImplementedException();
 	}
+	*/
 }
