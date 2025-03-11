@@ -21,10 +21,12 @@ public abstract class WebhookService(
 	{
 		using var db = DbFactory.CreateDbContext();
 
+		var today = DateOnly.FromDateTime(DateTime.Today);
+
 		var results = await db
 			.Webhooks
 			.Include(w => w.Account)
-			.Where(w => w.Account.RenewalDate > DateTime.Now && w.IsActive)
+			.Where(w => w.Account.RenewalDate >= today && w.IsActive)
 			.AsSplitQuery()
 			.ToArrayAsync();
 

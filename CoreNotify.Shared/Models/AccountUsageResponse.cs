@@ -2,7 +2,7 @@
 
 public class AccountUsageResponse
 {
-	public DateTime RenewalDate { get; set; }
+	public DateOnly RenewalDate { get; set; }
 	public DailyUsage[] RecentUsage { get; set; } = [];
 	public int TotalRecentMessages => RecentUsage.Sum(x => x.Confirmations + x.ResetCodes + x.ResetLinks + x.Alerts);
 

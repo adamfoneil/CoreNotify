@@ -29,7 +29,7 @@ public class VerifyAccountAttribute(bool requireAdmin = false) : Attribute, IAsy
 					goto unauthorized;
 				}
 
-				if (account!.RenewalDate < DateTime.UtcNow)
+				if (account!.RenewalDate < DateOnly.FromDateTime(DateTime.Today))
 				{
 					_logger.LogDebug("Attempted use of expired key {key} from {email}", decoded.ApiKey, decoded.Email);
 					goto unauthorized;

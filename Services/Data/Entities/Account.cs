@@ -10,7 +10,7 @@ public class Account : BaseEntity
 	public string Email { get; set; } = default!;
 	public bool EmailConfirmed { get; set; }
 	public string ApiKey { get; set; } = Services.ApiKey.Generate(32);
-	public DateTime RenewalDate { get; set; } = DateTime.Today.AddDays(30);
+	public DateOnly RenewalDate { get; set; } = DateOnly.FromDateTime(DateTime.Today.AddDays(30));
 	/// <summary>
 	/// allow system-level admin view of activity from the API
 	/// </summary>
@@ -29,6 +29,6 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
 		builder.HasIndex(p => p.Email).IsUnique();
 		builder.Property(p => p.Email).IsRequired().HasMaxLength(50);
 		builder.Property(p => p.ApiKey).IsRequired().HasMaxLength(32);
-		builder.Property(p => p.RenewalDate).HasColumnType("timestamp without time zone");
+		builder.Property(p => p.RenewalDate).HasColumnType("date");
 	}
 }
