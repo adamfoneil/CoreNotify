@@ -38,6 +38,7 @@ var app = builder.Build();
 app.Services.UseScheduler(scheduler =>
 {
 	scheduler.Schedule<SerilogCleanup>().Hourly();
+	scheduler.Schedule<ExpirationReminder>().DailyAtHour(10);
 });
 
 app.UseHttpsRedirection();
