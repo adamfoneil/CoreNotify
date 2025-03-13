@@ -17,7 +17,7 @@ public static class ServiceCollectionExtensions
 		services.AddSingleton<IEmailSender<TUser>, CoreNotifyEmailSender<TUser>>();
 	}
 
-	public static void AddCoreNotifyGenericEmailSender<TUser>(this IServiceCollection services, string domain, IConfiguration? config = null, string? mailerConfigSection = null) where TUser : IdentityUser
+	public static void AddCoreNotifyGenericEmailSender<TUser>(this IServiceCollection services, string domain, IConfiguration? config = null, string? mailerConfigSection = null, EmailSenderContent? content = null) where TUser : IdentityUser
 	{
 		services.AddHttpClient();
 
@@ -32,7 +32,7 @@ public static class ServiceCollectionExtensions
 			sp => new GenericEmailSender<TUser>(
 				domain,
 				sp.GetRequiredService<MailerSendClient>(),
-				sp.GetRequiredService<ILogger<GenericEmailSender<TUser>>>()
-				));
+				sp.GetRequiredService<ILogger<GenericEmailSender<TUser>>>(),
+				content));
 	}
 }
