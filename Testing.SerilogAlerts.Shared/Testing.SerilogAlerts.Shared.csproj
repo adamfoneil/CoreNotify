@@ -27,4 +27,20 @@
     <PackageReference Update="Microsoft.Testing.Extensions.CodeCoverage" Version="17.14.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Update="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="Microsoft.Testing.Extensions.TrxReport" Version="1.6.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="MSTest.TestAdapter" Version="3.8.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="MSTest.TestFramework" Version="3.8.2" />
+  </ItemGroup>
+
 </Project>

@@ -27,6 +27,8 @@ builder.Services
 	.AddHostedService<BounceHandler>()
 	.AddSingleton<ConcurrentQueue<Bounce>>()
 	.Configure<MailerSendOptions>(builder.Configuration.GetSection("MailerSend"))
+	.Configure<ExpirationReminder.Options>(builder.Configuration.GetSection("ExpirationReminders"))
+	.AddSingleton<ExpirationReminder>()
 	.AddSingleton<MailerSendClient>()
 	.AddSingleton<EmailSenderContent>()
 	.AddScoped(sp => new SerilogCleanup(connectionString, serilogRetentionDays, sp.GetRequiredService<ILogger<SerilogCleanup>>()))
@@ -37,7 +39,8 @@ var app = builder.Build();
 
 app.Services.UseScheduler(scheduler =>
 {
-	scheduler.Schedule<SerilogCleanup>().Hourly();
+	scheduler.Schedule<SerilogCleanup>().DailyAtHour(23);
+	scheduler.Schedule<ExpirationReminder>().DailyAtHour(10);
 });
 
 app.UseHttpsRedirection();
