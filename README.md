@@ -29,8 +29,6 @@ A few things to note about how this works:
 - [CoreNotifyEmailSender](https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.MailerSend/CoreNotifyEmailSender.cs) is not a generic email client. It sends only `IEmailSender<TUser>` messages (account confirmations, password resets), and you cannot customize the email content.
 - For generic email capability with MailerSend, use [MailerSendClient](https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.MailerSend/MailerSendClient.cs). In that case, you use your own MailerSend API key.
 
-Note that the backend API is hosted at url https://plankton-app-evwok.ondigitalocean.app, a DigitalOcean "starter" url. One day I might get a more appropriate host name.
-
 # Serilog Alerts
 If you're self-hosting Serilog in your projects using the SQL Server sink, have you wanted to get alerts automatically?
 
