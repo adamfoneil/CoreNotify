@@ -62,7 +62,8 @@ public class ExpirationReminder(
 				{
 					RenewalDate = account.RenewalDate.ToString("M/d/yy"),
 					MonthlyPrice = _options.MonthlyPrice.ToString("c2"),
-					_options.PaymentLink
+					_options.PaymentLink,
+					_options.ContactEmail
 				};
 
 				var html = await stubble.RenderAsync(template, data);
