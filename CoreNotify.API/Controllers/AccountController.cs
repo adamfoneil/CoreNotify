@@ -52,6 +52,7 @@ public class AccountController(
 		}
 	}
 
+	[HttpPost("resend")]
 	public async Task<IActionResult> Resend(CreateAccountRequest request)
 	{
 		try
