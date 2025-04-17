@@ -26,7 +26,8 @@ Note that the API key in the demo app no longer works (or may work intermittentl
 A few things to note about how this works:
 - CoreNotify uses [MailerSend](https://www.mailersend.com/) under the hood.
 - Account notification emails will come from **{yourdomain}.corenotify.net**
-- [CoreNotifyEmailSender](https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.MailerSend/CoreNotifyEmailSender.cs) is not a generic email client. It sends only `IEmailSender<TUser>` messages (account confirmations, password resets), and you cannot customize the email content.
+- [CoreNotifyEmailSender](https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.MailerSend/CoreNotifyEmailSender.cs) is not a generic email client. It sends only `IEmailSender<TUser>` messages (account confirmations, password resets), and you cannot customize the email content, with one exception.
+- You can send arbitrary email content to the account email you registered using the [SendAlertAsync](https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.Client/CoreNotifyClient.cs#L64) method.
 - For generic email capability with MailerSend, use [MailerSendClient](https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.MailerSend/MailerSendClient.cs). In that case, you use your own MailerSend API key.
 
 # Serilog Alerts
