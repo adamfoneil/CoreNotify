@@ -1,6 +1,9 @@
-﻿using CoreNotify.Client;
+﻿using ConsoleTableExt;
+using CoreNotify.Client;
+using CoreNotify.Shared.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System.Data;
 
 var config = new ConfigurationBuilder()
 #if DEBUG
@@ -34,8 +37,14 @@ try
 		case "usage":
 			var myKey = config["CoreNotifyApiKey"] ?? args[2];
 			var usage = await client.GetUsageAsync(args[1], myKey);
+			Console.WriteLine($"Account email: {args[1]}");
 			Console.WriteLine($"Renewal date: {usage.RenewalDate:M/d/yy}");
 			Console.WriteLine($"Total recent messages: {usage.TotalRecentMessages:n0}");
+			
+			ConsoleTableBuilder.From(BuildDataTable(usage))
+				.WithFormat(ConsoleTableBuilderFormat.Alternative)
+				.ExportAndWriteLine();
+
 			Console.WriteLine($"Service URL: {client.ServiceUrl}");
 			break;
 
@@ -60,3 +69,23 @@ catch (Exception exc)
 }
 
 Console.ResetColor();
+
+DataTable BuildDataTable(AccountUsageResponse usageData)
+{
+	DataTable table = new();
+	table.Columns.Add("Date", typeof(DateOnly));
+	table.Columns.Add("Confirmations", typeof(int));
+	table.Columns.Add("Reset Codes", typeof(int));
+	table.Columns.Add("Reset Links", typeof(int));
+	table.Columns.Add("Alerts", typeof(int));
+	foreach (var usage in usageData.RecentUsage)
+	{
+		table.Rows.Add(
+			usage.Date,
+			usage.Confirmations,
+			usage.ResetCodes,
+			usage.ResetLinks,
+			usage.Alerts);
+	}
+	return table;
+}
