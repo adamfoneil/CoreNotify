@@ -1,0 +1,13 @@
+<Solution>
+  <Project Path="CoreNotify.API/CoreNotify.API.csproj" />
+  <Project Path="CoreNotify.CLI/CoreNotify.CLI.csproj" />
+  <Project Path="CoreNotify.Client/CoreNotify.Client.csproj" />
+  <Project Path="CoreNotify.MailerSend/CoreNotify.MailerSend.csproj" />
+  <Project Path="CoreNotify.SerilogAlerts.Shared/CoreNotify.SerilogAlerts.Shared.csproj" />
+  <Project Path="CoreNotify.SerilogAlerts.SqlServer/CoreNotify.SerilogAlerts.SqlServer.csproj" />
+  <Project Path="CoreNotify.Shared/CoreNotify.Shared.csproj" />
+  <Project Path="DemoApp/DemoApp.csproj" />
+  <Project Path="Services/Services.csproj" />
+  <Project Path="Testing.SerilogAlerts.Shared/Testing.SerilogAlerts.Shared.csproj" />
+  <Project Path="Testing/Testing.csproj" />
+</Solution>
