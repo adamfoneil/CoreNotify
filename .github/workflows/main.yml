@@ -6,11 +6,21 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+        contents: write
     
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
+      with:
+        fetch-depth: 2
 
+    - name: Set version tag
+      uses: adamfoneil/branch-tagger@main
+      with:
+        branch: ${{ github.ref_name }}
+        filename: version.json
+        
     - name: Set up .NET
       uses: actions/setup-dotnet@v2
       with:
