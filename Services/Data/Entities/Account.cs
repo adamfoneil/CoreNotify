@@ -9,7 +9,7 @@ public class Account : BaseEntity
 {
 	public string Email { get; set; } = default!;
 	public bool EmailConfirmed { get; set; }
-	public string ApiKey { get; set; } = Services.ApiKey.Generate(32);
+	public string ApiKey { get; set; } = Services.ApiKey.Generate(KeyLength);
 	public DateOnly RenewalDate { get; set; } = DateOnly.FromDateTime(DateTime.Today.AddDays(30));
 	/// <summary>
 	/// allow system-level admin view of activity from the API
@@ -20,6 +20,8 @@ public class Account : BaseEntity
 	public ICollection<SentMessage> SentMessages { get; set; } = [];
 	public ICollection<Webhook> Webhooks { get; set; } = [];
 	public ICollection<SerilogContinuationMarker> SerilogContinuationMarkers { get; set; } = [];
+
+	public const int KeyLength = 32;
 }
 
 public class AccountConfiguration : IEntityTypeConfiguration<Account>
