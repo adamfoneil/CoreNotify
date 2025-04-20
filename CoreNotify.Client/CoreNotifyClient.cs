@@ -61,6 +61,15 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		return await response.Content.ReadAsStringAsync();
 	}
 
+	public async Task<string> RecycleKeyAsync(string accountEmail, string apiKey)
+	{
+		var client = GetHttpClient();
+		client.AddAuthorization(accountEmail, apiKey);
+		var response = await client.PostAsJsonAsync("api/account/recycle", new CreateAccountRequest() { Email = accountEmail });
+		response.ThrowIfProblemResponse();
+		return await response.Content.ReadAsStringAsync();
+	}
+
 	public async Task SendAlertAsync(string accountEmail, string apiKey, SendAlertRequest request)
 	{
 		var client = GetHttpClient();

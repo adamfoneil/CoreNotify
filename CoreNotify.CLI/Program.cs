@@ -27,6 +27,8 @@ var client = services.GetRequiredService<CoreNotifyClient>();
 Console.ResetColor();
 try
 {
+	var myKey = args.Length >= 3 ? args[2] : config["CoreNotifyApiKey"];	
+
 	switch (args[0])
 	{
 		case "register":
@@ -35,7 +37,7 @@ try
 			break;
 
 		case "usage":
-			var myKey = config["CoreNotifyApiKey"] ?? args[2];
+			ArgumentNullException.ThrowIfNull(myKey, "API key");
 			var usage = await client.GetUsageAsync(args[1], myKey);
 			Console.WriteLine($"Account email: {args[1]}");
 			Console.WriteLine($"Renewal date: {usage.RenewalDate:M/d/yy}");
@@ -51,6 +53,12 @@ try
 		case "resend":
 			await client.ResendApiKeyAsync(args[1]);
 			Console.WriteLine($"Your CoreNotify API key was resent to {args[1]}");
+			break;
+
+		case "recycle":
+			ArgumentNullException.ThrowIfNull(myKey, "API key");
+			await client.RecycleKeyAsync(args[1], myKey);
+			Console.WriteLine($"Your CoreNotify API key was recycled. A new key was sent to {args[1]}");
 			break;
 
 		case "info":
@@ -70,7 +78,7 @@ catch (Exception exc)
 
 Console.ResetColor();
 
-DataTable BuildDataTable(AccountUsageResponse usageData)
+static DataTable BuildDataTable(AccountUsageResponse usageData)
 {
 	DataTable table = new();
 	table.Columns.Add("Date", typeof(DateOnly));
