@@ -10,7 +10,7 @@ public static class ServiceCollectionExtensions
 {
 	public static void AddCoreNotify<TUser>(this IServiceCollection services, IConfiguration configuration) where TUser : IdentityUser
 	{
-		services.Configure<Options>(options => options.BaseUrl = "https://www.corenotify.com");
+		services.Configure<Options>(options => options.BaseUrl = "https://www.corenotify.net");
 		services.AddSingleton<CoreNotifyClient>();
 		services.Configure<CoreNotifyOptions>(configuration.GetSection("CoreNotify"));
 		services.AddHttpClient();
