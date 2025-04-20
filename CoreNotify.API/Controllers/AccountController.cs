@@ -2,8 +2,10 @@
 using CoreNotify.Shared.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Services;
 using Services.Data;
 using Services.Data.Entities;
+using System.Security.Principal;
 
 namespace CoreNotify.API.Controllers;
 
@@ -74,6 +76,37 @@ public class AccountController(
 		catch (Exception exc)
 		{
 			_logger.LogError(exc, "Error resending API key to {email}", request.Email);
+			return Problem(exc.FullMessage());
+		}
+	}
+
+	[HttpPost("recycle")]
+	[VerifyAccount]
+	public async Task<IActionResult> Recycle()
+	{
+		var account = HttpContext.Items["Account"] as Account ?? throw new Exception("account missing");
+
+		try
+		{
+			using var db = _dbFactory.CreateDbContext();
+			var acct = await db.Accounts.SingleOrDefaultAsync(row => row.Email == account.Email) ?? throw new Exception($"Account not found: {account.Email}");
+
+			acct.ApiKey = ApiKey.Generate(Account.KeyLength);
+			await db.SaveChangesAsync();
+
+			await _mailerSendClient.SendAsync(new MailerSendClient.Message()
+			{
+				To = [account.Email],
+				Subject = "CoreNotify API Key - Recycle",
+				Html = $"<p>Your new API key is: <strong>{acct.ApiKey}</strong></p>"
+			});
+
+			_logger.LogInformation("Recycle API key sent to {email}", account.Email);
+			return Ok($"An email with your API key was sent to {account.Email}");
+		}
+		catch (Exception exc)
+		{
+			_logger.LogError(exc, "Error recycling account for {email}", account.Email);
 			return Problem(exc.FullMessage());
 		}
 	}

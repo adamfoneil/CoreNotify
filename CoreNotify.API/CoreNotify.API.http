@@ -82,3 +82,8 @@ Authorization: Bearer {{Token}}
 
 PUT {{CoreNotify.API_HostAddress}}/api/marker/myapp/232
 Authorization: Bearer {{Token}}
+
+###
+
+POST {{CoreNotify.API_HostAddress}}/api/account/recycle
+Authorization: Bearer YWRhbWZvbmVpbEBwcm90b24ubWU6emRITlNXMFAwV2lwa3JLdWh2Y0JQc1lwU1YzYnF3aTc=
