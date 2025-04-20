@@ -1,6 +1,7 @@
 using Coravel;
 using CoreNotify.MailerSend;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using Services;
 using Services.Data;
@@ -32,8 +33,11 @@ builder.Services
 	.AddSingleton<MailerSendClient>()
 	.AddSingleton<EmailSenderContent>()
 	.AddScoped(sp => new SerilogCleanup(connectionString, serilogRetentionDays, sp.GetRequiredService<ILogger<SerilogCleanup>>()))
-	.AddDbContextFactory<ApplicationDbContext>(options => options.UseNpgsql(connectionString))	
+	.AddDbContextFactory<ApplicationDbContext>(options => options.UseNpgsql(connectionString))		
 	.AddControllers();
+
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddOpenApi();
 	
 var app = builder.Build();
 
@@ -45,4 +49,6 @@ app.Services.UseScheduler(scheduler =>
 
 app.UseHttpsRedirection();
 app.MapControllers();
+app.MapOpenApi();
+
 app.Run();
