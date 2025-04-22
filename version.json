@@ -1,6 +1,9 @@
 {
-  "master": {
     "next": 103,
-    "commitId": "68ea5ce96d404af766a771e1198c77b9676aa686"
-  }
+    "commitId": "68ea5ce96d404af766a771e1198c77b9676aa686",
+    "outputPaths": [
+        "CoreNotify.CLI",
+        "CoreNotify.API",
+        "CoreNotify.MailerSend"
+    ]
 }
