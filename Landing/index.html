@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CoreNotify – Simple Email for ASP.NET Core</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>CoreNotify</h1>
+      <p>Account confirmation and password reset emails for ASP.NET Identity</p>
+      <div class="center">
+        <a href="https://github.com/adamfoneil/CoreNotify" target="_blank" class="github-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+              <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38
+                0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
+                -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07
+                -.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
+                0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12
+                0 0 .67-.21 2.2.82a7.65 7.65 0 012.01-.27c.68 0 1.36.09 2.01.27
+                1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82
+                2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54
+                1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016
+                8c0-4.42-3.58-8-8-8z"/>
+            </svg>
+            GitHub
+          </a> |
+          <a href="https://www.nuget.org/packages/CoreNotify.CLI" target="_blank" class="nuget-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 512 512" fill="currentColor">
+              <path d="M112 0h288c61.8 0 112 50.2 112 112v288c0 61.8-50.2 112-112 112H112C50.2 512 0 461.8 0 400V112C0 50.2 50.2 0 112 0zm239.1 336c22.6 0 41.1-18.5 41.1-41.1s-18.5-41.1-41.1-41.1-41.1 18.5-41.1 41.1 18.5 41.1 41.1 41.1zm-186.2 0c22.6 0 41.1-18.5 41.1-41.1s-18.5-41.1-41.1-41.1-41.1 18.5-41.1 41.1 18.5 41.1 41.1 41.1zM144 112c0 53 43 96 96 96s96-43 96-96H144z"/>
+            </svg>
+            NuGet
+          </a>          
+      </div>
+      
+    </div>
+  </header>
+
+  <section class="features">
+    <div class="container">
+      <h2>Why CoreNotify?</h2>
+      <ul>
+        <li>✅ Make ASP.NET Identity account emails work without setting up an email provider</li>
+        <li>✅ No domain verification</li>
+        <li>✅ No limit on number of apps you use with</li>
+        <li>✅ Drop-in replacement for the default "NoOp" <code>IEmailSender&lt;T&gt;</code>.</li>        
+        <li>✅ CLI tool for easy setup and management</li>
+        <li>✅ 30-day free trial, then $5/month</li>        
+      </ul>
+    </div>
+  </section>
+
+  <section class="how-it-works">
+    <div class="container">
+      <h2>Get it Working</h2>
+      <ol>
+        <li>
+            <p>Install the CoreNotify CLI: </p>
+            <p>
+                <code>dotnet tool install --global CoreNotify.CLI</code>
+            </p>
+        </li>
+        <li>
+            <p>Register your email:</p>
+            <p><code>corenotify register you@example.com</code></p>
+            <p>You should receive your API key.</p>
+        </li>
+        <li>
+            <p>Add the NuGet package to your app:</p>
+            <p><code>dotnet add package CoreNotify.MailerSend</code></p>
+        </li>        
+        <li>
+            <p>Configure your API key</p>
+        </li>
+        <li>
+            <p>Replace the default email sender</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="container">
+        <h2>Things to Know</h2>
+        <ul>
+            <li>Uses <a href="https://www.mailersend.com/">MailerSend</a> under the hood</li>
+            <li>Emails will show <strong>{yourdomain}.corenotify.net</strong> as the sender domain</li>
+            <li>Email content cannot be customized</li>
+        </ul>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Adam O'Neil</p>
+    </div>
+  </footer>
+</body>
+</html>
