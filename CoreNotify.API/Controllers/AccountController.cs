@@ -5,17 +5,18 @@ using Microsoft.EntityFrameworkCore;
 using Services;
 using Services.Data;
 using Services.Data.Entities;
-using System.Security.Principal;
 
 namespace CoreNotify.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
 public class AccountController(
+	AccountService accountService,
 	ILogger<AccountController> logger,	
 	MailerSendClient mailerSendClient,
 	IDbContextFactory<ApplicationDbContext> dbFactory) : ControllerBase
 {
+	private readonly AccountService _accountService = accountService;
 	private readonly ILogger<AccountController> _logger = logger;	
 	private readonly MailerSendClient _mailerSendClient = mailerSendClient;
 	private readonly IDbContextFactory<ApplicationDbContext> _dbFactory = dbFactory;
@@ -25,25 +26,7 @@ public class AccountController(
 	{		
 		try
 		{
-			using var db = _dbFactory.CreateDbContext();
-			var account = new Account()
-			{
-				Email = request.Email				
-			};
-			db.Accounts.Add(account);
-			await db.SaveChangesAsync();
-
-			await _mailerSendClient.SendAsync(new MailerSendClient.Message()
-			{
-				To = [request.Email],
-				Subject = "CoreNotify Account Created",
-				Html = 
-					$"<p>Your account has been created with a renewal date of {account.RenewalDate:M/d/yy}. Your API key is: <strong>{account.ApiKey}</strong></p>" +
-					$"<p>If you did not do this, please ignore. Someone entered your email by mistake.</p>" +
-					"<p>Please see <a href=\"https://github.com/adamfoneil/CoreNotify\">https://github.com/adamfoneil/CoreNotify</a> for more info.</p>"
-			});
-			
-			_logger.LogInformation("Account created for {email}", request.Email);
+			await _accountService.CreateAsync(request);
 
 			return Ok($"An email with your API key was sent to {request.Email}");
 		}

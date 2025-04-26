@@ -36,7 +36,7 @@ If you're self-hosting Serilog in your projects using the SQL Server sink, have 
 Please see the [Serilog Alerts project](https://github.com/adamfoneil/CoreNotify/tree/master/CoreNotify.SerilogAlerts.SqlServer).
 
 # Payment
-All accounts have a 30 day free trial. If you like this service, send $5 * number of months you'd like
+All accounts have a 30 day free trial. If you like this service, send $6 * number of months you'd like
 
 [paypal.me/adamosoftware](https://paypal.me/adamosoftware?country.x=US&locale.x=en_US)
 

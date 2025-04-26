@@ -1,9 +1,14 @@
-@host=https://localhost:7080/
+@host=https://localhost:7080
 
 ###
 
-POST {{host}}api/LemonSqueezy/OrderCreated
+GET {{host}}/api/info
+
+###
+
+POST {{host}}/api/LemonSqueezy/OrderCreated
 Content-Type: application/json
+X-Signature: hello.1235!
 
 {
   "data": {

@@ -7,14 +7,14 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header>
-    <div class="container">
-      <h1>CoreNotify</h1>
-      <p>"Serverless" account confirmation and password reset emails for ASP.NET Identity</p>
-      <div class="center">
-        <a href="https://github.com/adamfoneil/CoreNotify" target="_blank" class="github-link">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
-              <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38
+    <header>
+        <div class="container">
+            <h1>CoreNotify</h1>
+            <p>"Serverless" account confirmation and password reset emails for ASP.NET Identity</p>
+            <div class="center">
+                <a href="https://github.com/adamfoneil/CoreNotify" target="_blank" class="github-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16">
+                        <path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38
                 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13
                 -.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07
                 -.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95
@@ -23,85 +23,88 @@
                 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82
                 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54
                 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0016
-                8c0-4.42-3.58-8-8-8z"/>
-            </svg>
-            GitHub
-          </a>         
-      </div>
-      
-    </div>
-  </header>
+                8c0-4.42-3.58-8-8-8z" />
+                    </svg>
+                    GitHub
+                </a>
+            </div>
 
-  <section class="features">
-    <div class="container">
-      <h2>Why CoreNotify?</h2>
-      <ul>
-        <li>✅ Make ASP.NET Identity account emails work without setting up an email provider</li>
-        <li>✅ No domain verification</li>
-        <li>✅ No limit on number of apps you use with</li>
-        <li>✅ Drop-in replacement for the default "NoOp" <code>IEmailSender&lt;T&gt;</code>.</li>        
-        <li>✅ CLI tool for easy setup and management</li>
-        <li>✅ 30-day free trial, then $5/month</li>        
-      </ul>
-    </div>
-  </section>
+        </div>
+    </header>
 
-  <section class="how-it-works">
-    <div class="container">
-      <h2>Getting Started</h2>
-      <ol>
-        <li>
-            <p>Install the CoreNotify CLI: </p>
-            <p>
-                <code>dotnet tool install --global CoreNotify.CLI</code>
-            </p>
-        </li>
-        <li>
-            <p>Register your email:</p>
-            <p><code>corenotify register you@example.com</code></p>
-            <p>You should receive your API key. Note this is for billing purposes and traceability. CoreNotify should be able to send to any recipient who registers in your applications.</p>
-        </li>
-        <li>
-            <p>Add the NuGet package to your app:</p>
-            <p><code>dotnet add package CoreNotify.MailerSend</code></p>
-        </li>        
-        <li>
-            <p>Configure your API key. See demo: <a href="https://github.com/adamfoneil/CoreNotify/blob/master/DemoApp/appsettings.json#L3" target="_blank">appsettings.json</a></p>
-        </li>
-        <li>
-            <p>Replace the default email sender</p>
-            <img src="images/startup-code.png" alt="Startup Code" style="width:610px;height:49px" />
-        </li>
-      </ol>
-    </div>
-  </section>
+    <section class="features">
+        <div class="container">
+            <h2>Why CoreNotify?</h2>
+            <ul>
+                <li>✅ Make ASP.NET Identity account emails work without setting up an email provider</li>
+                <li>✅ No domain verification</li>
+                <li>✅ No limit on number of apps you use with</li>
+                <li>✅ Drop-in replacement for the default "NoOp" <code>IEmailSender&lt;T&gt;</code>.</li>
+                <li>✅ CLI tool for easy setup and management</li>
+                <li>✅ 30-day free trial, then $5.99/month</li>
+            </ul>
+        </div>
+    </section>
 
-  <section class="features">
-    <div class="container">
-        <h2>Things to Know</h2>
-        <ul>
-            <li>Uses <a href="https://www.mailersend.com/" target="_blank">MailerSend</a> under the hood</li>
-            <li>Emails will show <strong>{yourdomain}.corenotify.net</strong> as the sender domain</li>
-            <li>Email content is fixed, see <a href="https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.MailerSend/EmailSenderContent.cs" target="_blank">EmailSenderContent.cs</a></li>
-            <li>Learn more on the <a href="https://github.com/adamfoneil/CoreNotify" target="_blank">GitHub repo</a></li>
-        </ul>
-    </div>
-  </section>
+    <section class="how-it-works">
+        <div class="container">
+            <h2>Getting Started</h2>
+            <ol>
+                <li>
+                    <p>Install the CoreNotify CLI: </p>
+                    <p>
+                        <code>dotnet tool install --global CoreNotify.CLI</code>
+                    </p>
+                </li>
+                <li>
+                    <p>Register your email:</p>
+                    <p><code>corenotify register you@example.com</code></p>
+                    <p>You should receive your API key. Note this is for billing purposes and traceability. CoreNotify should be able to send to any recipient who registers in your applications.</p>
+                </li>
+                <li>
+                    <p>Add the NuGet package to your app:</p>
+                    <p><code>dotnet add package CoreNotify.MailerSend</code></p>
+                </li>
+                <li>
+                    <p>Configure your API key. See demo: <a href="https://github.com/adamfoneil/CoreNotify/blob/master/DemoApp/appsettings.json#L3" target="_blank">appsettings.json</a></p>
+                </li>
+                <li>
+                    <p>Replace the default email sender</p>
+                    <img src="images/startup-code.png" alt="Startup Code" style="width:610px;height:49px" />
+                </li>
+            </ol>
+        </div>
+    </section>
 
-  <section class="features">
-      <div class="container">
-          <h2>API</h2>
-          <ul>
-              <li>Build info: <a href="/api/info">/api/info</a></li>
-              <li>OpenAPI spec: <a href="/openapi/v1.json">/openapi/v1.json</a></li>
-          </ul>
-      </div>
-  </section>
+    <section class="features">
+        <div class="container">
+            <h2>Things to Know</h2>
+            <ul>
+                <li>Uses <a href="https://www.mailersend.com/" target="_blank">MailerSend</a> under the hood</li>
+                <li>Emails will show <strong>{yourdomain}.corenotify.net</strong> as the sender domain</li>
+                <li>Email content is fixed, see <a href="https://github.com/adamfoneil/CoreNotify/blob/master/CoreNotify.MailerSend/EmailSenderContent.cs" target="_blank">EmailSenderContent.cs</a></li>
+                <li>Learn more on the <a href="https://github.com/adamfoneil/CoreNotify" target="_blank">GitHub repo</a></li>
+                <li>If you used the trial and like the service: <a href="https://adamfoneil.lemonsqueezy.com/buy/a48a6ebe-0aea-4696-884e-e459e5d0c8c3?embed=1&media=0&logo=0&discount=0" class="lemonsqueezy-button">Buy CoreNotify</a></li>
+            </ul>
+        </div>
+    </section>
 
-  <footer>
-    <div class="container">
-      <p>© 2025 Adam O'Neil</p>
-    </div>
-  </footer>
+    <section class="features">
+        <div class="container">
+            <h2>API</h2>
+            <ul>
+                <li>Build info: <a href="/api/info">/api/info</a></li>
+                <li>OpenAPI spec: <a href="/openapi/v1.json">/openapi/v1.json</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>© 2025 Adam O'Neil</p>
+        </div>
+    </footer>
+
+    <script src="https://assets.lemonsqueezy.com/lemon.js" defer></script>
 </body>
 </html>
