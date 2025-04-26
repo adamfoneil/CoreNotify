@@ -1,6 +1,7 @@
 using Coravel;
 using CoreNotify.MailerSend;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Serilog;
 using Services;
 using Services.Data;
@@ -39,6 +40,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApi();
 	
 var app = builder.Build();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.Services.UseScheduler(scheduler =>
 {
