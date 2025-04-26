@@ -85,14 +85,21 @@ a {
 
   .github-link {
     display: inline-flex;
-    align-items: center;
+    align-items: center;    
     gap: 0.5em;    
   }
   
-  .github-link:hover {
-    color: #0366d6;
-  }
-  
+a:hover {
+  background-color: #cf03d6;
+  color: white;
+}
+
+a {
+  padding: 0.3rem;
+  border-radius: 0.2rem;
+}
+
+
 .center {
   display: inline-flex;
   align-items: center;
