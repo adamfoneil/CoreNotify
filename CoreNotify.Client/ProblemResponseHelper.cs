@@ -5,7 +5,7 @@ namespace CoreNotify.Client;
 
 internal static class ProblemResponseHelper
 {
-	public static async void ThrowIfProblemResponse(this HttpResponseMessage response)
+	public static async Task ThrowIfProblemResponseAsync(this HttpResponseMessage response)
 	{
 		try
 		{

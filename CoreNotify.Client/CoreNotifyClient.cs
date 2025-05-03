@@ -15,14 +15,14 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 	{
 		var client = GetHttpClient();
 		var response = await client.PostAsJsonAsync("api/account/register", new CreateAccountRequest { Email = accountEmail });
-		response.ThrowIfProblemResponse();
+		await response.ThrowIfProblemResponseAsync();
 	}
 
 	public async Task ResendApiKeyAsync(string accountEmail)
 	{
 		var client = GetHttpClient();
 		var response = await client.PostAsJsonAsync("api/account/resend", new CreateAccountRequest() { Email = accountEmail });
-		response.ThrowIfProblemResponse();
+		await response.ThrowIfProblemResponseAsync();
 	}
 
 	public async Task<AccountUsageResponse> GetUsageAsync(string accountEmail, string apiKey)
@@ -30,7 +30,7 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		var client = GetHttpClient();
 		client.AddAuthorization(accountEmail, apiKey);
 		var response = await client.GetAsync("api/account/usage");		
-		response.ThrowIfProblemResponse();
+		await response.ThrowIfProblemResponseAsync();
 		return await response.Content.ReadFromJsonAsync<AccountUsageResponse>() ?? new();
 	}
 
@@ -39,7 +39,7 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		var client = GetHttpClient();
 		client.AddAuthorization(accountEmail, apiKey);
 		var response = await client.PostAsJsonAsync("api/send/confirmation", request);
-		response.ThrowIfProblemResponse();
+		await response.ThrowIfProblemResponseAsync();
 		return await response.Content.ReadAsStringAsync();
 	}
 	
@@ -48,7 +48,7 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		var client = GetHttpClient();
 		client.AddAuthorization(accountEmail, apiKey);
 		var response = await client.PostAsJsonAsync("api/send/resetlink", request);
-		response.ThrowIfProblemResponse();
+		await response.ThrowIfProblemResponseAsync();
 		return await response.Content.ReadAsStringAsync();
 	}
 
@@ -57,7 +57,7 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		var client = GetHttpClient();
 		client.AddAuthorization(accountEmail, apiKey);
 		var response = await client.PostAsJsonAsync("api/send/resetcode", request);
-		response.ThrowIfProblemResponse();
+		await response.ThrowIfProblemResponseAsync();
 		return await response.Content.ReadAsStringAsync();
 	}
 
@@ -66,7 +66,7 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		var client = GetHttpClient();
 		client.AddAuthorization(accountEmail, apiKey);
 		var response = await client.PostAsJsonAsync("api/account/recycle", new CreateAccountRequest() { Email = accountEmail });
-		response.ThrowIfProblemResponse();
+		await response.ThrowIfProblemResponseAsync();
 		return await response.Content.ReadAsStringAsync();
 	}
 
@@ -75,7 +75,7 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		var client = GetHttpClient();
 		client.AddAuthorization(accountEmail, apiKey);
 		var response = await client.PostAsJsonAsync("api/send/alert", request);
-		response.ThrowIfProblemResponse();
+		await response.ThrowIfProblemResponseAsync();
 	}
 
 	public async Task<long> GetContinuationMarkerAsync(string accountEmail, string apiKey, string name)
@@ -83,7 +83,7 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		var client = GetHttpClient();
 		client.AddAuthorization(accountEmail, apiKey);
 		var response = await client.GetAsync($"api/marker/{name}");
-		response.ThrowIfProblemResponse();
+		await response.ThrowIfProblemResponseAsync();
 
 		using JsonDocument doc = JsonDocument.Parse(await response.Content.ReadAsStringAsync());
 		return doc.RootElement.GetProperty("logEntryId").GetInt64();
@@ -94,7 +94,7 @@ public class CoreNotifyClient(IHttpClientFactory httpClientFactory, IOptions<Opt
 		var client = GetHttpClient();
 		client.AddAuthorization(accountEmail, apiKey);
 		var response = await client.PutAsync($"api/marker/{name}/{value}", new StringContent(""));
-		response.ThrowIfProblemResponse();
+		await response.ThrowIfProblemResponseAsync();
 	}
 
 	private HttpClient GetHttpClient()
