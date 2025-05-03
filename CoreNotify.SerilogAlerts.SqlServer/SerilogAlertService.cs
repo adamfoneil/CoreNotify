@@ -30,9 +30,16 @@ public class SerilogAlertService(
 
 	public async Task Invoke()
 	{
-		_logger.LogDebug("Invoking scheduled Serilog alert...");
-		var data = await _query.QueryNewEntriesAsync();
-		await SendAlertInnerAsync(data);
+		try
+		{
+			_logger.LogDebug("Invoking scheduled Serilog alert...");
+			var data = await _query.QueryNewEntriesAsync();
+			await SendAlertInnerAsync(data);
+		}
+		catch (Exception exc)
+		{
+			_logger.LogError(exc, "Error invoking serilog alert");
+		}
 	}
 
 	private async Task SendAlertInnerAsync(SerilogEntry[] data)

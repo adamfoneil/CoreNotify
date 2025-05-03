@@ -54,7 +54,7 @@ var app = builder.Build();
 
 app.Services.UseScheduler(scheduler =>
 {
-	scheduler.Schedule<SerilogAlertService>().EveryFiveMinutes();
+	scheduler.Schedule<SerilogAlertService>().EveryMinute();
 });
 
 app.UseSerilogRequestLogging();
