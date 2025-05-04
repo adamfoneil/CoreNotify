@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Services.Data;
+using Services.Data.Entities;
 using Stubble.Core.Builders;
 using static CoreNotify.MailerSend.MailerSendClient;
 
@@ -23,9 +24,38 @@ public class ExpirationReminder(
 	public class Options
 	{
 		public int IntervalDays { get; set; } = 3;
-		public decimal MonthlyPrice { get; set; } = 5.00m;
+		public decimal MonthlyPrice { get; set; } = 6.00m;
 		public string PaymentLink { get; set; } = default!;
 		public string ContactEmail { get; set; } = default!;
+	}
+
+	public async Task<string> RenderContentAsync(Account account)
+	{
+		const string PortalLink = "https://adamfoneil.lemonsqueezy.com/billing";
+		const string GitHubLink = "https://github.com/adamfoneil/CoreNotify";
+
+		var template =
+			"""
+			<p>Your account will expire on {{RenewalDate}}.</p>
+			<p>If you paid through Lemon Squeezy, it should auotmatically renew. Manage your subscription here: <a href="{{PortalLink}}">{{PortalLink}}</a></p>
+			<p>If you paid me directly with PayPal, please send {{MonthlyPrice}} x the number of months you'd like to renew to {{PaymentLink}}.</p>
+			<p>Please see the GitHub repo here: <a href="{{GitHubLink}}">{{GitHubLink}}</a> for more info.</p>
+			<p>For human contact, please reach out to {{ContactEmail}}.</p>
+			""";
+
+		var stubble = new StubbleBuilder().Build();
+
+		var data = new
+		{
+			GitHubLink,
+			PortalLink,
+			RenewalDate = account.RenewalDate.ToString("M/d/yy"),
+			MonthlyPrice = _options.MonthlyPrice.ToString("c2"),
+			_options.PaymentLink,
+			_options.ContactEmail
+		};
+
+		return await stubble.RenderAsync(template, data);
 	}
 
 	public async Task Invoke()
@@ -44,32 +74,16 @@ public class ExpirationReminder(
 			return;
 		}
 
-		var template =
-			"""
-			<p>Your account will expire on {{RenewalDate}}. CoreNotify does not have automatic renewal.</p>
-			<p>If you find the service useful, please send {{MonthlyPrice}} x the number of months you'd like to renew to {{PaymentLink}}.</p>
-			<p>Please see the GitHub repo here: <a href=\"https://github.com/adamfoneil/CoreNotify\">https://github.com/adamfoneil/CoreNotify</a> for more info.</p>
-			<p>For human contact, please reach out to {{ContactEmail}}.</p>
-			""";
-
-		var stubble = new StubbleBuilder().Build();
-
 		foreach (var account in accounts)
 		{
 			try
 			{
-				var data = new
-				{
-					RenewalDate = account.RenewalDate.ToString("M/d/yy"),
-					MonthlyPrice = _options.MonthlyPrice.ToString("c2"),
-					_options.PaymentLink,
-					_options.ContactEmail
-				};
+				_logger.LogDebug("Rendering html content for {account}", account.Email);
 
-				var html = await stubble.RenderAsync(template, data);
+				var html = await RenderContentAsync(account);
 
 				_logger.LogDebug("Sending expiration reminder to {Email} for {RenewalDate}: {Content}", account.Email, account.RenewalDate, html);
-
+				
 				await _mailerSendClient.SendAsync(new Message()
 				{
 					To = [account.Email],
@@ -78,7 +92,6 @@ public class ExpirationReminder(
 				});
 
 				_logger.LogInformation("Sent expiration reminder to {Email} for {RenewalDate}", account.Email, account.RenewalDate);
-
 			}
 			catch (Exception exc)
 			{
