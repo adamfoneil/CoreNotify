@@ -18,6 +18,7 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 var serilogRetentionDays = builder.Configuration.GetValue<int?>("SerilogRetentionDays") ?? 5;
 
 Log.Logger = new LoggerConfiguration()
+	.Enrich.WithMachineName()
 	.MinimumLevel.Warning()
 	.MinimumLevel.Override("CoreNotify.API", Serilog.Events.LogEventLevel.Debug)
 	.MinimumLevel.Override("Services", Serilog.Events.LogEventLevel.Debug)
