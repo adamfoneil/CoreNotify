@@ -6,6 +6,11 @@ using Services;
 using Services.Data;
 using Services.Models;
 using System.Collections.Concurrent;
+using System.Globalization;
+
+var defaultCulture = new CultureInfo("en-US");
+CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
+CultureInfo.DefaultThreadCurrentUICulture = defaultCulture;
 
 var builder = WebApplication.CreateBuilder(args);
 
