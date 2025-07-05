@@ -20,7 +20,7 @@ public class SerilogMetricsQuery(IDbContextFactory<ApplicationDbContext> dbFacto
 			.Select(g => new
 			{
 				SourceContext = g.Key.SourceContext!,
-				Level = g.Key.Level,
+				g.Key.Level,
 				Count = g.Count(),
 				LatestTimestamp = g.Max(s => s.Timestamp)
 			})
