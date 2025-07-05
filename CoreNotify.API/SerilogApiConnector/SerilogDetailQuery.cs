@@ -2,7 +2,6 @@
 using SerilogBlazor.Abstractions;
 using SerilogBlazor.ApiConnector;
 using Services.Data;
-using Services.Data.Entities;
 using System.Text.Json;
 
 namespace CoreNotify.API.SerilogApiConnector;
@@ -11,7 +10,7 @@ public class SerilogDetailQuery(IDbContextFactory<ApplicationDbContext> dbFactor
 {
 	private readonly IDbContextFactory<ApplicationDbContext> _dbFactory = dbFactory;
 
-	public override async Task<SerilogEntry[]> ExecuteAsync(string? search)
+	public override async Task<SerilogEntry[]> ExecuteAsync(string? search, int offset, int rowCount)
 	{
 		var criteria = (search is not null) ? SerilogQuery.Criteria.ParseExpression(search) : new();
 
@@ -67,7 +66,8 @@ public class SerilogDetailQuery(IDbContextFactory<ApplicationDbContext> dbFactor
 		// Order by timestamp descending and limit results
 		var results = await query
 			.OrderByDescending(s => s.Timestamp)
-			.Take(100)
+			.Skip(offset)
+			.Take(rowCount)
 			.ToArrayAsync();
 
 		// Convert to SerilogEntry objects
@@ -88,7 +88,7 @@ public class SerilogDetailQuery(IDbContextFactory<ApplicationDbContext> dbFactor
 		};
 	}
 
-	private static SerilogEntry ConvertToSerilogEntry(Serilog serilog)
+	private static SerilogEntry ConvertToSerilogEntry(Services.Data.Entities.Serilog serilog)
 	{
 		return new SerilogEntry
 		{
