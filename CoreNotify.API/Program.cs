@@ -43,8 +43,9 @@ builder.Services
 	.AddSingleton<EmailSenderContent>()	
 	.AddScoped(sp => new SerilogCleanup(connectionString, serilogRetentionDays, sp.GetRequiredService<ILogger<SerilogCleanup>>()))
 	.AddDbContextFactory<ApplicationDbContext>(options => options.UseNpgsql(connectionString))
-	.AddSingleton<SerilogDetailQuery>()
-	.AddSingleton<SerilogMetricsQuery>()
+	.AddMemoryCache()
+	.AddSingleton<IDetailQuery, SerilogDetailQuery>()
+	.AddSingleton<IMetricsQuery, SerilogMetricsQuery>()
 	.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -64,5 +65,9 @@ app.Services.UseScheduler(scheduler =>
 app.UseHttpsRedirection();
 app.MapControllers();
 app.MapOpenApi();
+
+app.MapSerilogEndpoints(
+	"/api/serilog", 
+	builder.Configuration["SerilogApiConnector:HeaderSecret"] ?? throw new Exception("Serilog API connection header secret not found"));
 
 app.Run();

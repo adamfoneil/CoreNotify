@@ -6,11 +6,11 @@ using System.Text.Json;
 
 namespace CoreNotify.API.SerilogApiConnector;
 
-public class SerilogDetailQuery(IDbContextFactory<ApplicationDbContext> dbFactory) : DetailQuery
+public class SerilogDetailQuery(IDbContextFactory<ApplicationDbContext> dbFactory) : IDetailQuery
 {
 	private readonly IDbContextFactory<ApplicationDbContext> _dbFactory = dbFactory;
 
-	public override async Task<SerilogEntry[]> ExecuteAsync(string? search, int offset, int rowCount)
+	public async Task<SerilogEntry[]> ExecuteAsync(string? search, int offset, int rowCount)
 	{
 		var criteria = (search is not null) ? SerilogQuery.Criteria.ParseExpression(search) : new();
 
@@ -68,10 +68,11 @@ public class SerilogDetailQuery(IDbContextFactory<ApplicationDbContext> dbFactor
 			.OrderByDescending(s => s.Timestamp)
 			.Skip(offset)
 			.Take(rowCount)
+			.OrderByDescending(row => row.Timestamp)
 			.ToArrayAsync();
 
 		// Convert to SerilogEntry objects
-		return results.Select(ConvertToSerilogEntry).ToArray();
+		return [.. results.Select(ConvertToSerilogEntry)];
 	}
 
 	private static int? MapLevelToInt(string level)

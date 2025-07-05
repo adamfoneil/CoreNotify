@@ -5,11 +5,11 @@ using Services.Data;
 
 namespace CoreNotify.API.SerilogApiConnector;
 
-public class SerilogMetricsQuery(IDbContextFactory<ApplicationDbContext> dbFactory) : MetricsQuery
+public class SerilogMetricsQuery(IDbContextFactory<ApplicationDbContext> dbFactory) : IMetricsQuery
 {
 	private readonly IDbContextFactory<ApplicationDbContext> _dbFactory = dbFactory;
 
-	public override async Task<SourceContextMetricsResult[]> ExecuteAsync()
+	public async Task<SourceContextMetricsResult[]> ExecuteAsync()
 	{
 		using var context = await _dbFactory.CreateDbContextAsync();
 		
