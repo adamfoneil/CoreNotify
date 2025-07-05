@@ -13,21 +13,33 @@ public class SerilogMetricsQuery(IDbContextFactory<ApplicationDbContext> dbFacto
 	{
 		using var context = await _dbFactory.CreateDbContextAsync();
 		
-		var now = DateTime.Now;
-		
-		var query = from log in context.Serilog
-			where log.SourceContext != null
-			group log by new { log.SourceContext, log.Level } into g
-			select new SourceContextMetricsResult
+		// Query database for raw grouped data
+		var rawResults = await context.Serilog
+			.Where(s => s.SourceContext != null)
+			.GroupBy(s => new { s.SourceContext, s.Level })
+			.Select(g => new
 			{
 				SourceContext = g.Key.SourceContext!,
-				Level = g.Key.Level.HasValue ? g.Key.Level.Value.ToString() : "Unknown",
+				Level = g.Key.Level,
 				Count = g.Count(),
-				LatestTimestamp = g.Max(s => s.Timestamp) ?? DateTime.MinValue,
-				AgeText = ParseAgeText((now - (g.Max(s => s.Timestamp) ?? DateTime.MinValue)).TotalMinutes)
-			};
-			
-		var results = await query.ToArrayAsync();
+				LatestTimestamp = g.Max(s => s.Timestamp)
+			})
+			.ToArrayAsync();
+		
+		// Calculate age text in memory and create final results
+		var now = DateTime.Now;
+		var results = rawResults.Select(r => new SourceContextMetricsResult
+		{
+			SourceContext = r.SourceContext,
+			Level = r.Level.HasValue ? r.Level.Value.ToString() : "Unknown",
+			Count = r.Count,
+			LatestTimestamp = r.LatestTimestamp ?? DateTime.MinValue,
+			AgeText = ParseAgeText((now - (r.LatestTimestamp ?? DateTime.MinValue)).TotalMinutes)
+		})
+		.OrderByDescending(r => r.LatestTimestamp)
+		.ThenBy(r => r.SourceContext)
+		.ToArray();
+		
 		return results;
 	}
 	
