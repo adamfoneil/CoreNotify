@@ -95,7 +95,7 @@ public class SerilogDetailQuery(IDbContextFactory<ApplicationDbContext> dbFactor
 			AgeText = CalculateAgeText(serilog.Timestamp),
 			SourceContext = serilog.SourceContext,
 			RequestId = ExtractRequestId(serilog.LogEvent),
-			Level = MapIntToLevel(serilog.Level),
+			Level = PostgresHelpers.MapIntToLevel(serilog.Level),
 			MessageTemplate = serilog.MessageTemplate ?? string.Empty,
 			Message = serilog.Message ?? string.Empty,
 			Exception = serilog.Exception,
@@ -201,18 +201,7 @@ public class SerilogDetailQuery(IDbContextFactory<ApplicationDbContext> dbFactor
 		}
 
 		return [];
-	}
-
-	private static string MapIntToLevel(int? level) => level switch
-	{
-		0 => "Verbose",
-		1 => "Debug",
-		2 => "Information",
-		3 => "Warning",
-		4 => "Error",
-		5 => "Fatal",
-		_ => "Unknown"
-	};
+	}	
 
 	private static string CalculateAgeText(DateTime? timestamp)
 	{

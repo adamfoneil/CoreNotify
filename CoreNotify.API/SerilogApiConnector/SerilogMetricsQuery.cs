@@ -31,7 +31,7 @@ public class SerilogMetricsQuery(IDbContextFactory<ApplicationDbContext> dbFacto
 		var results = rawResults.Select(r => new SourceContextMetricsResult
 		{
 			SourceContext = r.SourceContext,
-			Level = r.Level.HasValue ? r.Level.Value.ToString() : "Unknown",
+			Level = r.Level.HasValue ? PostgresHelpers.MapIntToLevel(r.Level.Value) : "Unknown",
 			Count = r.Count,
 			LatestTimestamp = r.LatestTimestamp ?? DateTime.MinValue,
 			AgeText = ParseAgeText((now - (r.LatestTimestamp ?? DateTime.MinValue)).TotalMinutes)
