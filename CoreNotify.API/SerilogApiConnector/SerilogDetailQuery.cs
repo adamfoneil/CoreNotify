@@ -3,6 +3,7 @@ using SerilogBlazor.Abstractions;
 using SerilogBlazor.ApiConnector;
 using Services.Data;
 using Services.Data.Entities;
+using System.Text.Json;
 
 namespace CoreNotify.API.SerilogApiConnector;
 
@@ -38,6 +39,12 @@ public class SerilogDetailQuery(IDbContextFactory<ApplicationDbContext> dbFactor
 		if (!string.IsNullOrEmpty(criteria.SourceContext))
 		{
 			query = query.Where(s => s.SourceContext != null && s.SourceContext.Contains(criteria.SourceContext));
+		}
+
+		if (!string.IsNullOrEmpty(criteria.RequestId))
+		{
+			// For RequestId, we need to search in the LogEvent JSON
+			query = query.Where(s => s.LogEvent != null && s.LogEvent.Contains($"\"RequestId\":\"{criteria.RequestId}\""));
 		}
 
 		if (!string.IsNullOrEmpty(criteria.Level))
@@ -89,14 +96,113 @@ public class SerilogDetailQuery(IDbContextFactory<ApplicationDbContext> dbFactor
 			Timestamp = serilog.Timestamp ?? DateTime.MinValue,
 			AgeText = CalculateAgeText(serilog.Timestamp),
 			SourceContext = serilog.SourceContext,
-			RequestId = null, // RequestId is not available in the Serilog entity
+			RequestId = ExtractRequestId(serilog.LogEvent),
 			Level = MapIntToLevel(serilog.Level),
 			MessageTemplate = serilog.MessageTemplate ?? string.Empty,
 			Message = serilog.Message ?? string.Empty,
 			Exception = serilog.Exception,
-			UserName = null, // UserName is not available in the Serilog entity
-			Properties = [] // Properties would need to be parsed from LogEvent JSON
+			UserName = ExtractUserName(serilog.LogEvent),
+			Properties = ParseLogEventProperties(serilog.LogEvent)
 		};
+	}
+
+	private static string? ExtractRequestId(string? logEvent)
+	{
+		if (string.IsNullOrEmpty(logEvent))
+			return null;
+
+		try
+		{
+			var jsonDoc = JsonDocument.Parse(logEvent);
+			// Try both standard structure and PostgreSQL specific structure
+			if (jsonDoc.RootElement.TryGetProperty("Properties", out var propertiesElement))
+			{
+				if (propertiesElement.TryGetProperty("RequestId", out var requestIdElement))
+				{
+					return ExtractValueFromJsonElement(requestIdElement);
+				}
+			}
+		}
+		catch (JsonException)
+		{
+			// Ignore JSON parsing errors
+		}
+
+		return null;
+	}
+
+	private static string? ExtractUserName(string? logEvent)
+	{
+		if (string.IsNullOrEmpty(logEvent))
+			return null;
+
+		try
+		{
+			var jsonDoc = JsonDocument.Parse(logEvent);
+			if (jsonDoc.RootElement.TryGetProperty("Properties", out var propertiesElement))
+			{
+				if (propertiesElement.TryGetProperty("UserName", out var userNameElement))
+				{
+					return ExtractValueFromJsonElement(userNameElement);
+				}
+			}
+		}
+		catch (JsonException)
+		{
+			// Ignore JSON parsing errors
+		}
+
+		return null;
+	}
+
+	private static string? ExtractValueFromJsonElement(JsonElement element)
+	{
+		return element.ValueKind switch
+		{
+			JsonValueKind.String => element.GetString(),
+			JsonValueKind.Object when element.TryGetProperty("$", out var valueElement) => ExtractValueFromJsonElement(valueElement),
+			_ => element.ToString()
+		};
+	}
+
+	private static Dictionary<string, object> ParseLogEventProperties(string? logEvent)
+	{
+		if (string.IsNullOrEmpty(logEvent))
+			return [];
+
+		try
+		{
+			var jsonDoc = JsonDocument.Parse(logEvent);
+			if (jsonDoc.RootElement.TryGetProperty("Properties", out var propertiesElement))
+			{
+				var result = new Dictionary<string, object>();
+
+				foreach (var property in propertiesElement.EnumerateObject())
+				{
+					result[property.Name] = property.Value.ValueKind switch
+					{
+						JsonValueKind.String => property.Value.GetString() ?? string.Empty,
+						JsonValueKind.Number => property.Value.TryGetInt64(out var longValue) ? longValue : property.Value.GetDecimal(),
+						JsonValueKind.True => true,
+						JsonValueKind.False => false,
+						JsonValueKind.Null => "null",
+						JsonValueKind.Array => "[Array]",
+						JsonValueKind.Object when property.Value.TryGetProperty("$", out var valueElement) => 
+							ExtractValueFromJsonElement(valueElement) ?? "[Object]",
+						JsonValueKind.Object => "[Object]",
+						_ => property.Value.ToString()
+					};
+				}
+
+				return result;
+			}
+		}
+		catch (JsonException)
+		{
+			// Ignore JSON parsing errors
+		}
+
+		return [];
 	}
 
 	private static string MapIntToLevel(int? level)
