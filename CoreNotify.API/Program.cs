@@ -1,7 +1,9 @@
 using Coravel;
+using CoreNotify.API.SerilogApiConnector;
 using CoreNotify.MailerSend;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using SerilogBlazor.ApiConnector;
 using Services;
 using Services.Data;
 using Services.Models;
@@ -38,9 +40,11 @@ builder.Services
 	.AddSingleton<ExpirationReminder>()
 	.AddSingleton<MailerSendClient>()
 	.AddSingleton<AccountService>()
-	.AddSingleton<EmailSenderContent>()
+	.AddSingleton<EmailSenderContent>()	
 	.AddScoped(sp => new SerilogCleanup(connectionString, serilogRetentionDays, sp.GetRequiredService<ILogger<SerilogCleanup>>()))
-	.AddDbContextFactory<ApplicationDbContext>(options => options.UseNpgsql(connectionString))		
+	.AddDbContextFactory<ApplicationDbContext>(options => options.UseNpgsql(connectionString))
+	.AddSingleton<SerilogDetailQuery>()
+	.AddSingleton<SerilogMetricsQuery>()
 	.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
