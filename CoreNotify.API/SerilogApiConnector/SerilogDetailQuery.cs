@@ -75,19 +75,16 @@ public class SerilogDetailQuery(IDbContextFactory<ApplicationDbContext> dbFactor
 		return [.. results.Select(ConvertToSerilogEntry)];
 	}
 
-	private static int? MapLevelToInt(string level)
+	private static int? MapLevelToInt(string level) => level switch
 	{
-		return level switch
-		{
-			"Fatal" => 0,
-			"Error" => 1,
-			"Warning" => 2,
-			"Information" => 3,
-			"Debug" => 4,
-			"Trace" => 5,
-			_ => null
-		};
-	}
+		"Fatal" => 5,
+		"Error" => 4,
+		"Warning" => 3,
+		"Information" => 2,
+		"Debug" => 1,
+		"Verbose" => 0,
+		_ => null
+	};
 
 	private static SerilogEntry ConvertToSerilogEntry(Services.Data.Entities.Serilog serilog)
 	{
@@ -206,19 +203,16 @@ public class SerilogDetailQuery(IDbContextFactory<ApplicationDbContext> dbFactor
 		return [];
 	}
 
-	private static string MapIntToLevel(int? level)
+	private static string MapIntToLevel(int? level) => level switch
 	{
-		return level switch
-		{
-			0 => "Fatal",
-			1 => "Error",
-			2 => "Warning",
-			3 => "Information",
-			4 => "Debug",
-			5 => "Trace",
-			_ => "Unknown"
-		};
-	}
+		0 => "Verbose",
+		1 => "Debug",
+		2 => "Information",
+		3 => "Warning",
+		4 => "Error",
+		5 => "Fatal",
+		_ => "Unknown"
+	};
 
 	private static string CalculateAgeText(DateTime? timestamp)
 	{
