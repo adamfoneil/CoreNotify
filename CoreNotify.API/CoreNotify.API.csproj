@@ -8,7 +8,10 @@
     <EnableSdkContainerDebugging>True</EnableSdkContainerDebugging>
     <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:9.0</ContainerBaseImage>
     <UserSecretsId>ea86e09b-6761-4135-8e22-91768b02d916</UserSecretsId>
-    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>    
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+	  <RestoreAdditionalProjectSources>
+		  https://aosoftware.blob.core.windows.net/packages/index.json
+	  </RestoreAdditionalProjectSources>
   </PropertyGroup>
 
   <ItemGroup>
@@ -21,8 +24,8 @@
     <PackageReference Include="Coravel" Version="6.0.2" />        
     <PackageReference Include="Dapper" Version="2.1.66" />        
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />        
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.5">
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -31,6 +34,7 @@
     <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1" />
     <PackageReference Include="Serilog.Sinks.PostgreSQL" Version="2.3.0" />
+	<PackageReference Include="Serilog.Blazor.ApiConnector" Version="1.0.0" />
 	<PackageReference Include="Pekspro.BuildInformationGenerator" Version="0.3.0" PrivateAssets="all" ExcludeAssets="runtime">
 		<IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>
