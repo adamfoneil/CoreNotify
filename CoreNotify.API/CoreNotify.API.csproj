@@ -32,7 +32,8 @@
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.2" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
     <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
-    <PackageReference Include="Serilog.Blazor.ApiConnector" Version="1.0.6" />    
+    <PackageReference Include="Serilog.Blazor.Abstractions" Version="1.0.6" />
+    <PackageReference Include="Serilog.Blazor.ApiConnector" Version="1.0.7" />
     <PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1" />
     <PackageReference Include="Serilog.Sinks.PostgreSQL" Version="2.3.0" />	
 	<PackageReference Include="Pekspro.BuildInformationGenerator" Version="0.3.0" PrivateAssets="all" ExcludeAssets="runtime">

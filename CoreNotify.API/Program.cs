@@ -1,14 +1,17 @@
 using Coravel;
+using CoreNotify.API;
 using CoreNotify.API.SerilogApiConnector;
 using CoreNotify.MailerSend;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using SerilogBlazor.Abstractions;
 using SerilogBlazor.ApiConnector;
 using Services;
 using Services.Data;
 using Services.Models;
 using System.Collections.Concurrent;
 using System.Globalization;
+using SerilogCleanup = Services.SerilogCleanup;
 
 var defaultCulture = new CultureInfo("en-US");
 CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
@@ -19,11 +22,10 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection string 'DefaultConnection' not found");
 var serilogRetentionDays = builder.Configuration.GetValue<int?>("SerilogRetentionDays") ?? 5;
 
-Log.Logger = new LoggerConfiguration()
-	.Enrich.WithMachineName()
-	.MinimumLevel.Warning()
-	.MinimumLevel.Override("CoreNotify.API", Serilog.Events.LogEventLevel.Debug)
-	.MinimumLevel.Override("Services", Serilog.Events.LogEventLevel.Debug)
+var logLevels = new ApiLogLevels();
+
+Log.Logger = logLevels.GetConfiguration()
+	.Enrich.WithMachineName()	
 	.WriteTo.Console()
 	.WriteTo.PostgreSQL(connectionString, "serilog", needAutoCreateTable: true)
 	.CreateLogger();
@@ -32,6 +34,7 @@ builder.Services
 	.AddHttpClient()
 	.AddSerilog()
 	.AddScheduler()
+	.AddSingleton<ILogLevels>(sp => logLevels)
 	.AddHostedService<BounceHandler>()
 	.AddSingleton<ConcurrentQueue<Bounce>>()
 	.Configure<MailerSendOptions>(builder.Configuration.GetSection("MailerSend"))
