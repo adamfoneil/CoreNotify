@@ -63,9 +63,11 @@ public class MailerSendClient(
 		{
 			return values.First();
 		}
+		
+		_logger.LogWarning("Email sent successfully to {recipient} with subject {subject}, but X-Message-Id header not found in response", 
+			string.Join(", ", message.To.Select(r => r.Email)), message.Subject);
 
-		// once in a while, the response does not contain the X-Message-Id header even though email was sent successfully
-		throw new MailerSendException();
+		return Guid.NewGuid().ToString();
 	}
 
 	private static JsonSerializerOptions SerializerOptions => new()

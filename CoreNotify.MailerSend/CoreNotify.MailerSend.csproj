@@ -11,7 +11,7 @@
     <Description>Email API client for mailersend.com, with IEmailSender support for ASP.NET Core Identity</Description>
     <Copyright>Copyright (c) 2025 Adam O'Neil</Copyright>
     <PackageProjectUrl>https://github.com/adamfoneil/CoreNotify</PackageProjectUrl>
-    <Version>1.0.12</Version>
+    <Version>1.0.13</Version>
     <RepositoryUrl>https://github.com/adamfoneil/CoreNotify</RepositoryUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
