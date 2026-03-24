@@ -1,12 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RuntimeIdentifiers>linux-x64</RuntimeIdentifiers>
     <EnableSdkContainerDebugging>True</EnableSdkContainerDebugging>
-    <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:9.0</ContainerBaseImage>
+    <ContainerBaseImage>mcr.microsoft.com/dotnet/aspnet:10.0</ContainerBaseImage>
     <UserSecretsId>ea86e09b-6761-4135-8e22-91768b02d916</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
 	  <RestoreAdditionalProjectSources>
@@ -19,23 +19,18 @@
   </ItemGroup>
 
   <ItemGroup>
+	<PackageReference Include="Bramblelog" Version="0.9.13-alpha" />
 	<PackageReference Include="CoreNotify.MailerSend" Version="1.0.12" />
 	<PackageReference Include="Humanizer" Version="2.14.1" />
     <PackageReference Include="Coravel" Version="6.0.2" />        
     <PackageReference Include="Dapper" Version="2.1.66" />        
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.5" />        
-    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.6">
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />        
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.5">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.2" />
-    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="9.0.4" />
-    <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
-    <PackageReference Include="Serilog.Blazor.Abstractions" Version="1.0.6" />
-    <PackageReference Include="Serilog.Blazor.ApiConnector" Version="1.0.7" />
-    <PackageReference Include="Serilog.Enrichers.Environment" Version="3.0.1" />
-    <PackageReference Include="Serilog.Sinks.PostgreSQL" Version="2.3.0" />	
+    </PackageReference>    
+    <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.1" />    
 	<PackageReference Include="Pekspro.BuildInformationGenerator" Version="0.3.0" PrivateAssets="all" ExcludeAssets="runtime">
 		<IncludeAssets>compile; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 	</PackageReference>

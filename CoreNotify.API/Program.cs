@@ -1,17 +1,12 @@
+using Bramblelog;
 using Coravel;
-using CoreNotify.API;
-using CoreNotify.API.SerilogApiConnector;
 using CoreNotify.MailerSend;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
-using SerilogBlazor.Abstractions;
-using SerilogBlazor.ApiConnector;
 using Services;
 using Services.Data;
 using Services.Models;
 using System.Collections.Concurrent;
 using System.Globalization;
-using SerilogCleanup = Services.SerilogCleanup;
 
 var defaultCulture = new CultureInfo("en-US");
 CultureInfo.DefaultThreadCurrentCulture = defaultCulture;
@@ -22,19 +17,11 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection string 'DefaultConnection' not found");
 var serilogRetentionDays = builder.Configuration.GetValue<int?>("SerilogRetentionDays") ?? 5;
 
-var logLevels = new ApiLogLevels();
-
-Log.Logger = logLevels.GetConfiguration()
-	.Enrich.WithMachineName()	
-	.WriteTo.Console()
-	.WriteTo.PostgreSQL(connectionString, "serilog", needAutoCreateTable: true)
-	.CreateLogger();
+builder.Services.AddLogging(config => config.AddBramblelog(builder.Configuration));
 
 builder.Services
 	.AddHttpClient()
-	.AddSerilog()
 	.AddScheduler()
-	.AddSingleton<ILogLevels>(sp => logLevels)
 	.AddHostedService<BounceHandler>()
 	.AddSingleton<ConcurrentQueue<Bounce>>()
 	.Configure<MailerSendOptions>(builder.Configuration.GetSection("MailerSend"))
@@ -43,12 +30,9 @@ builder.Services
 	.AddSingleton<ExpirationReminder>()
 	.AddSingleton<MailerSendClient>()
 	.AddSingleton<AccountService>()
-	.AddSingleton<EmailSenderContent>()	
-	.AddScoped(sp => new SerilogCleanup(connectionString, serilogRetentionDays, sp.GetRequiredService<ILogger<SerilogCleanup>>()))
+	.AddSingleton<EmailSenderContent>()		
 	.AddDbContextFactory<ApplicationDbContext>(options => options.UseNpgsql(connectionString))
 	.AddMemoryCache()
-	.AddSingleton<IDetailQuery, SerilogDetailQuery>()
-	.AddSingleton<IMetricsQuery, SerilogMetricsQuery>()
 	.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -68,9 +52,6 @@ app.Services.UseScheduler(scheduler =>
 app.UseHttpsRedirection();
 app.MapControllers();
 app.MapOpenApi();
-
-app.MapSerilogEndpoints(
-	"/api/serilog", 
-	builder.Configuration["SerilogApiConnector:HeaderSecret"] ?? throw new Exception("Serilog API connection header secret not found"));
+app.MapBramblelogWebhook();
 
 app.Run();
