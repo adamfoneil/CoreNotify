@@ -1,4 +1,5 @@
 ﻿using CoreNotify.Shared;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 
 namespace Testing;

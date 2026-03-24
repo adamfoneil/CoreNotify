@@ -1,4 +1,5 @@
 ﻿using CoreNotify.SerilogAlerts.Shared;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace Testing.SerilogAlerts.Shared;
 
