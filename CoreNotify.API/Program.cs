@@ -40,6 +40,7 @@ builder.Services.AddOpenApi();
 	
 var app = builder.Build();
 
+app.UseMiddleware<HttpLoggingMiddleware>();
 app.UseDefaultFiles();
 app.UseStaticFiles();
 

@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-	<PackageReference Include="Bramblelog" Version="1.0.2" />
+	<PackageReference Include="Bramblelog" Version="1.0.4" />
 	<PackageReference Include="CoreNotify.MailerSend" Version="1.0.12" />
 	<PackageReference Include="Humanizer" Version="2.14.1" />
     <PackageReference Include="Coravel" Version="6.0.2" />        
