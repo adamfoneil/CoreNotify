@@ -18,6 +18,8 @@ public class BounceHandler(
 
 	protected override async Task ExecuteAsync(CancellationToken stoppingToken)
 	{
+		_logger.LogInformation("BounceHandler started");
+
 		while (!stoppingToken.IsCancellationRequested)
 		{
 			if (_logger.IsEnabled(LogLevel.Debug))
