@@ -17,7 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new Exception("Connection string 'DefaultConnection' not found");
 var serilogRetentionDays = builder.Configuration.GetValue<int?>("SerilogRetentionDays") ?? 5;
 
-builder.Services.AddLogging(config => config.AddBramblelog(builder.Configuration));
+builder.Logging.AddBramblelog(builder.Configuration);
 
 builder.Services
 	.AddHttpClient()

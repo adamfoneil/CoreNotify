@@ -20,6 +20,11 @@ public class BounceHandler(
 	{
 		while (!stoppingToken.IsCancellationRequested)
 		{
+			if (_logger.IsEnabled(LogLevel.Debug))
+            {
+                _logger.LogDebug("Bounce queue count: {count}", _bounceQueue.Count);
+            }        
+
 			if (_bounceQueue.TryDequeue(out var bounce))
 			{
 				try
