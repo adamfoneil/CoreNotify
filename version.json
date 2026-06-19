@@ -1,6 +1,6 @@
 {
-  "next": 123,
-  "commitId": "f7727c961ff2fb0cd4097b5d3f066939170ea564",
+  "next": 124,
+  "commitId": "025b499906660ace018d61c101ab03c0ca1b84a0",
   "outputPaths": [
     "CoreNotify.CLI",
     "CoreNotify.API",
